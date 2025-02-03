@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Questionnaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Welcome Page -->
+<div class="page" id="welcome-page">
+    <h1>Welcome to our Compatibility Questionnaire</h1>
+    <div class="image-container">
+        <!-- Updated image path (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/welcome-image.jpg" alt="Welcome Image">
+    </div>
+    <button onclick="nextQuestion()">Next</button>
+</div>
+
+<!-- Question 1 -->
+<div class="page" id="question-1">
+    <h2>Who are you?</h2>
+    <div class="question-images">
+        <!-- Updated image paths (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question1-image1.jpg" alt="Image 1 for Question 1">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question1-image2.jpg" alt="Image 2 for Question 1">
+    </div>
+    <form>
+        <input type="radio" name="q1" value="correct"> Correct Answer<br>
+        <input type="radio" name="q1" value="wrong"> Wrong Answer 1<br>
+        <input type="radio" name="q1" value="wrong2"> Wrong Answer 2<br>
+        <input type="radio" name="q1" value="wrong3"> Wrong Answer 3<br>
+    </form>
+    <button onclick="submitAnswer(1)">Submit Answer</button>
+</div>
+
+<!-- Question 2 -->
+<div class="page" id="question-2">
+    <h2>What is my favorite quality about you?</h2>
+    <div class="question-images">
+        <!-- Updated image paths (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question2-image1.jpg" alt="Image 1 for Question 2">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question2-image2.jpg" alt="Image 2 for Question 2">
+    </div>
+    <form>
+        <input type="radio" name="q2" value="correct"> Correct Answer<br>
+        <input type="radio" name="q2" value="wrong"> Wrong Answer 1<br>
+        <input type="radio" name="q2" value="wrong2"> Wrong Answer 2<br>
+        <input type="radio" name="q2" value="wrong3"> Wrong Answer 3<br>
+    </form>
+    <button onclick="submitAnswer(2)">Submit Answer</button>
+</div>
+
+<!-- Question 3 -->
+<div class="page" id="question-3">
+    <h2>What is the best compliment that you have ever received from me?</h2>
+    <div class="question-images">
+        <!-- Updated image paths (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question3-image1.jpg" alt="Image 1 for Question 3">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question3-image2.jpg" alt="Image 2 for Question 3">
+    </div>
+    <form>
+        <input type="radio" name="q3" value="correct"> Correct Answer<br>
+        <input type="radio" name="q3" value="wrong"> Wrong Answer 1<br>
+        <input type="radio" name="q3" value="wrong2"> Wrong Answer 2<br>
+        <input type="radio" name="q3" value="wrong3"> Wrong Answer 3<br>
+    </form>
+    <button onclick="submitAnswer(3)">Submit Answer</button>
+</div>
+
+<!-- Question 4 -->
+<div class="page" id="question-4">
+    <h2>Will you be my Valentine?</h2>
+    <div class="question-images">
+        <!-- Updated image paths (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question4-image1.jpg" alt="Image 1 for Question 4">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/question4-image2.jpg" alt="Image 2 for Question 4">
+    </div>
+    <form>
+        <input type="radio" name="q4" value="correct"> Correct Answer<br>
+        <input type="radio" name="q4" value="wrong"> Wrong Answer<br>
+    </form>
+    <button onclick="submitAnswer(4)">Submit Answer</button>
+</div>
+
+<!-- Final Page with Music -->
+<div class="page" id="final-page">
+    <h1>Thank you for completing the questionnaire!</h1>
+    <p>Your energy is magnetic, and it’s about time someone acknowledged and reciprocated that.</p>
+    
+    <!-- First video (plays right after question 4 is answered correctly) -->
+    <div id="music-container-1">
+        <iframe id="song-1" width="560" height="315" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID_1?autoplay=1&loop=1&playlist=YOUTUBE_VIDEO_ID_1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <!-- Final Thank You Video -->
+    <div id="music-container-2">
+        <iframe id="song-2" width="560" height="315" src="https://www.youtube.com/embed/YOUTUBE_VIDEO_ID_2?autoplay=1&loop=1&playlist=YOUTUBE_VIDEO_ID_2" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <div id="image-container" class="image-container">
+        <!-- Updated image paths (from GitHub) -->
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/final-image1.jpg" alt="Image 1 for Final Page">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/final-image2.jpg" alt="Image 2 for Final Page">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/final-image3.jpg" alt="Image 3 for Final Page">
+        <img src="https://raw.githubusercontent.com/your-username/your-repository-name/main/images/final-image4.jpg" alt="Image 4 for Final Page">
+    </div>
+    <button id="final-submit" onclick="finalSubmit()">Submit</button>
+</div>
+
+<!-- Date/Time Page -->
+<div class="page" id="date-time-page">
+    <h2>Choose a date and time for our meeting</h2>
+    <form>
+        <input type="datetime-local" name="datetime">
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="name" placeholder="Your Name" required>
+    </form>
+    <button onclick="submitDateTime()">Submit</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
