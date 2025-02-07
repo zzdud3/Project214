@@ -1,89 +1,69 @@
-let correctAudio = document.getElementById("correct-audio");
-let incorrectAudio = document.getElementById("incorrect-audio");
-let correctAudioTime = 0; 
-
-document.addEventListener("DOMContentLoaded", () => {
-    correctAudio.play();
-});
+let correctAudio = new Audio("correct-audio.mp3");
+let incorrectAudio = new Audio("incorrect-audio.mp3");
+let lastIncorrectQuestion = null; // To track which correct question was answered incorrectly
 
 function startQuiz() {
-    pauseIncorrectAudio();
-    resumeCorrectAudio();
+    correctAudio.play();
     showScreen("question1");
 }
 
-function checkAnswer(question, answer) {
-    if (answer === "correct") {
-        resumeCorrectAudio();
-        showScreen("question2");
+function showScreen(screenId) {
+    let screens = document.querySelectorAll(".screen");
+    screens.forEach(screen => screen.classList.add("hidden"));
+    document.getElementById(screenId).classList.remove("hidden");
+}
+
+function checkAnswer(questionNumber, answerType) {
+    if (answerType === "correct") {
+        correctAudio.play();
+        if (questionNumber === 1) {
+            showScreen("question2");
+        } else if (questionNumber === 2) {
+            showScreen("valentine");
+        }
     } else {
-        playIncorrectAudio();
-        let wrongPath = `question-wrong${answer.charAt(answer.length - 1)}`;
-        showScreen(wrongPath);
+        incorrectAudio.play();
+        lastIncorrectQuestion = questionNumber; // Store the last incorrect question
+        if (answerType === "wrong1") {
+            showScreen("question-wrong1");
+        } else if (answerType === "wrong2") {
+            showScreen("question-wrong2");
+        } else if (answerType === "wrong3") {
+            showScreen("question-wrong3");
+        }
     }
 }
 
 function checkFlowerAnswer() {
-    let answer = document.getElementById("flower-answer").value.toLowerCase();
+    let answer = document.getElementById("flower-answer").value.trim().toLowerCase();
     if (answer.includes("tulip")) {
-        resumeCorrectAudio();
+        correctAudio.play();
         showScreen("valentine");
     } else {
-        playIncorrectAudio();
+        incorrectAudio.play();
+        lastIncorrectQuestion = 2;
         showScreen("question-wrong1");
     }
 }
 
-function checkWrongAnswer() {
-    goToIncorrectFinalPage();
+function goToIncorrectPath() {
+    incorrectAudio.play();
+    showScreen("incorrect-path");
+}
+
+function correctFromWrongBank() {
+    if (lastIncorrectQuestion) {
+        showScreen(`question${lastIncorrectQuestion}`);
+        correctAudio.play();
+        lastIncorrectQuestion = null; // Reset tracking
+    }
 }
 
 function goToDateSelection() {
+    correctAudio.play();
     showScreen("date-selection");
 }
 
-function goToIncorrectFinalPage() {
-    pauseCorrectAudio();
-    playIncorrectAudio();
-    showScreen("incorrect-final");
-}
-
-function restartQuiz() {
-    pauseIncorrectAudio();
-    correctAudioTime = 0;
-    correctAudio.currentTime = 0;
-    correctAudio.play();
-    showScreen("welcome-screen");
-}
-
-// Audio Control Functions
-function playIncorrectAudio() {
-    correctAudioTime = correctAudio.currentTime;
-    correctAudio.pause();
-    incorrectAudio.play();
-}
-
-function pauseIncorrectAudio() {
-    incorrectAudio.pause();
-    incorrectAudio.currentTime = 0;
-}
-
-function pauseCorrectAudio() {
-    correctAudio.pause();
-}
-
-function resumeCorrectAudio() {
-    incorrectAudio.pause();
-    correctAudio.currentTime = correctAudioTime;
-    correctAudio.play();
-}
-
-function showScreen(screenId) {
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
-    document.getElementById(screenId).classList.add("active");
-}
 function sendEmail() {
     let dateTime = document.getElementById("date-time").value;
     if (!dateTime) {
@@ -91,7 +71,7 @@ function sendEmail() {
         return;
     }
 
-    let emailAddress = "rehmanzaine9@gmail.com";  // Replace with your email
+    let emailAddress = "rehmanzaine9@gmail.com";  // Replace with your actual email
     let subject = "Valentine's Date Selection";
     let body = `The selected date and time is: ${dateTime}`;
 
@@ -99,4 +79,11 @@ function sendEmail() {
     window.location.href = mailtoLink;
 
     showScreen("thank-you");
+}
+
+function restartQuiz() {
+    incorrectAudio.pause();
+    incorrectAudio.currentTime = 0;
+    correctAudio.play();
+    showScreen("welcome-screen");
 }
