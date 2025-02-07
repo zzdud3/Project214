@@ -1,6 +1,6 @@
-let correctAudio = new Audio("correct-audio.mp3");
-let incorrectAudio = new Audio("incorrect-audio.mp3");
-let lastIncorrectQuestion = null; // To track which correct question was answered incorrectly
+let correctAudio = new Audio("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/correct-audio.mp3");
+let incorrectAudio = new Audio("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/incorrect-audio.mp3");
+let lastIncorrectQuestion = null; 
 
 function startQuiz() {
     correctAudio.play();
@@ -16,21 +16,11 @@ function showScreen(screenId) {
 function checkAnswer(questionNumber, answerType) {
     if (answerType === "correct") {
         correctAudio.play();
-        if (questionNumber === 1) {
-            showScreen("question2");
-        } else if (questionNumber === 2) {
-            showScreen("valentine");
-        }
+        showScreen(questionNumber === 1 ? "question2" : "valentine");
     } else {
         incorrectAudio.play();
-        lastIncorrectQuestion = questionNumber; // Store the last incorrect question
-        if (answerType === "wrong1") {
-            showScreen("question-wrong1");
-        } else if (answerType === "wrong2") {
-            showScreen("question-wrong2");
-        } else if (answerType === "wrong3") {
-            showScreen("question-wrong3");
-        }
+        lastIncorrectQuestion = questionNumber; 
+        showScreen(`question-wrong${answerType.slice(-1)}`);
     }
 }
 
@@ -46,7 +36,7 @@ function checkFlowerAnswer() {
     }
 }
 
-function goToIncorrectPath() {
+function checkIncorrectAnswer() {
     incorrectAudio.play();
     showScreen("incorrect-path");
 }
@@ -55,7 +45,7 @@ function correctFromWrongBank() {
     if (lastIncorrectQuestion) {
         showScreen(`question${lastIncorrectQuestion}`);
         correctAudio.play();
-        lastIncorrectQuestion = null; // Reset tracking
+        lastIncorrectQuestion = null;
     }
 }
 
@@ -71,11 +61,7 @@ function sendEmail() {
         return;
     }
 
-    let emailAddress = "rehmanzaine9@gmail.com";  // Replace with your actual email
-    let subject = "Valentine's Date Selection";
-    let body = `The selected date and time is: ${dateTime}`;
-
-    let mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    let mailtoLink = `mailto:rehmanzaine9@gmail.com?subject=Valentine's Date Selection&body=The selected date and time is: ${dateTime}`;
     window.location.href = mailtoLink;
 
     showScreen("thank-you");
@@ -83,7 +69,6 @@ function sendEmail() {
 
 function restartQuiz() {
     incorrectAudio.pause();
-    incorrectAudio.currentTime = 0;
     correctAudio.play();
     showScreen("welcome-screen");
 }
