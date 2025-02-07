@@ -84,3 +84,19 @@ function showScreen(screenId) {
     });
     document.getElementById(screenId).classList.add("active");
 }
+function sendEmail() {
+    let dateTime = document.getElementById("date-time").value;
+    if (!dateTime) {
+        alert("Please select a date and time.");
+        return;
+    }
+
+    let emailAddress = "YOUR_EMAIL@example.com";  // Replace with your email
+    let subject = "Valentine's Date Selection";
+    let body = `The selected date and time is: ${dateTime}`;
+
+    let mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
+
+    showScreen("thank-you");
+}
