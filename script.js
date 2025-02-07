@@ -17,19 +17,27 @@ const incorrectFinalScreen = document.getElementById("incorrect-final");
 // Start quiz function (called when "Proceed" button is clicked on the welcome screen)
 function startQuiz() {
   // Hide the welcome screen and show the first question
-  welcomeScreen.classList.add("hidden");
-  question1Screen.classList.remove("hidden");
-
-  // Start the background correct audio
+  showScreen('question1');
   correctAudio.play();
   correctAudio.loop = true;
+}
+
+// Function to handle screen visibility (show/hide elements)
+function showScreen(screenId) {
+  const allScreens = document.querySelectorAll('.screen');
+  allScreens.forEach(screen => {
+    screen.classList.add('hidden');
+  });
+  const activeScreen = document.getElementById(screenId);
+  if (activeScreen) {
+    activeScreen.classList.remove('hidden');
+  }
 }
 
 // Function to check the answer for Question 1 (Correct Path)
 function checkAnswer(question, answer) {
   if (answer === 'correct') {
-    question1Screen.classList.add("hidden");
-    question2Screen.classList.remove("hidden");
+    showScreen('question2');
   } else {
     showIncorrectPath();
   }
@@ -39,8 +47,7 @@ function checkAnswer(question, answer) {
 function checkFlowerAnswer() {
   const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
   if (answer === 'rose') { // Change 'rose' to the correct answer if needed
-    question2Screen.classList.add("hidden");
-    valentineScreen.classList.remove("hidden");
+    showScreen('valentine');
   } else {
     showIncorrectPath();
   }
@@ -48,20 +55,14 @@ function checkFlowerAnswer() {
 
 // Valentine screen navigation
 function goToDateSelection() {
-  valentineScreen.classList.add("hidden");
-  dateSelectionScreen.classList.remove("hidden");
+  showScreen('date-selection');
 }
 
 // Function to handle incorrect answers
 function showIncorrectPath() {
-  // Hide current screens and show the incorrect question path
   correctAudio.pause();
   incorrectAudio.play();
-  question1Screen.classList.add("hidden");
-  question2Screen.classList.add("hidden");
-  valentineScreen.classList.add("hidden");
-  dateSelectionScreen.classList.add("hidden");
-  questionWrong1Screen.classList.remove("hidden");
+  showScreen('question-wrong1');
 }
 
 // Check answers for incorrect questions
@@ -69,16 +70,13 @@ function checkWrongAnswer(question, isCorrect) {
   if (isCorrect) {
     switch (question) {
       case 1:
-        questionWrong1Screen.classList.add("hidden");
-        question1Screen.classList.remove("hidden");
+        showScreen('question1');
         break;
       case 2:
-        questionWrong2Screen.classList.add("hidden");
-        question2Screen.classList.remove("hidden");
+        showScreen('question2');
         break;
       case 3:
-        questionWrong3Screen.classList.add("hidden");
-        valentineScreen.classList.remove("hidden");
+        showScreen('valentine');
         break;
     }
     incorrectAudio.pause();
@@ -87,10 +85,7 @@ function checkWrongAnswer(question, isCorrect) {
   } else {
     incorrectAudio.pause();
     incorrectAudio.play();
-    questionWrong1Screen.classList.add("hidden");
-    questionWrong2Screen.classList.add("hidden");
-    questionWrong3Screen.classList.add("hidden");
-    incorrectFinalScreen.classList.remove("hidden");
+    showScreen('incorrect-final');
   }
 }
 
@@ -103,21 +98,8 @@ function sendEmail() {
 
 // Restart quiz (called when the user clicks "Restart" on the incorrect final page)
 function restartQuiz() {
-  incorrectFinalScreen.classList.add("hidden");
-  welcomeScreen.classList.remove("hidden");
+  showScreen('welcome-screen');
   incorrectAudio.pause();
   correctAudio.play();
   correctAudio.loop = true;
-}
-
-// Handling screen visibility (hide and show functionality for each screen)
-function hideAllScreens() {
-  const screens = document.querySelectorAll('.screen');
-  screens.forEach(screen => screen.classList.add("hidden"));
-}
-
-// Function to hide audio when switching between paths
-function switchToCorrectPath() {
-  incorrectAudio.pause();
-  correctAudio.play();
 }
