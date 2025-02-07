@@ -8,19 +8,13 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-    <!-- Correct Path Audio -->
-    <audio id="correct-audio" loop>
-        <source src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/correct-path.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Incorrect Path Audio -->
-    <audio id="incorrect-audio" loop>
-        <source src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/incorrect-answer.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- Welcome Screen -->
-    <div id="welcome-screen" class="screen active">
+    <div id="welcome-screen" class="screen">
         <h1>Welcome!</h1>
+        <audio id="correct-audio" autoplay loop>
+            <source src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/correct-audio.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
         <button onclick="startQuiz()">Proceed</button>
     </div>
 
