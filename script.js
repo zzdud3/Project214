@@ -1,74 +1,117 @@
-let correctAudio = new Audio("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/correct-audio.mp3");
-let incorrectAudio = new Audio("https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/incorrect-audio.mp3");
-let lastIncorrectQuestion = null; 
+// Get audio elements
+const correctAudio = document.getElementById("correct-audio");
+const incorrectAudio = document.getElementById("incorrect-audio");
 
+// Function to start the quiz
 function startQuiz() {
-    correctAudio.play();
     showScreen("question1");
+    playCorrectAudio();
 }
 
+// Function to show a screen
 function showScreen(screenId) {
-    let screens = document.querySelectorAll(".screen");
-    screens.forEach(screen => screen.classList.add("hidden"));
+    document.querySelectorAll(".screen").forEach(screen => screen.classList.add("hidden"));
     document.getElementById(screenId).classList.remove("hidden");
 }
 
-function checkAnswer(questionNumber, answerType) {
-    if (answerType === "correct") {
-        correctAudio.play();
-        showScreen(questionNumber === 1 ? "question2" : "valentine");
-    } else {
-        incorrectAudio.play();
-        lastIncorrectQuestion = questionNumber; 
-        showScreen(`question-wrong${answerType.slice(-1)}`);
-    }
-}
-
-function checkFlowerAnswer() {
-    let answer = document.getElementById("flower-answer").value.trim().toLowerCase();
-    if (answer.includes("tulip")) {
-        correctAudio.play();
-        showScreen("valentine");
-    } else {
-        incorrectAudio.play();
-        lastIncorrectQuestion = 2;
-        showScreen("question-wrong1");
-    }
-}
-
-function checkIncorrectAnswer() {
-    incorrectAudio.play();
-    showScreen("incorrect-path");
-}
-
-function correctFromWrongBank() {
-    if (lastIncorrectQuestion) {
-        showScreen(`question${lastIncorrectQuestion}`);
-        correctAudio.play();
-        lastIncorrectQuestion = null;
-    }
-}
-
-function goToDateSelection() {
+// Function to play correct audio
+function playCorrectAudio() {
+    incorrectAudio.pause();
     correctAudio.play();
-    showScreen("date-selection");
 }
 
+// Function to play incorrect audio
+function playIncorrectAudio() {
+    correctAudio.pause();
+    incorrectAudio.play();
+}
+
+// Function to check answer for multiple-choice questions
+function checkAnswer(questionNum, answerType) {
+    if (answerType === "correct") {
+        if (questionNum === 1) {
+            showScreen("question2");
+        } else if (questionNum === 2) {
+            showScreen("valentine");
+        }
+        playCorrectAudio();
+    } else {
+        handleIncorrectAnswer(questionNum);
+    }
+}
+
+// Function to handle incorrect answers
+function handleIncorrectAnswer(questionNum) {
+    playIncorrectAudio();
+    if (questionNum === 1) {
+        showScreen("question-wrong1");
+    } else if (questionNum === 2) {
+        showScreen("question-wrong2");
+    }
+}
+
+// Function to check the free-response answer
+function checkFlowerAnswer() {
+    const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
+    if (answer.includes("tulip")) {
+        showScreen("valentine");
+        playCorrectAudio();
+    } else {
+        showScreen("question-wrong3");
+        playIncorrectAudio();
+    }
+}
+
+// Function to process incorrect path answers
+function checkWrongAnswer(questionNum, isCorrect) {
+    if (isCorrect) {
+        // If correct, return to the corresponding correct question
+        if (questionNum === 1) {
+            showScreen("question1");
+        } else if (questionNum === 2) {
+            showScreen("question2");
+        } else if (questionNum === 3) {
+            showScreen("valentine");
+        }
+        playCorrectAudio();
+    } else {
+        // If incorrect, go to the incorrect final page
+        showScreen("incorrect-path");
+        playIncorrectAudio();
+    }
+}
+
+// Function to handle the valentine question
+function goToDateSelection() {
+    showScreen("date-selection");
+    playCorrectAudio();
+}
+
+// Function to process incorrect valentine answer
+function wrongAnswerPath() {
+    showScreen("incorrect-path");
+    playIncorrectAudio();
+}
+
+// Function to restart quiz from the incorrect final page
+function restartQuiz() {
+    showScreen("welcome-screen");
+    playCorrectAudio();
+}
+
+// Function to send email with selected date and time
 function sendEmail() {
-    let dateTime = document.getElementById("date-time").value;
+    const dateTime = document.getElementById("date-time").value;
     if (!dateTime) {
         alert("Please select a date and time.");
         return;
     }
 
-    let mailtoLink = `mailto:rehmanzaine9@gmail.com?subject=Valentine's Date Selection&body=The selected date and time is: ${dateTime}`;
-    window.location.href = mailtoLink;
+    const email = "rehmanzaine9@gmail.com"; // Replace with your email
+    const subject = encodeURIComponent("Valentine's Date Confirmation");
+    const body = encodeURIComponent(`The selected date and time is: ${dateTime}`);
 
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     showScreen("thank-you");
-}
-
-function restartQuiz() {
-    incorrectAudio.pause();
-    correctAudio.play();
-    showScreen("welcome-screen");
+    playCorrectAudio();
 }
