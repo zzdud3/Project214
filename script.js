@@ -1,105 +1,135 @@
-// Variables to manage the audio
-const correctAudio = document.getElementById("correct-audio");
-const incorrectAudio = document.getElementById("incorrect-audio");
+// Track which question the user has reached in the correct and incorrect paths
+let userProgress = {
+    currentQuestion: "question1", // Start at the first question in the correct path
+    correctAnswers: [], // Store the correct answers the user has given
+    incorrectAnswers: [] // Track the incorrect answers
+};
 
-// Elements for each screen
-const welcomeScreen = document.getElementById("welcome-screen");
-const question1Screen = document.getElementById("question1");
-const question2Screen = document.getElementById("question2");
-const valentineScreen = document.getElementById("valentine");
-const dateSelectionScreen = document.getElementById("date-selection");
-const thankYouScreen = document.getElementById("thank-you");
-const questionWrong1Screen = document.getElementById("question-wrong1");
-const questionWrong2Screen = document.getElementById("question-wrong2");
-const questionWrong3Screen = document.getElementById("question-wrong3");
-const incorrectFinalScreen = document.getElementById("incorrect-final");
-
-// Start quiz function (called when "Proceed" button is clicked on the welcome screen)
+// Function to start the quiz from the welcome screen
 function startQuiz() {
-  // Hide the welcome screen and show the first question
-  showScreen('question1');
-  correctAudio.play();
-  correctAudio.loop = true;
+    showScreen('question1');
+    correctAudio.play();
+    correctAudio.loop = true;
 }
 
-// Function to handle screen visibility (show/hide elements)
+// Function to show or hide screens
 function showScreen(screenId) {
-  const allScreens = document.querySelectorAll('.screen');
-  allScreens.forEach(screen => {
-    screen.classList.add('hidden');
-  });
-  const activeScreen = document.getElementById(screenId);
-  if (activeScreen) {
-    activeScreen.classList.remove('hidden');
-  }
-}
-
-// Function to check the answer for Question 1 (Correct Path)
-function checkAnswer(question, answer) {
-  if (answer === 'correct') {
-    showScreen('question2');
-  } else {
-    showIncorrectPath();
-  }
-}
-
-// Function to check the answer for the flower question
-function checkFlowerAnswer() {
-  const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
-  if (answer === 'rose') { // Change 'rose' to the correct answer if needed
-    showScreen('valentine');
-  } else {
-    showIncorrectPath();
-  }
-}
-
-// Valentine screen navigation
-function goToDateSelection() {
-  showScreen('date-selection');
-}
-
-// Function to handle incorrect answers
-function showIncorrectPath() {
-  correctAudio.pause();
-  incorrectAudio.play();
-  showScreen('question-wrong1');
-}
-
-// Check answers for incorrect questions
-function checkWrongAnswer(question, isCorrect) {
-  if (isCorrect) {
-    switch (question) {
-      case 1:
-        showScreen('question1');
-        break;
-      case 2:
-        showScreen('question2');
-        break;
-      case 3:
-        showScreen('valentine');
-        break;
+    const allScreens = document.querySelectorAll('.screen');
+    allScreens.forEach(screen => {
+        screen.classList.add('hidden');
+    });
+    const activeScreen = document.getElementById(screenId);
+    if (activeScreen) {
+        activeScreen.classList.remove('hidden');
     }
+}
+
+// Check answers in the correct question bank
+function checkAnswer(question, answer) {
+    if (answer === 'correct') {
+        userProgress.correctAnswers.push(question); // Track the correct answer
+        if (question === "question1") {
+            showScreen('question2');
+        } else if (question === "question2") {
+            showScreen('valentine');
+        } else if (question === "valentine") {
+            showScreen('date-selection');
+        }
+    } else {
+        userProgress.incorrectAnswers.push(question); // Track the incorrect answer
+        showIncorrectPath(question);
+    }
+}
+
+// Handle incorrect answers in the correct question path
+function showIncorrectPath(question) {
+    correctAudio.pause();
+    incorrectAudio.play();
+    showScreen('question-wrong1');
+    userProgress.currentQuestion = question; // Track the current question in the incorrect path
+}
+
+// Handle incorrect questions and allow returning to correct questions on correct answers
+function checkWrongAnswer(question, isCorrect) {
+    if (isCorrect) {
+        switch (question) {
+            case "question1":
+                showScreen('question1');
+                break;
+            case "question2":
+                showScreen('question2');
+                break;
+            case "question3":
+                showScreen('valentine');
+                break;
+        }
+        userProgress.correctAnswers.push(question); // Track as correct
+        incorrectAudio.pause();
+        correctAudio.play();
+        correctAudio.loop = true;
+    } else {
+        incorrectAudio.pause();
+        incorrectAudio.play();
+        showScreen('incorrect-final');
+    }
+}
+
+// Flower answer (specific to question 2)
+function checkFlowerAnswer() {
+    const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
+    if (answer === 'tulips') { // Correct answer
+        checkAnswer('question2', 'correct'); // Return to the correct question bank
+    } else {
+        checkAnswer('question2', 'wrong'); // Incorrect answer leads to the incorrect path
+    }
+}
+
+// Handle incorrect final page and restart
+function restartQuiz() {
+    userProgress = { // Reset user progress when restarting
+        currentQuestion: "question1",
+        correctAnswers: [],
+        incorrectAnswers: []
+    };
+    showScreen('welcome-screen');
     incorrectAudio.pause();
     correctAudio.play();
     correctAudio.loop = true;
-  } else {
-    incorrectAudio.pause();
-    incorrectAudio.play();
-    showScreen('incorrect-final');
-  }
 }
 
-// Send email function (called when the user confirms date selection)
+// Final screen after successful date selection
 function sendEmail() {
-  const dateTime = document.getElementById("date-time").value;
-  // Implement email sending logic here
-  alert("Date and time confirmed: " + dateTime);
+    const dateTime = document.getElementById("date-time").value;
+    // Implement email sending logic here
+    alert("Date and time confirmed: " + dateTime);
 }
 
-// Restart quiz (called when the user clicks "Restart" on the incorrect final page)
-function restartQuiz() {
-  showScreen('welcome-screen');
-  incorrectAudio.pause();
-  correctAudio.play();
-  correctAudio.loop = true;
+// Incorrect question screens and flow
+function showIncorrectQuestion(question) {
+    if (question === "question-wrong1") {
+        showScreen('question-wrong1');
+    } else if (question === "question-wrong2") {
+        showScreen('question-wrong2');
+    } else if (question === "question-wrong3") {
+        showScreen('question-wrong3');
+    }
+}
+
+// Handle the restart button from the incorrect final page
+function restartFromIncorrect() {
+    showScreen('welcome-screen');
+    incorrectAudio.pause();
+    correctAudio.play();
+    correctAudio.loop = true;
+}
+
+// Example of how to structure the HTML question screens
+function generateQuestionScreen(questionId, questionText, answers) {
+    return `
+    <div id="${questionId}" class="screen hidden">
+        <h2>${questionText}</h2>
+        ${answers.map(answer => `
+            <button onclick="checkAnswer('${questionId}', '${answer.correct ? 'correct' : 'wrong'}')">${answer.text}</button>
+        `).join('')}
+    </div>`;
 }
