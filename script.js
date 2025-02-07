@@ -91,7 +91,7 @@ function sendEmail() {
         return;
     }
 
-    let emailAddress = "YOUR_EMAIL@example.com";  // Replace with your email
+    let emailAddress = "rehmanzaine9@gmail.com";  // Replace with your email
     let subject = "Valentine's Date Selection";
     let body = `The selected date and time is: ${dateTime}`;
 
