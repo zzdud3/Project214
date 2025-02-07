@@ -8,20 +8,28 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-    <!-- Audio Elements -->
-    <audio id="correct-audio" src="correct-path.mp3" loop></audio>
-    <audio id="incorrect-audio" src="incorrect-answer.mp3"></audio>
+    <!-- Correct Path Audio -->
+    <audio id="correct-audio" loop>
+        <source src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/correct-path.mp3" type="audio/mpeg">
+    </audio>
 
+    <!-- Incorrect Path Audio -->
+    <audio id="incorrect-audio" loop>
+        <source src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/incorrect-answer.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen active">
         <h1>Welcome!</h1>
         <button onclick="startQuiz()">Proceed</button>
     </div>
 
+    <!-- Question 1 (Correct Path) -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
         <div class="image-container">
-            <img src="left1.jpg" alt="Left Image">
-            <img src="right1.jpg" alt="Right Image">
+            <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/left-image.jpg" alt="Left Image">
+            <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/right-image.jpg" alt="Right Image">
         </div>
         <button onclick="checkAnswer(1, 'correct')">Option 1</button>
         <button onclick="checkAnswer(1, 'wrong1')">Option 2</button>
@@ -29,76 +37,59 @@
         <button onclick="checkAnswer(1, 'wrong3')">Option 4</button>
     </div>
 
+    <!-- Question 2 (Correct Path) -->
     <div id="question2" class="screen hidden">
         <h2>What flower grows between your nose and chin?</h2>
-        <div class="image-container">
-            <img src="left2.jpg" alt="Left Image">
-            <img src="right2.jpg" alt="Right Image">
-        </div>
         <input type="text" id="flower-answer" placeholder="Your answer...">
         <button onclick="checkFlowerAnswer()">Submit</button>
     </div>
 
+    <!-- Valentine Question (Correct Path) -->
     <div id="valentine" class="screen hidden">
         <h2>Will you be my Valentine?</h2>
-        <div class="image-container">
-            <img src="left3.jpg" alt="Left Image">
-            <img src="right3.jpg" alt="Right Image">
-        </div>
         <button onclick="goToDateSelection()">Yes</button>
         <button onclick="wrongAnswerPath()">No</button>
     </div>
 
+    <!-- Date Selection -->
     <div id="date-selection" class="screen hidden">
         <h2>Select a Date & Time</h2>
         <input type="datetime-local" id="date-time">
         <button onclick="sendEmail()">Confirm</button>
     </div>
 
+    <!-- Thank You Page -->
     <div id="thank-you" class="screen hidden">
         <h2>Thank You!</h2>
         <p>A heartfelt message here...</p>
     </div>
 
-    <div id="incorrect-path" class="screen hidden">
-        <h2>Thank you for being amazing, but I would like to go in a different direction.</h2>
-        <audio controls autoplay>
-            <source src="incorrect-answer.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
-    <!-- Incorrect Question Paths -->
+    <!-- Incorrect Path Questions -->
     <div id="question-wrong1" class="screen hidden">
         <h2>What was my Roman Empire?</h2>
-        <div class="image-container">
-            <img src="left4.jpg" alt="Left Image">
-            <img src="right4.jpg" alt="Right Image">
-        </div>
-        <button onclick="goToIncorrectPath()">Option 1</button>
-        <button onclick="goToIncorrectPath()">Option 2</button>
-        <button onclick="goToIncorrectPath()">Option 3</button>
+        <button onclick="checkWrongAnswer()">Option 1</button>
+        <button onclick="checkWrongAnswer()">Option 2</button>
+        <button onclick="checkWrongAnswer()">Option 3</button>
     </div>
 
     <div id="question-wrong2" class="screen hidden">
         <h2>What’s your favorite flower?</h2>
-        <div class="image-container">
-            <img src="left5.jpg" alt="Left Image">
-            <img src="right5.jpg" alt="Right Image">
-        </div>
-        <button onclick="goToIncorrectPath()">Option 1</button>
-        <button onclick="goToIncorrectPath()">Option 2</button>
-        <button onclick="goToIncorrectPath()">Option 3</button>
+        <button onclick="checkWrongAnswer()">Option 1</button>
+        <button onclick="checkWrongAnswer()">Option 2</button>
+        <button onclick="checkWrongAnswer()">Option 3</button>
     </div>
 
     <div id="question-wrong3" class="screen hidden">
         <h2>What flowers have I not gotten you yet?</h2>
-        <div class="image-container">
-            <img src="left6.jpg" alt="Left Image">
-            <img src="right6.jpg" alt="Right Image">
-        </div>
-        <button onclick="goToIncorrectPath()">Option 1</button>
-        <button onclick="goToIncorrectPath()">Option 2</button>
-        <button onclick="goToIncorrectPath()">Option 3</button>
+        <button onclick="checkWrongAnswer()">Option 1</button>
+        <button onclick="checkWrongAnswer()">Option 2</button>
+        <button onclick="checkWrongAnswer()">Option 3</button>
+    </div>
+
+    <!-- Incorrect Final Page -->
+    <div id="incorrect-final" class="screen hidden">
+        <h2>Thank you for being amazing, but I would like to go in a different direction.</h2>
+        <button onclick="restartQuiz()">Restart</button>
     </div>
 </body>
 </html>
