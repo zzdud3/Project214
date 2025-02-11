@@ -65,9 +65,10 @@ function checkAnswer(question, isCorrect) {
 
 // Handle incorrect answers and show incorrect path
 function showIncorrectPath(question) {
-    let incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
-    if (incorrectQuestionIndex !== -1) {
-        showScreen(userProgress.incorrectQuestions[incorrectQuestionIndex].question);
+    if (question === "question1") {
+        showScreen("question-wrong1");
+    } else if (question === "question2") {
+        showScreen("question-wrong2");
     }
 }
 
@@ -76,28 +77,24 @@ function checkWrongAnswer(question, isCorrect) {
     const incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
     
     if (isCorrect) {
-        // Mark this question as answered correctly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
-        
-        // Check if all incorrect questions have been answered correctly
-        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly)) {
-            // If all incorrect questions have been answered correctly, go back to the main path
-            if (question === "question-wrong1") {
-                showScreen("question1");
-            } else if (question === "question-wrong2") {
-                showScreen("question2");
-            } else if (question === "question-wrong3") {
-                showScreen("question2");
-            }
+        if (question === "question-wrong1") {
+            showScreen("question1");
+        } else if (question === "question-wrong2") {
+            showScreen("question2");
+        } else if (question === "question-wrong3") {
+            showScreen("question2");
         }
     } else {
-        // If not all incorrect questions have been answered correctly, keep prompting incorrect questions
-        if (userProgress.incorrectQuestions.some(q => !q.answeredCorrectly)) {
-            // Show the current question again until answered correctly
-            showScreen(question);
-        } else {
-            // If all questions were answered incorrectly, show the restart screen
+        userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
+        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly === false)) {
             showScreen("incorrect-final");
+        } else {
+            // Move to the next incorrect question
+            const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
+            if (nextIncorrectQuestion) {
+                showScreen(nextIncorrectQuestion.question);
+            }
         }
     }
 }
