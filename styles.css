@@ -33,17 +33,17 @@ button:hover {
 .image-container {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 10px; /* Reduced spacing */
     flex-wrap: wrap;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 /* Image Resizing & Aesthetic Styling */
 .image-container img {
-    max-width: 40%; /* Ensures images remain smaller */
+    max-width: 30%; /* Smaller image size */
     height: auto;
-    border-radius: 15px; /* Softer, rounded edges */
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow effect */
+    border-radius: 10px; /* Softer, rounded edges */
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.15); /* Subtle shadow effect */
     transition: transform 0.3s ease;
 }
 
@@ -72,10 +72,10 @@ button:hover {
 }
 
 #welcome-screen img, #thank-you img, #incorrect-final img {
-    max-width: 60%;
+    max-width: 50%; /* Reduced from 60% */
     height: auto;
     margin-top: 15px;
-    border-radius: 20px;
+    border-radius: 15px;
 }
 
 /* Input Fields */
