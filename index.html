@@ -3,85 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Proposal Quiz</title>
+    <title>Valentine's Quiz</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
     <!-- Welcome Screen -->
-    <div id="welcome-screen" class="screen show">
-        <h1>Welcome to the Valentine's Proposal Quiz!</h1>
-        <p>Are you ready for some fun?</p>
+    <div id="welcome-screen" class="screen">
+        <h1>Welcome to the Valentine's Quiz!</h1>
+        <img src="path_to_welcome_image.jpg" alt="Welcome Image">
         <button onclick="startQuiz()">Proceed</button>
-        <img src="path_to_welcome_image.jpg" alt="Welcome Image" id="welcome-image">
-    </div>
-<!-- Question 1 (Path A) -->
-<div id="question1" class="screen hidden">
-    <h2>Who are you?</h2>
-    <button onclick="checkAnswer('question1', 'Option 1')">Option 1</button>
-    <button onclick="checkAnswer('question1', 'Option 2')">Option 2</button>
-    <button onclick="checkAnswer('question1', 'Option 3')">Option 3</button>
-    <button onclick="checkAnswer('question1', 'Option 4')">Option 4</button>
-    <img src="path_to_image_1.jpg" alt="Image 1">
-</div>
-
-<!-- Question 2 (Path A) - Free-text -->
-<div id="question2" class="screen hidden">
-    <h2>What resides between your nose and chin?</h2>
-    <input type="text" id="answer" placeholder="Type your answer here">
-    <button onclick="checkAnswer('question2', document.getElementById('answer').value)">Submit</button>
-</div>
-
-<!-- Question 3 (Path A) -->
-<div id="question3" class="screen hidden">
-    <h2>What is my type?</h2>
-    <button onclick="checkAnswer('question3', 'Introverted')">Introverted</button>
-    <button onclick="checkAnswer('question3', 'Extroverted')">Extroverted</button>
-    <button onclick="checkAnswer('question3', 'Ambivert')">Ambivert</button>
-    <button onclick="checkAnswer('question3', 'Maverick')">Maverick</button>
-</div>
-
-<!-- Question 1 (Path B) -->
-<div id="question4" class="screen hidden">
-    <h2>What was my Roman Empire?</h2>
-    <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
-    <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
-    <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
-</div>
-
-<!-- Question 2 (Path B) -->
-<div id="question5" class="screen hidden">
-    <h2>What was the first set of flowers I got you?</h2>
-    <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
-    <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
-    <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
-</div>
-
-<!-- Question 3 (Path B) -->
-<div id="question6" class="screen hidden">
-    <h2>Why did the tomato turn red?</h2>
-    <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
-    <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
-    <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
-</div>
-
-<!-- Restart Page -->
-<div id="restart-screen" class="screen hidden">
-    <h2>Sorry, please try again!</h2>
-    <button onclick="startQuiz()">Restart</button>
-</div>
-
-<!-- Thank You Page -->
-<div id="thank-you" class="screen hidden">
-    <h2>Thank You for Completing the Quiz!</h2>
-    <p>Your responses have been recorded. We appreciate you!</p>
-    <p>We will be in touch soon. <3</p>
-</div>
-
-<script src="script.js"></script>
-    <!-- YouTube Player (Hidden) -->
-    <div id="youtube-container">
-        <iframe id="youtube-player" width="0" height="0" frameborder="0" allow="autoplay" src="https://www.youtube.com/embed/YOUR_PLAYLIST_ID?playlist=YOUR_PLAYLIST_ID&autoplay=1&loop=1&mute=1"></iframe>
     </div>
 
+    <!-- Path A Questions -->
+    <div id="question1" class="screen hidden">
+        <h2>Who are you?</h2>
+        <button onclick="answerQuestion('question1', 'Option 1')">Option 1</button>
+        <button onclick="answerQuestion('question1', 'Option 2')">Option 2</button>
+        <button onclick="answerQuestion('question1', 'Option 3')">Option 3</button>
+        <button onclick="answerQuestion('question1', 'Option 4')">Option 4</button>
+        <img src="path_to_image_1.jpg" alt="Image 1">
+        <img src="path_to_image_2.jpg" alt="Image 2">
+    </div>
+
+    <div id="question2" class="screen hidden">
+        <h2>What resides between your nose and chin?</h2>
+        <input type="text" id="answer2" placeholder="Type your answer here">
+        <button onclick="answerQuestion('question2', document.getElementById('answer2').value)">Submit</button>
+    </div>
+
+    <div id="question3" class="screen hidden">
+        <h2>What is my type?</h2>
+        <button onclick="answerQuestion('question3', 'Introverted')">Introverted</button>
+        <button onclick="answerQuestion('question3', 'Extroverted')">Extroverted</button>
+        <button onclick="answerQuestion('question3', 'Ambivert')">Ambivert</button>
+        <button onclick="answerQuestion('question3', 'Maverick')">Maverick</button>
+    </div>
+
+    <!-- Path B Questions -->
+    <div id="question4" class="screen hidden">
+        <h2>What was my Roman Empire?</h2>
+        <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
+        <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
+        <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
+    </div>
+
+    <div id="question5" class="screen hidden">
+        <h2>What was the first set of flowers I got you?</h2>
+        <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
+        <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
+        <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
+    </div>
+
+    <div id="question6" class="screen hidden">
+        <h2>Why did the tomato turn red?</h2>
+        <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
+        <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
+        <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
+    </div>
+
+    <!-- Valentine's Question -->
+    <div id="valentines-question" class="screen hidden">
+        <h2>Will you be my Valentine?</h2>
+        <button onclick="handleValentinesAnswer('Yes')">Yes</button>
+        <button onclick="handleValentinesAnswer('No')">No</button>
+    </div>
+
+    <!-- Date & Time Selection Page -->
+    <div id="date-time-selection" class="screen hidden">
+        <h2>Select a Date and Time</h2>
+        <input type="datetime-local" id="datetime">
+        <button onclick="showCuisinePage()">Proceed</button>
+    </div>
+
+    <!-- Final Questions -->
+    <div id="cuisine" class="screen hidden">
+        <h2>Cuisine?</h2>
+        <img src="path_to_cuisine_image.jpg" alt="Cuisine Image">
+        <button onclick="answerCuisine('Option 1')">Option 1</button>
+        <button onclick="answerCuisine('Option 2')">Option 2</button>
+        <button onclick="answerCuisine('Option 3')">Option 3</button>
+    </div>
+
+    <div id="activity" class="screen hidden">
+        <h2>Activity?</h2>
+        <img src="path_to_activity_image.jpg" alt="Activity Image">
+        <button onclick="answerActivity('Option 1')">Option 1</button>
+        <button onclick="answerActivity('Option 2')">Option 2</button>
+        <button onclick="answerActivity('Option 3')">Option 3</button>
+    </div>
+
+    <div id="when" class="screen hidden">
+        <h2>When?</h2>
+        <input type="datetime-local" id="when-time">
+        <button onclick="captureWhen()">Submit</button>
+    </div>
+
+    <!-- Restart Screen -->
+    <div id="restart-screen" class="screen hidden">
+        <h2>Sorry, please try again!</h2>
+        <button onclick="startQuiz()">Restart</button>
+    </div>
+
+    <!-- Thank You Screen -->
+    <div id="thank-you" class="screen hidden">
+        <h2>Thank You for Completing the Quiz!</h2>
+        <p>Your responses have been recorded. We appreciate you!</p>
+        <p>We will be in touch soon. <3</p>
+    </div>
+
+    <!-- Hidden YouTube Playlist -->
+    <div id="youtube-player">
+        <iframe width="0" height="0" src="https://www.youtube.com/embed/videoseries?list=YOUR_PLAYLIST_ID&autoplay=1&loop=1&controls=0&mute=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
