@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Quiz</title>
+    <title>Valentine's Day Proposal</title>
     <link rel="stylesheet" href="styles.css">
     <script defer src="script.js"></script>
 </head>
@@ -14,6 +14,8 @@
         <button onclick="startQuiz()">Proceed</button>
         <!-- Insert your image below -->
         <img src="your-image-link.jpg" alt="Welcome Image" id="welcome-image">
+        <a href="https://link-to-image1.com" target="_blank"><img src="your-image-link2.jpg" alt="Image 1" id="image1"></a>
+        <a href="https://link-to-image2.com" target="_blank"><img src="your-image-link3.jpg" alt="Image 2" id="image2"></a>
     </div>
 
     <!-- YouTube Player (Hidden) -->
@@ -30,15 +32,6 @@
         <button onclick="checkAnswer('question1', false)">Justin Bieber's wife</button>
         <!-- Insert your image below -->
         <img src="your-image-link.jpg" alt="Question 1 Image" id="question1-image">
-    </div>
-
-    <!-- Question 2 -->
-    <div id="question2" class="screen hidden">
-        <h2>What flower grows between your nose and chin?</h2>
-        <input type="text" id="flower-answer" placeholder="Your answer...">
-        <button onclick="checkFlowerAnswer()">Submit</button>
-        <!-- Insert your image below -->
-        <img src="your-image-link.jpg" alt="Question 2 Image" id="question2-image">
     </div>
 
     <!-- Valentine Question -->
@@ -78,25 +71,6 @@
         <img src="your-image-link.jpg" alt="Incorrect Question 1 Image" id="question-wrong1-image">
     </div>
 
-    <div id="question-wrong2" class="screen hidden">
-        <h2>What was the first set of flowers I got you?</h2>
-        <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
-        <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
-        <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
-        <!-- Insert your image below -->
-        <img src="your-image-link.jpg" alt="Incorrect Question 2 Image" id="question-wrong2-image">
-    </div>
-
-    <div id="question-wrong3" class="screen hidden">
-        <h2> Why did the tomato turn red?</h2>
-        <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
-        <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
-        <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
-        <!-- Insert your image below -->
-        <img src="your-image-link.jpg" alt="Incorrect Question 3 Image" id="question-wrong3-image">
-    </div>
-
-    <!-- Final Incorrect Screen -->
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, maybe you ought to try harder.</h2>
         <button onclick="restartQuiz()">Restart</button>
