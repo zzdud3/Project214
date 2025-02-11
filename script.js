@@ -1,7 +1,11 @@
 let userProgress = {
     currentQuestion: "question1",
     correctAnswers: [],
-    incorrectAnswers: []
+    incorrectAnswers: [],
+    incorrectQuestions: [
+        { question: "question-wrong1", answeredCorrectly: false },
+        { question: "question-wrong2", answeredCorrectly: false }
+    ]
 };
 
 // Static YouTube Playlist ID
@@ -69,14 +73,21 @@ function showIncorrectPath(question) {
 
 // Handle incorrect path with chance to return
 function checkWrongAnswer(question, isCorrect) {
+    const incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
+    
     if (isCorrect) {
-        if (question === "question1") {
+        userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
+        if (question === "question-wrong1") {
             showScreen("question1");
-        } else if (question === "question2") {
+        } else if (question === "question-wrong2") {
             showScreen("question2");
         }
     } else {
-        showScreen("incorrect-final");
+        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly)) {
+            showScreen("incorrect-final");
+        } else {
+            showScreen(question);  // Keep asking the same incorrect question until answered correctly
+        }
     }
 }
 
@@ -95,7 +106,11 @@ function restartQuiz() {
     userProgress = {
         currentQuestion: "question1",
         correctAnswers: [],
-        incorrectAnswers: []
+        incorrectAnswers: [],
+        incorrectQuestions: [
+            { question: "question-wrong1", answeredCorrectly: false },
+            { question: "question-wrong2", answeredCorrectly: false }
+        ]
     };
     showScreen("welcome-screen");
 }
@@ -103,11 +118,6 @@ function restartQuiz() {
 // Valentine path
 function goToDateSelection() {
     showScreen("date-selection");
-}
-
-// Incorrect answer on Valentine question sends user to the wrong path
-function wrongAnswerPath() {
-    showScreen("question-wrong1"); // Send user to the first incorrect path
 }
 
 // Send email function
