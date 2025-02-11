@@ -26,14 +26,6 @@
         <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
         <button onclick="checkAnswer('question1', false)">MuscleMami</button>
         <button onclick="checkAnswer('question1', false)">Justi Bieber's wife</button>
-
-        <!-- Clickable Images (Open in new tab) -->
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image1.jpg" alt="Image 1" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image2.jpg" alt="Image 2" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
     </div>
 
     <!-- Question 2 -->
@@ -41,14 +33,6 @@
         <h2>What flower grows between your nose and chin?</h2>
         <input type="text" id="flower-answer" placeholder="Your answer...">
         <button onclick="checkFlowerAnswer()">Submit</button>
-
-        <!-- Clickable Images (Open in new tab) -->
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image3.jpg" alt="Flower Image 1" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image4.jpg" alt="Flower Image 2" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
     </div>
 
     <!-- Valentine Question -->
@@ -68,42 +52,21 @@
     <!-- Incorrect Questions -->
     <div id="question-wrong1" class="screen hidden">
         <h2>What was my Roman Empire?</h2>
-        <button onclick="checkWrongAnswer('question1', true)">Finding out you breathe the same air as other men.</button>
         <button onclick="checkWrongAnswer('question1', false)">RG3's downfall</button>
+        <button onclick="checkWrongAnswer('question1', true)">Finding out you breathe the same air as other men.</button>
         <button onclick="checkWrongAnswer('question1', false)">Getting old.</button>
-
-        <!-- Clickable Images (Open in new tab) -->
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image5.jpg" alt="Image 1" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image6.jpg" alt="Image 2" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
     </div>
 
     <div id="question-wrong2" class="screen hidden">
         <h2>What was the first flower I got you?</h2>
-        <button onclick="checkWrongAnswer('question2', true)">Carnations</button>
         <button onclick="checkWrongAnswer('question2', false)">Lilies</button>
         <button onclick="checkWrongAnswer('question2', false)">Tulips</button>
-
-        <!-- Clickable Images (Open in new tab) -->
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image7.jpg" alt="Flower 1" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
-        <a href="YOUR_LINK_HERE" target="_blank">
-            <img src="https://yourimagehost.com/image8.jpg" alt="Flower 2" style="width: 200px; height: auto; cursor: pointer;">
-        </a>
+        <button onclick="checkWrongAnswer('question2', true)">Carnations</button>
     </div>
 
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, wrong path. Try again!</h2>
         <button onclick="restartQuiz()">Restart</button>
-    </div>
-
-    <!-- Thank You Screen -->
-    <div id="thank-you" class="screen hidden">
-        <h2>Thank you for participating!</h2>
     </div>
 </body>
 </html>
