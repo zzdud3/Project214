@@ -109,6 +109,11 @@ function checkFlowerAnswer() {
     }
 }
 
+// Valentine path navigation
+function goToDateSelection() {
+    showScreen("date-selection");
+}
+
 // Restart the quiz
 function restartQuiz() {
     userProgress = {
