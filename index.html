@@ -9,18 +9,20 @@
 </head>
 <body>
     <!-- Hidden YouTube Background Music -->
-    <iframe width="0" height="0" src="https://www.youtube.com/embed/videoseries?si=CoWnY5fbLySxr51i&amp;list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <iframe id="bg-music" width="0" height="0" src="https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0" frameborder="0" allow="autoplay"></iframe>
     
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
         <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
+        <img src="welcome-placeholder.jpg" alt="Welcome Image">
         <button onclick="startQuiz()">Proceed</button>
-        <img src="welcome-image.jpg" alt="Welcome Image">
     </div>
     
     <!-- Path A Questions -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
+        <img src="question1-placeholder1.jpg" alt="Question Image 1">
+        <img src="question1-placeholder2.jpg" alt="Question Image 2">
         <button onclick="checkAnswer('question1', true)">Arianna OTJ</button>
         <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
         <button onclick="checkAnswer('question1', false)">MuscleMami</button>
@@ -29,12 +31,16 @@
 
     <div id="question2" class="screen hidden">
         <h2>What resides between your nose and chin?</h2>
+        <img src="question2-placeholder1.jpg" alt="Question Image 1">
+        <img src="question2-placeholder2.jpg" alt="Question Image 2">
         <input type="text" id="answer2">
         <button onclick="checkFreeResponse('answer2')">Submit</button>
     </div>
 
     <div id="question3" class="screen hidden">
         <h2>What is my type?</h2>
+        <img src="question3-placeholder1.jpg" alt="Question Image 1">
+        <img src="question3-placeholder2.jpg" alt="Question Image 2">
         <button onclick="checkAnswer('question3', true)">[Correct Answer]</button>
         <button onclick="checkAnswer('question3', false)">Option 1</button>
         <button onclick="checkAnswer('question3', false)">Option 2</button>
@@ -80,7 +86,7 @@
     <!-- Cuisine Selection -->
     <div id="cuisine" class="screen hidden">
         <h2>Cuisine?</h2>
-        <img src="cuisine-image.jpg" alt="Cuisine Image">
+        <img src="cuisine-placeholder1.jpg" alt="Cuisine Image">
         <button onclick="selectCuisine('Option 1')">Option 1</button>
         <button onclick="selectCuisine('Option 2')">Option 2</button>
         <button onclick="selectCuisine('Option 3')">Option 3</button>
@@ -89,23 +95,15 @@
     <!-- Activity Selection -->
     <div id="activity" class="screen hidden">
         <h2>Activity?</h2>
-        <img src="activity-image.jpg" alt="Activity Image">
+        <img src="activity-placeholder1.jpg" alt="Activity Image">
         <button onclick="selectActivity('Option 1')">Option 1</button>
         <button onclick="selectActivity('Option 2')">Option 2</button>
         <button onclick="selectActivity('Option 3')">Option 3</button>
     </div>
     
-    <!-- Final Date Confirmation -->
-    <div id="final-date" class="screen hidden">
-        <h2>When?</h2>
-        <input type="datetime-local" id="final-date-time">
-        <button onclick="sendEmail()">Confirm</button>
-    </div>
-    
     <!-- Thank You Page -->
     <div id="thank-you" class="screen hidden">
         <h2>Thank You for Completing the Quiz!</h2>
-        <button onclick="proceedToFinalDate()">Proceed</button>
     </div>
     
     <!-- Restart Page -->
