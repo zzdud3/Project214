@@ -7,6 +7,7 @@ function loadYouTubePlayer() {
 
 // Start the quiz
 function startQuiz() {
+    console.log("Starting quiz...");
     // Hide the welcome screen and show the first question
     document.getElementById('welcome-screen').classList.add('hidden');
     document.getElementById('question1').classList.remove('hidden');
@@ -15,6 +16,7 @@ function startQuiz() {
 
 // Check answer for correct path
 function checkAnswer(questionId, isCorrect) {
+    console.log(`Answer for ${questionId}: ${isCorrect ? 'Correct' : 'Incorrect'}`);
     if (isCorrect) {
         proceedToNextScreen(questionId);
     } else {
@@ -24,6 +26,7 @@ function checkAnswer(questionId, isCorrect) {
 
 // Proceed to the next screen in the correct path
 function proceedToNextScreen(questionId) {
+    console.log(`Proceeding from ${questionId}`);
     if (questionId === 'question1') {
         // Hide question 1 and show Valentine question
         document.getElementById('question1').classList.add('hidden');
@@ -33,6 +36,7 @@ function proceedToNextScreen(questionId) {
 
 // Show the incorrect question path
 function showIncorrectQuestion(questionId) {
+    console.log(`Showing incorrect path from ${questionId}`);
     if (questionId === 'question1') {
         // Hide question 1 and show first incorrect question
         document.getElementById('question1').classList.add('hidden');
@@ -42,6 +46,7 @@ function showIncorrectQuestion(questionId) {
 
 // Check answer for incorrect questions
 function checkWrongAnswer(questionId, isCorrect) {
+    console.log(`Answer for ${questionId} (wrong path): ${isCorrect ? 'Correct' : 'Incorrect'}`);
     if (isCorrect) {
         proceedToNextScreenFromWrongPath(questionId);
     } else {
@@ -52,6 +57,7 @@ function checkWrongAnswer(questionId, isCorrect) {
 
 // Proceed to the next screen after answering wrong questions
 function proceedToNextScreenFromWrongPath(questionId) {
+    console.log(`Proceeding from ${questionId} in incorrect path`);
     if (questionId === 'question-wrong1') {
         // Hide first incorrect question and show second incorrect question
         document.getElementById('question-wrong1').classList.add('hidden');
@@ -68,6 +74,7 @@ function proceedToNextScreenFromWrongPath(questionId) {
 
 // Show the final incorrect screen
 function showFinalIncorrectScreen() {
+    console.log("Showing final incorrect screen...");
     document.getElementById('question-wrong1').classList.add('hidden');
     document.getElementById('question-wrong2').classList.add('hidden');
     document.getElementById('question-wrong3').classList.add('hidden');
@@ -76,6 +83,7 @@ function showFinalIncorrectScreen() {
 
 // Go to the date selection after "Will you be my Valentine?"
 function goToDateSelection() {
+    console.log("Moving to date selection...");
     document.getElementById('valentine').classList.add('hidden');
     document.getElementById('date-selection').classList.remove('hidden');
 }
@@ -98,6 +106,7 @@ function sendEmail() {
 
 // Restart the quiz
 function restartQuiz() {
+    console.log("Restarting quiz...");
     document.getElementById('incorrect-final').classList.add('hidden');
     document.getElementById('thank-you').classList.add('hidden');
     document.getElementById('welcome-screen').classList.remove('hidden');
