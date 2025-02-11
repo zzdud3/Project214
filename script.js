@@ -1,11 +1,20 @@
 function loadBackgroundMusic() {
     const musicContainer = document.getElementById("bg-music-container");
-    musicContainer.innerHTML = `
-        <iframe width="0" height="0"
-            src="https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ"
-            frameborder="0" allow="autoplay; encrypted-media">
-        </iframe>
-    `;
+    
+    // Remove existing iframe if it exists (prevents duplicates)
+    musicContainer.innerHTML = ""; 
+
+    // Create a new iframe dynamically to ensure autoplay works
+    const iframe = document.createElement("iframe");
+    iframe.width = "0";
+    iframe.height = "0";
+    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
+    iframe.frameBorder = "0";
+    iframe.allow = "autoplay; encrypted-media";
+
+    // Append the new iframe to the container
+    musicContainer.appendChild(iframe);
+
     console.log("Background music started.");
 }
 
