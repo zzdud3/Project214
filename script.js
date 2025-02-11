@@ -1,58 +1,118 @@
 document.addEventListener("DOMContentLoaded", function () {
-    showScreen("welcome-screen"); // Ensure welcome screen is visible on load
+  console.log("DOM fully loaded. Showing welcome screen...");
+  showScreen("welcome-screen");
+  playBackgroundMusic();
 });
 
-function startQuiz() {
-    showScreen("question1");
+function playBackgroundMusic() {
+  const bgMusic = document.getElementById("bg-music");
+  if (bgMusic) {
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?si=CoWnY5fbLySxr51i&amp;list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1";
+  } else {
+    console.error("Background music element not found");
+  }
 }
 
-function checkAnswer(question, isCorrect) {
-    if (isCorrect) {
-        if (question === "question1") showScreen("question2");
-        else if (question === "question2") showScreen("question3");
-        else if (question === "question3") showScreen("valentine");
-    } else {
-        if (question === "question1") showScreen("question-wrong1");
-        else showScreen("question-wrong2");
-    }
+let pathACurrent = "question1";
+const pathAOrder = ["question1", "question2", "question3"];
+const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
+let pathBUsed = [false, false, false];
+let userSelections = { dateTime: "", cuisine: "", activity: "" };
+
+function checkAnswer(currentQuestionId, isCorrect) {
+  console.log(`checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect}`);
+  if (isCorrect) {
+    advancePathA(currentQuestionId);
+  } else {
+    goToNextPathB();
+  }
 }
 
 function checkFreeResponse(inputId) {
-    let answer = document.getElementById(inputId).value.toLowerCase();
-    if (answer.includes("tulips")) {
-        showScreen("question3");
-    } else {
-        showScreen("question-wrong1");
-    }
+  const userInput = document.getElementById(inputId).value.trim().toLowerCase();
+  console.log("checkFreeResponse() - user typed:", userInput);
+  if (userInput.includes("tulips")) {
+    advancePathA("question2");
+  } else {
+    goToNextPathB();
+  }
 }
 
-function checkWrongAnswer(question, isCorrect) {
-    if (isCorrect) {
-        if (question === "question-wrong1") showScreen("question2");
-        else if (question === "question-wrong2") showScreen("question3");
-        else if (question === "question-wrong3") showScreen("question3");
-    } else {
-        if (question === "question-wrong1") showScreen("question-wrong2");
-        else if (question === "question-wrong2") showScreen("question-wrong3");
-        else showScreen("incorrect-final");
-    }
+function advancePathA(currentQuestionId) {
+  const currentIndex = pathAOrder.indexOf(currentQuestionId);
+  if (currentIndex < pathAOrder.length - 1) {
+    pathACurrent = pathAOrder[currentIndex + 1];
+    showScreen(pathACurrent);
+  } else {
+    pathACurrent = "valentine";
+    showScreen("valentine");
+  }
+}
+
+function goToNextPathB() {
+  const nextIndex = pathBUsed.findIndex(used => used === false);
+  if (nextIndex === -1) {
+    showScreen("incorrect-final");
+  } else {
+    pathBUsed[nextIndex] = true;
+    showScreen(pathBQuestions[nextIndex]);
+  }
+}
+
+function checkWrongAnswer(pathBQuestionId, isCorrect) {
+  console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
+  if (isCorrect) {
+    showScreen(pathACurrent);
+  } else {
+    goToNextPathB();
+  }
+}
+
+function startQuiz() {
+  showScreen("question1");
 }
 
 function goToDateSelection() {
-    showScreen("date-selection");
+  showScreen("date-selection");
+}
+
+function proceedToPreferences() {
+  userSelections.dateTime = document.getElementById("date-time").value;
+  showScreen("cuisine");
+}
+
+function selectCuisine(choice) {
+  userSelections.cuisine = choice;
+  showScreen("activity");
+}
+
+function selectActivity(choice) {
+  userSelections.activity = choice;
+  sendEmail();
 }
 
 function sendEmail() {
-    showScreen("thank-you");
+  userSelections.dateTime = document.getElementById("final-date-time").value;
+  console.log("Sending Email:", userSelections);
+  showScreen("thank-you");
 }
 
 function restartQuiz() {
-    showScreen("welcome-screen");
+  pathACurrent = "question1";
+  pathBUsed = [false, false, false];
+  userSelections = { dateTime: "", cuisine: "", activity: "" };
+  showScreen("welcome-screen");
 }
 
 function showScreen(screenId) {
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.add("hidden");
-    });
-    document.getElementById(screenId).classList.remove("hidden");
+  console.log(`showScreen(${screenId})`);
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.add("hidden");
+  });
+  const targetScreen = document.getElementById(screenId);
+  if (targetScreen) {
+    targetScreen.classList.remove("hidden");
+  } else {
+    console.error("Screen not found:", screenId);
+  }
 }
