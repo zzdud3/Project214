@@ -1,15 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Small delay to ensure DOM is ready
     setTimeout(() => {
-        showScreen("welcome-screen"); // Ensure welcome screen is visible on load
-        playBackgroundMusic(); // Start playing background music immediately
-    }, 100); // Small delay to ensure DOM is fully loaded
+        showScreen("welcome-screen"); 
+        playBackgroundMusic(); 
+    }, 100);
 });
 
+// Store user selections
 let userSelections = {
     dateTime: "",
     cuisine: "",
     activity: ""
 };
+
+// Path B tracking
+let incorrectPathBCounter = 0;
+const maxPathBQuestions = 3; // how many Path B questions exist?
 
 function startQuiz() {
     showScreen("question1");
@@ -17,11 +23,16 @@ function startQuiz() {
 
 function checkAnswer(question, isCorrect) {
     if (isCorrect) {
-        if (question === "question1") showScreen("question2");
-        else if (question === "question2") showScreen("question3");
-        else if (question === "question3") showScreen("valentine");
+        if (question === "question1") {
+            showScreen("question2");
+        } else if (question === "question2") {
+            showScreen("question3");
+        } else if (question === "question3") {
+            showScreen("valentine");
+        }
     } else {
-        showScreen("question-wrong1"); // Incorrect answers always lead to Path B
+        // Any incorrect answer from Path A sends user to question-wrong1
+        showScreen("question-wrong1");
     }
 }
 
@@ -34,60 +45,73 @@ function checkFreeResponse(inputId) {
     }
 }
 
-let incorrectPathBCounter = 0; // Tracks incorrect Path B answers
-const maxPathBQuestions = 3; // Maximum incorrect path B questions before restart
-
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
-        if (question === "question-wrong1") showScreen("question2");
-        else if (question === "question-wrong2") showScreen("question3");
-        else if (question === "question-wrong3") showScreen("question3");
+        // Correct B answer returns user to correct step in Path A
+        if (question === "question-wrong1") {
+            showScreen("question2");
+        } else if (question === "question-wrong2") {
+            showScreen("question3");
+        } else if (question === "question-wrong3") {
+            showScreen("question3");
+        }
     } else {
         incorrectPathBCounter++;
-        
         if (incorrectPathBCounter >= maxPathBQuestions) {
-            showScreen("incorrect-final"); // Restart after all Path B questions are answered incorrectly
-            incorrectPathBCounter = 0; // Reset counter
+            // If user fails all B questions, go to final restart
+            showScreen("incorrect-final");
+            incorrectPathBCounter = 0;
         } else {
-            if (question === "question-wrong1") showScreen("question-wrong2");
-            else if (question === "question-wrong2") showScreen("question-wrong3");
+            // Move to next Path B question
+            if (question === "question-wrong1") {
+                showScreen("question-wrong2");
+            } else if (question === "question-wrong2") {
+                showScreen("question-wrong3");
+            }
         }
     }
 }
 
+// Transition to date selection after Valentine question
 function goToDateSelection() {
     showScreen("date-selection");
 }
 
+// Save the date-time from the first date input, proceed to next preferences
 function proceedToPreferences() {
     userSelections.dateTime = document.getElementById("date-time").value;
     showScreen("cuisine");
 }
 
+// Save cuisine choice, go to activity
 function selectCuisine(choice) {
     userSelections.cuisine = choice;
     showScreen("activity");
 }
 
+// Save activity choice, go to final date confirmation
 function selectActivity(choice) {
     userSelections.activity = choice;
     showScreen("final-date");
 }
 
+// On final confirm, re-capture date/time & log
 function sendEmail() {
     userSelections.dateTime = document.getElementById("final-date-time").value;
     let emailContent = `Date and Time: ${userSelections.dateTime}\nCuisine: ${userSelections.cuisine}\nActivity: ${userSelections.activity}`;
-    console.log("Sending Email with content:", emailContent);
+    console.log("Sending Email with content:\n", emailContent);
     showScreen("thank-you");
 }
 
+// From thank-you page, user can pick final date
 function proceedToFinalDate() {
     showScreen("final-date");
 }
 
+// Restart entire quiz
 function restartQuiz() {
-    incorrectPathBCounter = 0; // Reset Path B tracking on restart
-    userSelections = { dateTime: "", cuisine: "", activity: "" }; // Reset stored selections
+    incorrectPathBCounter = 0;
+    userSelections = { dateTime: "", cuisine: "", activity: "" };
     showScreen("welcome-screen");
 }
 
@@ -103,6 +127,7 @@ function showScreen(screenId) {
     }
 }
 
+// Play background music from the hidden iframe
 function playBackgroundMusic() {
     let bgMusic = document.getElementById("bg-music");
     if (bgMusic) {
