@@ -1,15 +1,5 @@
-// User Progress
-let userProgress = {
-    currentQuestion: "question1",
-    correctAnswers: [],
-    incorrectAnswers: []
-};
-
-// YouTube Playlist Variables
-let player;
-const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID"; // Replace with actual playlist ID
-const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID"; // Replace with actual playlist ID
-let currentPlaylist = correctPlaylistId;
+// Static YouTube Playlist ID
+const youtubePlaylistId = "YOUR_PLAYLIST_ID"; // Replace with your static YouTube playlist ID
 
 // Load YouTube API
 function loadYouTubeAPI() {
@@ -26,7 +16,7 @@ function onYouTubeIframeAPIReady() {
         width: "0",
         playerVars: {
             listType: "playlist",
-            list: currentPlaylist,
+            list: youtubePlaylistId,
             autoplay: 1,
             loop: 1
         },
@@ -34,19 +24,6 @@ function onYouTubeIframeAPIReady() {
             onReady: (event) => event.target.playVideo()
         }
     });
-}
-
-// Switch YouTube Playlist
-function switchPlaylist(playlistId) {
-    if (player) {
-        player.loadPlaylist({
-            list: playlistId,
-            listType: "playlist",
-            autoplay: 1
-        });
-    } else {
-        currentPlaylist = playlistId;
-    }
 }
 
 // Show a screen and hide others
@@ -60,7 +37,6 @@ function showScreen(screenId) {
 // Start the quiz
 function startQuiz() {
     showScreen("question1");
-    switchPlaylist(correctPlaylistId);
 }
 
 // Check answers for correct path
@@ -78,7 +54,6 @@ function checkAnswer(question, isCorrect) {
 
 // Handle incorrect answers and show incorrect path
 function showIncorrectPath(question) {
-    switchPlaylist(incorrectPlaylistId);
     if (question === "question1") {
         showScreen("question-wrong1");
     } else if (question === "question2") {
@@ -94,7 +69,6 @@ function checkWrongAnswer(question, isCorrect) {
         } else if (question === "question2") {
             showScreen("question2");
         }
-        switchPlaylist(correctPlaylistId);
     } else {
         showScreen("incorrect-final");
     }
@@ -112,13 +86,7 @@ function checkFlowerAnswer() {
 
 // Restart the quiz
 function restartQuiz() {
-    userProgress = {
-        currentQuestion: "question1",
-        correctAnswers: [],
-        incorrectAnswers: []
-    };
     showScreen("welcome-screen");
-    switchPlaylist(correctPlaylistId);
 }
 
 // Valentine path
