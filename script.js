@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
-    showScreen("welcome-screen"); // Ensure welcome screen is visible on load
-    playBackgroundMusic(); // Start playing background music immediately
+    setTimeout(() => {
+        showScreen("welcome-screen"); // Ensure welcome screen is visible on load
+        playBackgroundMusic(); // Start playing background music immediately
+    }, 100); // Small delay to ensure DOM is fully loaded
 });
 
 let userSelections = {
@@ -93,10 +95,19 @@ function showScreen(screenId) {
     document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.add("hidden");
     });
-    document.getElementById(screenId).classList.remove("hidden");
+    let targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.remove("hidden");
+    } else {
+        console.error("Screen not found:", screenId);
+    }
 }
 
 function playBackgroundMusic() {
     let bgMusic = document.getElementById("bg-music");
-    bgMusic.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0";
+    if (bgMusic) {
+        bgMusic.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0";
+    } else {
+        console.error("Background music element not found");
+    }
 }
