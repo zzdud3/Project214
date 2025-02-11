@@ -209,7 +209,7 @@ function showScreen(screenId) {
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0";
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?si=CoWnY5fbLySxr51i&amp;list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0";
   } else {
     console.error("Background music element not found");
   }
