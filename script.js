@@ -1,64 +1,64 @@
-let currentPath = 'A'; // Start path A
-let currentQuestion = 1; // Start with question 1
+let currentPath = 'A'; // Track which path (A or B) we are on
 
 function startQuiz() {
-    // Hide welcome screen and show the first question
     document.getElementById('welcome-screen').classList.add('hidden');
     document.getElementById('question1').classList.remove('hidden');
 }
 
 function checkAnswer(questionId, isCorrect) {
     if (isCorrect) {
-        // Correct answer logic, proceed to next question based on path
-        if (currentQuestion === 1) {
-            document.getElementById('question1').classList.add('hidden');
-            document.getElementById('question2').classList.remove('hidden');
-            currentQuestion++;
-        } else if (currentQuestion === 2) {
-            document.getElementById('question2').classList.add('hidden');
-            document.getElementById('question3').classList.remove('hidden');
-            currentQuestion++;
-        } else if (currentQuestion === 3) {
-            document.getElementById('question3').classList.add('hidden');
-            document.getElementById('valentine').classList.remove('hidden');
-        }
+        proceedCorrectAnswer(questionId);
     } else {
-        // If the answer is incorrect, start path B logic
-        if (currentPath === 'A' && currentQuestion === 1) {
-            // Start path B for the first question
-            document.getElementById('question1').classList.add('hidden');
-            document.getElementById('question-wrong1').classList.remove('hidden');
-            currentPath = 'B';
-        } else {
-            // Handle the logic for incorrect answers in Path B
-            handlePathB();
-        }
+        proceedIncorrectAnswer(questionId);
     }
 }
 
-function handlePathB() {
-    if (currentPath === 'B' && currentQuestion === 1) {
-        document.getElementById('question-wrong1').classList.add('hidden');
-        document.getElementById('question-wrong2').classList.remove('hidden');
-        currentQuestion++;
-    } else if (currentPath === 'B' && currentQuestion === 2) {
-        document.getElementById('question-wrong2').classList.add('hidden');
-        document.getElementById('question-wrong3').classList.remove('hidden');
-        currentQuestion++;
-    } else if (currentPath === 'B' && currentQuestion === 3) {
-        document.getElementById('question-wrong3').classList.add('hidden');
-        document.getElementById('incorrect-final').classList.remove('hidden');
-        currentQuestion++;
+function proceedCorrectAnswer(questionId) {
+    if (questionId === 'question1') {
+        // Correct answer for question 1 (Path A)
+        document.getElementById('question1').classList.add('hidden');
+        document.getElementById('question2').classList.remove('hidden');
+    } else if (questionId === 'question2') {
+        // Correct answer for question 2 (Path A)
+        document.getElementById('question2').classList.add('hidden');
+        document.getElementById('question3').classList.remove('hidden');
+    } else if (questionId === 'question3') {
+        // Correct answer for question 3 (Path A)
+        document.getElementById('question3').classList.add('hidden');
+        document.getElementById('valentine').classList.remove('hidden');
+    } else if (questionId === 'question-b1') {
+        // Path B first question correct, go to second question in Path A
+        document.getElementById('question-b1').classList.add('hidden');
+        document.getElementById('question2').classList.remove('hidden');
+    } else if (questionId === 'question-b2') {
+        // Path B second question correct, go to second question in Path A
+        document.getElementById('question-b2').classList.add('hidden');
+        document.getElementById('question2').classList.remove('hidden');
+    } else if (questionId === 'question-b3') {
+        // Path B third question correct, go to third question in Path A
+        document.getElementById('question-b3').classList.add('hidden');
+        document.getElementById('question3').classList.remove('hidden');
     }
 }
 
-function restartQuiz() {
-    // Reset everything to the starting point
-    document.getElementById('thank-you').classList.add('hidden');
-    document.getElementById('incorrect-final').classList.add('hidden');
-    document.getElementById('welcome-screen').classList.remove('hidden');
-    currentQuestion = 1;
-    currentPath = 'A'; // Reset to Path A
+function proceedIncorrectAnswer(questionId) {
+    if (questionId === 'question1') {
+        // Incorrect answer for question 1 (Path A), go to Path B first question
+        document.getElementById('question1').classList.add('hidden');
+        document.getElementById('question-b1').classList.remove('hidden');
+    } else if (questionId === 'question-b1') {
+        // Path B first question incorrect, go to Path B second question
+        document.getElementById('question-b1').classList.add('hidden');
+        document.getElementById('question-b2').classList.remove('hidden');
+    } else if (questionId === 'question-b2') {
+        // Path B second question incorrect, go to Path B third question
+        document.getElementById('question-b2').classList.add('hidden');
+        document.getElementById('question-b3').classList.remove('hidden');
+    } else if (questionId === 'question-b3') {
+        // Path B third question incorrect, restart the quiz
+        document.getElementById('question-b3').classList.add('hidden');
+        document.getElementById('restart').classList.remove('hidden');
+    }
 }
 
 function goToDateSelection() {
@@ -67,9 +67,13 @@ function goToDateSelection() {
 }
 
 function sendEmail() {
-    const dateTime = document.getElementById('date-time').value;
-    alert('Date and time selected: ' + dateTime);
-    // Here, you can trigger an email functionality or integration with a backend
+    alert('Email sent!'); // Simulate email sending
     document.getElementById('date-selection').classList.add('hidden');
     document.getElementById('thank-you').classList.remove('hidden');
+}
+
+function restartQuiz() {
+    document.getElementById('restart').classList.add('hidden');
+    document.getElementById('thank-you').classList.add('hidden');
+    document.getElementById('welcome-screen').classList.remove('hidden');
 }
