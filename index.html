@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Day Proposal</title>
+    <title>Valentine's Proposal Quiz</title>
     <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
 </head>
 <body>
-    <!-- Welcome Screen -->
-    <div id="welcome-screen" class="screen">
-        <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
+    <div id="welcome-screen" class="screen show">
+        <h1>Welcome to the Valentine's Proposal Quiz!</h1>
+        <p>Are you ready for some fun?</p>
         <button onclick="startQuiz()">Proceed</button>
-        <img src="your-image-link.jpg" alt="Welcome Image" id="welcome-image">
+        <img src="path_to_welcome_image.jpg" alt="Welcome Image" id="welcome-image">
     </div>
 
-    <!-- Question 1 (Path A) -->
-    <div id="question1" class="screen hidden">
+    <div id="question1" class="screen">
         <h2>Who are you?</h2>
-        <button onclick="checkAnswer('question1', 'Arianna OTJ')">Arianna OTJ</button>
-        <button onclick="checkAnswer('question1', 'Mini Minaj')">Mini Minaj</button>
-        <button onclick="checkAnswer('question1', 'MuscleMami')">MuscleMami</button>
-        <button onclick="checkAnswer('question1', 'Justin Bieber\'s wife')">Justin Bieber's wife</button>
+        <button onclick="answerQuestion(1, 'Option 1')">Option 1</button>
+        <button onclick="answerQuestion(1, 'Option 2')">Option 2</button>
+        <button onclick="answerQuestion(1, 'Option 3')">Option 3</button>
+        <button onclick="answerQuestion(1, 'Option 4')">Option 4</button>
+        <img src="path_to_image_1.jpg" alt="Image 1">
+        <img src="path_to_image_2.jpg" alt="Image 2">
     </div>
 
     <!-- Question 2 (Path A) -->
