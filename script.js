@@ -77,9 +77,10 @@ function checkWrongAnswer(question, isCorrect) {
     const incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
 
     if (isCorrect) {
+        // Mark this incorrect question as answered correctly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
 
-        // Move to the next question in the correct path
+        // Move to the next correct question in the correct path
         if (question === "question-wrong1") {
             showScreen("question1");
         } else if (question === "question-wrong2") {
@@ -88,12 +89,14 @@ function checkWrongAnswer(question, isCorrect) {
             showScreen("question2");
         }
     } else {
+        // Mark this incorrect question as answered incorrectly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
 
         // Proceed through the incorrect questions until all are incorrect
         const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
 
         if (nextIncorrectQuestion) {
+            // Show the next unanswered incorrect question
             showScreen(nextIncorrectQuestion.question);
         } else {
             // If all incorrect questions are exhausted, show the restart screen
