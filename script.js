@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    showScreen("welcome-screen");
+    showScreen("welcome-screen"); // Ensure welcome screen is visible on load
 });
 
 function startQuiz() {
@@ -17,7 +17,7 @@ function checkAnswer(question, isCorrect) {
     }
 }
 
-function checkFreeResponse(inputId, question) {
+function checkFreeResponse(inputId) {
     let answer = document.getElementById(inputId).value.toLowerCase();
     if (answer.includes("tulips")) {
         showScreen("question3");
