@@ -109,6 +109,17 @@ function checkFlowerAnswer() {
     }
 }
 
+// Submit Date and Time
+function sendEmail() {
+    const dateTime = document.getElementById("date-time").value;
+    if (dateTime) {
+        alert("Date and time confirmed: " + dateTime);  // Optionally handle email sending
+        showScreen("thank-you");  // Show the thank you screen after confirmation
+    } else {
+        alert("Please select a date and time.");
+    }
+}
+
 // Restart the quiz
 function restartQuiz() {
     userProgress = {
@@ -118,12 +129,6 @@ function restartQuiz() {
     };
     showScreen("welcome-screen");
     switchPlaylist(correctPlaylistId);
-}
-
-// Send email function for Date confirmation
-function sendEmail() {
-    const dateTime = document.getElementById("date-time").value;
-    alert("Date and time confirmed: " + dateTime);
 }
 
 // Load YouTube API for video/audio functionality
