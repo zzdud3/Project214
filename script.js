@@ -1,38 +1,24 @@
 document.addEventListener("DOMContentLoaded", function () { 
   console.log("DOM fully loaded. Showing welcome screen...");
   showScreen("welcome-screen");
-
-  // Load background music (muted initially)
-  initializeBackgroundMusic();
-});
-
-function initializeBackgroundMusic() {
-  const bgMusic = document.getElementById("bg-music");
-  if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&mute=1"; 
-    console.log("Background music initialized (muted).");
-  } else {
-    console.error("Background music element not found.");
-  }
-}
-
-// Function to unmute music after user interaction
+  
 function unmuteBackgroundMusic() {
-  const bgMusic = document.getElementById("bg-music");
-  if (bgMusic) {
-    let src = bgMusic.src;
-    if (!src.includes("mute=0")) {
-      bgMusic.src = src.replace("mute=1", "mute=0"); 
-      console.log("Background music unmuted.");
+    const bgMusic = document.getElementById("bg-music");
+    
+    if (bgMusic) {
+        // Reload iframe with mute=0 after user interaction
+        bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&mute=0&playlist=CBx6e9cZlBQ";
+        console.log("Background music unmuted.");
+    } else {
+        console.error("Background music iframe not found.");
     }
-  }
 }
 
-// Modified startQuiz to unmute music when proceeding
+// Modify startQuiz() to unmute music when "Proceed" is clicked
 function startQuiz() {
-  console.log("Starting quiz, moving to first question.");
-  unmuteBackgroundMusic(); // Unmute music on user interaction
-  showScreen("question1");
+    console.log("Starting quiz, moving to first question.");
+    unmuteBackgroundMusic(); // Unmute music after user interaction
+    showScreen("question1");
 }
 
 
