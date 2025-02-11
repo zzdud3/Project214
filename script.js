@@ -1,22 +1,21 @@
-
-function unmuteBackgroundMusic() {
-    const bgMusic = document.getElementById("bg-music");
-    if (bgMusic) {
-        let src = bgMusic.src;
-        if (src.includes("mute=1")) {
-            // Unmute and start playing audio when Proceed button is clicked
-            bgMusic.src = src.replace("mute=1", "mute=0"); // Unmute the music
-            console.log("Background music unmuted and started playing.");
-        }
-    }
+function loadBackgroundMusic() {
+    const musicContainer = document.getElementById("bg-music-container");
+    musicContainer.innerHTML = `
+        <iframe width="0" height="0"
+            src="https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ"
+            frameborder="0" allow="autoplay; encrypted-media">
+        </iframe>
+    `;
+    console.log("Background music started.");
 }
 
-// Triggered when the user clicks the Proceed button to start the quiz
+// Triggered when the user clicks "Proceed"
 function startQuiz() {
     console.log("Starting quiz, moving to first question.");
-    unmuteBackgroundMusic(); // Unmute and start the music when user clicks Proceed
+    loadBackgroundMusic(); // Load and play background music dynamically
     showScreen("question1");
 }
+
 
 
 let pathACurrent = "question1";
