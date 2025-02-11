@@ -118,11 +118,12 @@ function restartQuiz() {
 function showScreen(screenId) {
   console.log(`showScreen(${screenId})`);
   document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.add("hidden");
+    screen.style.display = "none"; // Hide all screens
   });
+  
   const targetScreen = document.getElementById(screenId);
   if (targetScreen) {
-    targetScreen.classList.remove("hidden");
+    targetScreen.style.display = "block"; // Ensure the selected screen is shown
   } else {
     console.error("Screen not found:", screenId);
   }
