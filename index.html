@@ -3,120 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Quiz</title>
+    <title>Valentine's Day Proposal</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-
+    <!-- Hidden YouTube Background Music -->
+    <iframe id="bg-music" width="0" height="0" src="https://www.youtube.com/embed/YOUR_VIDEO_ID?autoplay=1&loop=1&playlist=YOUR_VIDEO_ID&mute=1" frameborder="0" allow="autoplay"></iframe>
+    
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
-        <h1>Welcome to the Valentine's Quiz!</h1>
-        <img src="path_to_welcome_image.jpg" alt="Welcome Image">
+        <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
         <button onclick="startQuiz()">Proceed</button>
+        <img src="welcome-image.jpg" alt="Welcome Image">
     </div>
-
+    
     <!-- Path A Questions -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
-        <button onclick="answerQuestion('question1', 'Option 1')">Option 1</button>
-        <button onclick="answerQuestion('question1', 'Option 2')">Option 2</button>
-        <button onclick="answerQuestion('question1', 'Option 3')">Option 3</button>
-        <button onclick="answerQuestion('question1', 'Option 4')">Option 4</button>
-        <img src="path_to_image_1.jpg" alt="Image 1">
-        <img src="path_to_image_2.jpg" alt="Image 2">
+        <button onclick="checkAnswer('question1', true)">Arianna OTJ</button>
+        <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
+        <button onclick="checkAnswer('question1', false)">MuscleMami</button>
+        <button onclick="checkAnswer('question1', false)">Justin Bieber's wife</button>
     </div>
 
     <div id="question2" class="screen hidden">
         <h2>What resides between your nose and chin?</h2>
-        <input type="text" id="answer2" placeholder="Type your answer here">
-        <button onclick="answerQuestion('question2', document.getElementById('answer2').value)">Submit</button>
+        <input type="text" id="answer2">
+        <button onclick="checkFreeResponse('answer2')">Submit</button>
     </div>
 
     <div id="question3" class="screen hidden">
         <h2>What is my type?</h2>
-        <button onclick="answerQuestion('question3', 'Introverted')">Introverted</button>
-        <button onclick="answerQuestion('question3', 'Extroverted')">Extroverted</button>
-        <button onclick="answerQuestion('question3', 'Ambivert')">Ambivert</button>
-        <button onclick="answerQuestion('question3', 'Maverick')">Maverick</button>
+        <button onclick="checkAnswer('question3', true)">[Correct Answer]</button>
+        <button onclick="checkAnswer('question3', false)">Option 1</button>
+        <button onclick="checkAnswer('question3', false)">Option 2</button>
+        <button onclick="checkAnswer('question3', false)">Option 3</button>
     </div>
-
+    
     <!-- Path B Questions -->
-    <div id="question4" class="screen hidden">
+    <div id="question-wrong1" class="screen hidden">
         <h2>What was my Roman Empire?</h2>
-        <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
-        <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
-        <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
+        <button onclick="checkWrongAnswer('question-wrong1', false)">RG3's downfall</button>
+        <button onclick="checkWrongAnswer('question-wrong1', true)">Eagles Super Bowl win</button>
+        <button onclick="checkWrongAnswer('question-wrong1', false)">Getting old</button>
     </div>
 
-    <div id="question5" class="screen hidden">
+    <div id="question-wrong2" class="screen hidden">
         <h2>What was the first set of flowers I got you?</h2>
-        <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
-        <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
-        <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
+        <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
+        <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
+        <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
     </div>
 
-    <div id="question6" class="screen hidden">
+    <div id="question-wrong3" class="screen hidden">
         <h2>Why did the tomato turn red?</h2>
-        <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
-        <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
-        <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
+        <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
     </div>
-
-    <!-- Valentine's Question -->
-    <div id="valentines-question" class="screen hidden">
+    
+    <!-- Valentine Question -->
+    <div id="valentine" class="screen hidden">
         <h2>Will you be my Valentine?</h2>
-        <button onclick="handleValentinesAnswer('Yes')">Yes</button>
-        <button onclick="handleValentinesAnswer('No')">No</button>
+        <button onclick="goToDateSelection()">Yes</button>
+        <button onclick="restartQuiz()">No</button>
     </div>
-
-    <!-- Date & Time Selection Page -->
-    <div id="date-time-selection" class="screen hidden">
-        <h2>Select a Date and Time</h2>
-        <input type="datetime-local" id="datetime">
-        <button onclick="showCuisinePage()">Proceed</button>
+    
+    <!-- Date Selection -->
+    <div id="date-selection" class="screen hidden">
+        <h2>Select a Date & Time</h2>
+        <input type="datetime-local" id="date-time">
+        <button onclick="proceedToPreferences()">Proceed</button>
     </div>
-
-    <!-- Final Questions -->
+    
+    <!-- Cuisine Selection -->
     <div id="cuisine" class="screen hidden">
         <h2>Cuisine?</h2>
-        <img src="path_to_cuisine_image.jpg" alt="Cuisine Image">
-        <button onclick="answerCuisine('Option 1')">Option 1</button>
-        <button onclick="answerCuisine('Option 2')">Option 2</button>
-        <button onclick="answerCuisine('Option 3')">Option 3</button>
+        <img src="cuisine-image.jpg" alt="Cuisine Image">
+        <button onclick="selectCuisine('Option 1')">Option 1</button>
+        <button onclick="selectCuisine('Option 2')">Option 2</button>
+        <button onclick="selectCuisine('Option 3')">Option 3</button>
     </div>
-
+    
+    <!-- Activity Selection -->
     <div id="activity" class="screen hidden">
         <h2>Activity?</h2>
-        <img src="path_to_activity_image.jpg" alt="Activity Image">
-        <button onclick="answerActivity('Option 1')">Option 1</button>
-        <button onclick="answerActivity('Option 2')">Option 2</button>
-        <button onclick="answerActivity('Option 3')">Option 3</button>
+        <img src="activity-image.jpg" alt="Activity Image">
+        <button onclick="selectActivity('Option 1')">Option 1</button>
+        <button onclick="selectActivity('Option 2')">Option 2</button>
+        <button onclick="selectActivity('Option 3')">Option 3</button>
     </div>
-
-    <div id="when" class="screen hidden">
+    
+    <!-- Final Date Confirmation -->
+    <div id="final-date" class="screen hidden">
         <h2>When?</h2>
-        <input type="datetime-local" id="when-time">
-        <button onclick="captureWhen()">Submit</button>
+        <input type="datetime-local" id="final-date-time">
+        <button onclick="sendEmail()">Confirm</button>
     </div>
-
-    <!-- Restart Screen -->
-    <div id="restart-screen" class="screen hidden">
-        <h2>Sorry, please try again!</h2>
-        <button onclick="startQuiz()">Restart</button>
-    </div>
-
-    <!-- Thank You Screen -->
+    
+    <!-- Thank You Page -->
     <div id="thank-you" class="screen hidden">
         <h2>Thank You for Completing the Quiz!</h2>
-        <p>Your responses have been recorded. We appreciate you!</p>
-        <p>We will be in touch soon. <3</p>
+        <button onclick="proceedToFinalDate()">Proceed</button>
     </div>
-
-    <!-- Hidden YouTube Playlist -->
-    <div id="youtube-player">
-        <iframe width="0" height="0" src="https://www.youtube.com/embed/videoseries?list=YOUR_PLAYLIST_ID&autoplay=1&loop=1&controls=0&mute=0" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+    
+    <!-- Restart Page -->
+    <div id="incorrect-final" class="screen hidden">
+        <h2>Sorry, maybe you ought to try harder.</h2>
+        <button onclick="restartQuiz()">Restart</button>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
