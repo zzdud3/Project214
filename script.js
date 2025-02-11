@@ -102,10 +102,12 @@ function checkWrongAnswer(question, isCorrect) {
 // Flower answer validation
 function checkFlowerAnswer() {
     const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
-    if (answer === "tulips") {
-        checkAnswer("question2", true);
-    } else {
-        checkAnswer("question2", false);
+    if (answer.length > 0) { // Proceed even if the answer is incorrect
+        if (answer === "tulips") {
+            checkAnswer("question2", true); // Correct answer
+        } else {
+            checkAnswer("question2", false); // Incorrect answer
+        }
     }
 }
 
