@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1";
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=0";
     bgMusic.allow = "autoplay";
     console.log("Background music started.");
   } else {
