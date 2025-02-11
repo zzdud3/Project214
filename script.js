@@ -1,64 +1,124 @@
-// Initialize current question index
-let currentQuestion = 0;
-
-// Array for questions and answers
+// Define questions and answers for both Path A and Path B
 const questionsPathA = [
-    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 1" },
-    { question: "What resides between your nose and chin?", correct: "tulips" },
-    { question: "What is my type?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 2" }
+    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correctAnswer: "Option 1" },
+    { question: "What resides between your nose and chin?", correctAnswer: "tulips", type: "freeResponse" },
+    { question: "What is my type?", options: ["Introverted", "Extroverted", "Ambivert", "Maverick"], correctAnswer: "Introverted" }
 ];
 
-// Array for Path B (same as Path A for now)
 const questionsPathB = [
-    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 2" },
-    { question: "What resides between your nose and chin?", correct: "tulips" },
-    { question: "What is my type?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 3" }
+    { question: "What was my Roman Empire?", options: ["Eagles superbowl win", "RG3's downfall", "Getting old"], correctAnswer: "Eagles superbowl win" },
+    { question: "What was the first set of flowers I got you?", options: ["Tulips", "Lilies", "Carnations"], correctAnswer: "Tulips" },
+    { question: "Why did the tomato turn red?", options: ["Because it saw the salad dressing", "It was ketchup to its friend", "Because it was a little shady"], correctAnswer: "Because it saw the salad dressing" }
 ];
 
-// Show the first question after clicking "Proceed"
+// Track the current question indices for Path A and Path B
+let currentPathAIndex = 0;
+let currentPathBIndex = 0;
+
+// Function to start the quiz
 function startQuiz() {
-    document.getElementById('welcome-screen').classList.remove('show'); // Hide the welcome screen
-    showQuestion(currentQuestion); // Show the first question
+    document.getElementById('welcome-screen').classList.add('hidden');
+    showQuestion(1);  // Start showing the first question (Path A)
 }
 
-// Function to display the current question based on the question index
-function showQuestion(questionIndex) {
-    // Hide all question screens first
-    const screens = document.querySelectorAll('.screen');
-    screens.forEach(screen => screen.classList.remove('show'));
+// Function to show the current question
+function showQuestion(questionNumber) {
+    // Hide all screens
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
 
-    // Logic to check if we reached the end
-    if (questionIndex >= questionsPathA.length) {
-        document.getElementById('thank-you').classList.add('show'); // Show Thank You screen
-        return;
-    }
+    // Determine which question to show (either Path A or Path B)
+    let question;
+    if (questionNumber <= 3) {
+        question = questionsPathA[questionNumber - 1]; // Path A questions
+        document.getElementById(`question${questionNumber}`).classList.remove('hidden');
+        document.querySelector(`#question${questionNumber} h2`).textContent = question.question;
 
-    // Show the current question based on the index
-    const questionId = `question${questionIndex + 1}`;
-    document.getElementById(questionId).classList.add('show');
-}
-
-// Handle user responses to questions
-function answerQuestion(answer) {
-    let currentQuestionData;
-    
-    // Get the current question's data based on current question index
-    if (currentQuestion < questionsPathA.length) {
-        currentQuestionData = questionsPathA[currentQuestion];
+        if (question.options) {
+            question.options.forEach((option, index) => {
+                document.querySelector(`#question${questionNumber} button:nth-child(${index + 1})`).textContent = option;
+            });
+        }
     } else {
-        currentQuestionData = questionsPathB[currentQuestion - questionsPathA.length];
-    }
+        question = questionsPathB[questionNumber - 4]; // Path B questions
+        document.getElementById(`question${questionNumber}`).classList.remove('hidden');
+        document.querySelector(`#question${questionNumber} h2`).textContent = question.question;
 
-    // Check if the answer is correct
-    if (answer === currentQuestionData.correct) {
-        currentQuestion++; // Move to the next question
-        showQuestion(currentQuestion); // Show the next question
-    } else {
-        // If answer is incorrect, show restart screen or next question in Path B
-        if (currentQuestion < questionsPathA.length - 1) {
-            showQuestion(currentQuestion); // Stay on the current question if incorrect
-        } else {
-            document.getElementById('restart-screen').classList.add('show'); // Show the restart screen
+        if (question.options) {
+            question.options.forEach((option, index) => {
+                document.querySelector(`#question${questionNumber} button:nth-child(${index + 1})`).textContent = option;
+            });
         }
     }
+}
+
+// Function to check the answer
+function checkAnswer(questionNumber, selectedAnswer) {
+    let correctAnswer;
+    let nextQuestionNumber;
+
+    // Check Path A questions
+    if (questionNumber <= 3) {
+        correctAnswer = questionsPathA[questionNumber - 1].correctAnswer;
+        nextQuestionNumber = questionNumber + 1;
+        // For free-response question, check if answer contains correct word
+        if (questionsPathA[questionNumber - 1].type === "freeResponse") {
+            if (selectedAnswer.toLowerCase().includes(correctAnswer.toLowerCase())) {
+                proceedToNextQuestion(nextQuestionNumber);
+            } else {
+                showRestartScreen();
+            }
+        }
+        // For multiple-choice questions, check if the selected option matches the correct answer
+        else if (selectedAnswer === correctAnswer) {
+            proceedToNextQuestion(nextQuestionNumber);
+        } else {
+            showRestartScreen();
+        }
+    }
+
+    // Check Path B questions
+    else if (questionNumber > 3) {
+        correctAnswer = questionsPathB[questionNumber - 4].correctAnswer;
+        nextQuestionNumber = questionNumber + 1;
+
+        // For multiple-choice questions in Path B, check if the selected option matches the correct answer
+        if (selectedAnswer === correctAnswer) {
+            proceedToNextQuestion(nextQuestionNumber);
+        } else {
+            showRestartScreen();
+        }
+    }
+}
+
+// Function to proceed to the next question
+function proceedToNextQuestion(nextQuestionNumber) {
+    if (nextQuestionNumber <= 3) {
+        currentPathAIndex++;
+        showQuestion(nextQuestionNumber);
+    } else if (nextQuestionNumber <= 6) {
+        currentPathBIndex++;
+        showQuestion(nextQuestionNumber);
+    } else {
+        showThankYouScreen();
+    }
+}
+
+// Function to show the Restart screen
+function showRestartScreen() {
+    document.getElementById('restart-screen').classList.remove('hidden');
+}
+
+// Function to show the Thank You screen
+function showThankYouScreen() {
+    document.getElementById('thank-you').classList.remove('hidden');
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    currentPathAIndex = 0;
+    currentPathBIndex = 0;
+    document.getElementById('welcome-screen').classList.remove('hidden');
+    document.getElementById('restart-screen').classList.add('hidden');
+    document.getElementById('thank-you').classList.add('hidden');
 }
