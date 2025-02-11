@@ -1,7 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () { 
-  console.log("DOM fully loaded. Showing welcome screen...");
-  showScreen("welcome-screen");
-  
+
 function unmuteBackgroundMusic() {
     const bgMusic = document.getElementById("bg-music");
     if (bgMusic) {
