@@ -1,34 +1,37 @@
+document.addEventListener("DOMContentLoaded", function () { 
+    console.log("DOM fully loaded. Showing welcome screen...");
+    showScreen("welcome-screen");
+});
+
 function startQuiz() {
     console.log("Starting quiz, moving to first question.");
 
     // Start background music
-    unmuteBackgroundMusic();
+    loadBackgroundMusic();
 
-    // Ensure transition to first question
+    // Ensure transition to the first question
     showScreen("question1");
 }
 
-// Function to unmute and restart background music
-function unmuteBackgroundMusic() {
-    const bgMusic = document.getElementById("bg-music");
+// Function to load and start background music
+function loadBackgroundMusic() {
+    const musicContainer = document.getElementById("bg-music-container");
 
-    if (bgMusic) {
-        // Completely remove & recreate the iframe to force playback
-        const parent = bgMusic.parentNode;
-        parent.removeChild(bgMusic);
+    // Remove existing iframe (prevents duplicates)
+    musicContainer.innerHTML = "";
 
-        const newIframe = document.createElement("iframe");
-        newIframe.id = "bg-music";
-        newIframe.width = "0";
-        newIframe.height = "0";
-        newIframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&mute=0&playlist=CBx6e9cZlBQ";
-        newIframe.frameBorder = "0";
-        newIframe.allow = "autoplay; encrypted-media";
-        
-        parent.appendChild(newIframe);
+    // Create a new iframe dynamically
+    const iframe = document.createElement("iframe");
+    iframe.width = "0";
+    iframe.height = "0";
+    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
+    iframe.frameBorder = "0";
+    iframe.allow = "autoplay; encrypted-media";
 
-        console.log("Background music unmuted and playing.");
-    }
+    // Append the new iframe to the container
+    musicContainer.appendChild(iframe);
+
+    console.log("Background music started.");
 }
 
 // Function to display the correct screen
@@ -48,6 +51,7 @@ function showScreen(screenId) {
         console.error("Screen not found:", screenId);
     }
 }
+
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
