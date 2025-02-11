@@ -1,21 +1,23 @@
-
-document.addEventListener("DOMContentLoaded", function () { 
+document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM fully loaded. Showing welcome screen...");
   showScreen("welcome-screen");
 
-  // Ensure background music plays immediately
-  playBackgroundMusic();
+  // Wait for user interaction to play background music
+  document.getElementById("welcome-screen").addEventListener("click", function () {
+    playBackgroundMusic();
+  });
 });
 
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
+    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0&enablejsapi=1";
     console.log("Background music started.");
   } else {
     console.error("Background music element not found.");
   }
 }
+
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
 const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
