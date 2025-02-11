@@ -1,88 +1,102 @@
-const pathA = [
-    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 1" },
-    { question: "What resides between your nose and chin?", type: "free-response", correct: "tulips" },
-    { question: "What is my type?", options: ["Introverted", "Extroverted", "Ambivert", "Maverick"], correct: "Introverted" }
-];
+document.addEventListener("DOMContentLoaded", function () {
+    showScreen("welcome-screen"); // Ensure welcome screen is visible on load
+    playBackgroundMusic(); // Start playing background music immediately
+});
 
-const pathB = [
-    { question: "What was my Roman Empire?", options: ["Eagles superbowl win", "RG3's downfall", "Getting old"], correct: "Eagles superbowl win" },
-    { question: "What was the first set of flowers I got you?", options: ["Tulips", "Lilies", "Carnations"], correct: "Tulips" },
-    { question: "Why did the tomato turn red?", options: ["Because it saw the salad dressing", "It was ketchup to its friend", "Because it was a little shady"], correct: "Because it saw the salad dressing" }
-];
-
-let currentPath = "A";
-let pathAIndex = 0;
-let pathBIndex = 0;
-let usedPathBQuestions = new Set();
+let userSelections = {
+    dateTime: "",
+    cuisine: "",
+    activity: ""
+};
 
 function startQuiz() {
-    document.getElementById("welcome-screen").classList.remove("active");
-    document.getElementById("quiz-container").classList.add("active");
-    pathAIndex = 0;
-    pathBIndex = 0;
-    usedPathBQuestions.clear();
-    currentPath = "A";
-    showQuestion();
+    showScreen("question1");
 }
 
-function showQuestion() {
-    let questionData = currentPath === "A" ? pathA[pathAIndex] : pathB[pathBIndex];
-
-    if (!questionData) {
-        document.getElementById("restart-screen").classList.add("active");
-        document.getElementById("quiz-container").classList.remove("active");
-        return;
-    }
-
-    document.getElementById("question-text").innerText = questionData.question;
-    const optionsContainer = document.getElementById("options-container");
-    optionsContainer.innerHTML = "";
-
-    if (questionData.type === "free-response") {
-        document.getElementById("free-response").style.display = "block";
-        document.getElementById("submit-answer").style.display = "block";
+function checkAnswer(question, isCorrect) {
+    if (isCorrect) {
+        if (question === "question1") showScreen("question2");
+        else if (question === "question2") showScreen("question3");
+        else if (question === "question3") showScreen("valentine");
     } else {
-        document.getElementById("free-response").style.display = "none";
-        document.getElementById("submit-answer").style.display = "none";
-
-        questionData.options.forEach(option => {
-            const button = document.createElement("button");
-            button.innerText = option;
-            button.onclick = () => checkAnswer(option, questionData.correct);
-            optionsContainer.appendChild(button);
-        });
+        showScreen("question-wrong1"); // Incorrect answers always lead to Path B
     }
 }
 
-function checkAnswer(selected, correct) {
-    if (selected.toLowerCase() === correct.toLowerCase()) {
-        if (currentPath === "A") {
-            pathAIndex++;
-            if (pathAIndex >= pathA.length) {
-                document.getElementById("date-selection-screen").classList.add("active");
-                document.getElementById("quiz-container").classList.remove("active");
-                return;
-            }
-        } else {
-            pathAIndex++;
-            currentPath = "A";
-        }
+function checkFreeResponse(inputId) {
+    let answer = document.getElementById(inputId).value.toLowerCase();
+    if (answer.includes("tulips")) {
+        showScreen("question3");
     } else {
-        if (currentPath === "A") {
-            if (pathBIndex < pathB.length) {
-                currentPath = "B";
-            } else {
-                document.getElementById("restart-screen").classList.add("active");
-                return;
-            }
+        showScreen("question-wrong1");
+    }
+}
+
+let incorrectPathBCounter = 0; // Tracks incorrect Path B answers
+const maxPathBQuestions = 3; // Maximum incorrect path B questions before restart
+
+function checkWrongAnswer(question, isCorrect) {
+    if (isCorrect) {
+        if (question === "question-wrong1") showScreen("question2");
+        else if (question === "question-wrong2") showScreen("question3");
+        else if (question === "question-wrong3") showScreen("question3");
+    } else {
+        incorrectPathBCounter++;
+        
+        if (incorrectPathBCounter >= maxPathBQuestions) {
+            showScreen("incorrect-final"); // Restart after all Path B questions are answered incorrectly
+            incorrectPathBCounter = 0; // Reset counter
         } else {
-            pathBIndex++;
+            if (question === "question-wrong1") showScreen("question-wrong2");
+            else if (question === "question-wrong2") showScreen("question-wrong3");
         }
     }
-    showQuestion();
+}
+
+function goToDateSelection() {
+    showScreen("date-selection");
 }
 
 function proceedToPreferences() {
-    document.getElementById("date-selection-screen").classList.remove("active");
-    document.getElementById("preferences-screen").classList.add("active");
+    userSelections.dateTime = document.getElementById("date-time").value;
+    showScreen("cuisine");
+}
+
+function selectCuisine(choice) {
+    userSelections.cuisine = choice;
+    showScreen("activity");
+}
+
+function selectActivity(choice) {
+    userSelections.activity = choice;
+    showScreen("final-date");
+}
+
+function sendEmail() {
+    userSelections.dateTime = document.getElementById("final-date-time").value;
+    let emailContent = `Date and Time: ${userSelections.dateTime}\nCuisine: ${userSelections.cuisine}\nActivity: ${userSelections.activity}`;
+    console.log("Sending Email with content:", emailContent);
+    showScreen("thank-you");
+}
+
+function proceedToFinalDate() {
+    showScreen("final-date");
+}
+
+function restartQuiz() {
+    incorrectPathBCounter = 0; // Reset Path B tracking on restart
+    userSelections = { dateTime: "", cuisine: "", activity: "" }; // Reset stored selections
+    showScreen("welcome-screen");
+}
+
+function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+    });
+    document.getElementById(screenId).classList.remove("hidden");
+}
+
+function playBackgroundMusic() {
+    let bgMusic = document.getElementById("bg-music");
+    bgMusic.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&loop=1&playlist=YOUR_PLAYLIST_ID&mute=0";
 }
