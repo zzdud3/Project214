@@ -6,79 +6,93 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 100);
 });
 
-// Keep track of user’s Path A and path B states, plus final form data
+// Keep track of user’s Path A progress & final form data
+let pathACurrent = "question1"; // Which Path A question is next?
+const pathAOrder = ["question1", "question2", "question3", "valentine"]; 
+
 let userSelections = {
   dateTime: "",
   cuisine: "",
   activity: ""
 };
 
-// Index for path B questions
+// Track how many Path B questions have been answered incorrectly
 let pathBIndex = 0;
-// A reference to the IDs of each Path B question in sequence
 const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
-
-function startQuiz() {
-  showScreen("question1");
-}
+const maxPathB = pathBQuestions.length;
 
 /* ---------------- PATH A LOGIC ---------------- */
-function checkAnswer(questionId, isCorrect) {
+/** 
+ * Moves to the next question in pathAOrder when correct, 
+ * or branches to Path B (question-wrong1) when incorrect.
+ */
+function checkAnswer(currentQuestion, isCorrect) {
   if (isCorrect) {
-    // Move to next question in Path A
-    if (questionId === "question1") {
-      showScreen("question2");
-    } else if (questionId === "question2") {
-      showScreen("question3");
-    } else if (questionId === "question3") {
-      showScreen("valentine");
-    }
+    // If correct, move forward in the Path A array
+    advancePathA(currentQuestion);
   } else {
-    // Any incorrect answer from Path A -> start Path B from first question
+    // Wrong -> Path B start
     pathBIndex = 0;
     showScreen(pathBQuestions[pathBIndex]);
   }
 }
 
+/** 
+ * Free-response version (question2). If the user types 'tulips', correct;
+ * otherwise, to Path B.
+ */
 function checkFreeResponse(inputId) {
-  const answer = document.getElementById(inputId).value.toLowerCase();
-  if (answer.includes("tulips")) {
-    showScreen("question3");
+  const userInput = document.getElementById(inputId).value.trim().toLowerCase();
+  if (userInput.includes("tulips")) {
+    advancePathA("question2");
   } else {
-    // Wrong -> go to first Path B question
     pathBIndex = 0;
     showScreen(pathBQuestions[pathBIndex]);
+  }
+}
+
+/**
+ * Increments pathACurrent to the next question in pathAOrder
+ */
+function advancePathA(currentQuestion) {
+  // Find index of currentQuestion in pathAOrder
+  const currentIndex = pathAOrder.indexOf(currentQuestion);
+  if (currentIndex >= 0 && currentIndex < pathAOrder.length - 1) {
+    // Move to next
+    pathACurrent = pathAOrder[currentIndex + 1];
+    showScreen(pathACurrent);
+  } else {
+    // If at the last in array (valentine), just show valentine
+    showScreen("valentine");
   }
 }
 
 /* ---------------- PATH B LOGIC ---------------- */
-function checkWrongAnswer(questionId, isCorrect) {
+/**
+ * If user answers a Path B question correctly, 
+ * they return to the *same* Path A question they missed 
+ * (so they don't skip question2 or question3).
+ */
+function checkWrongAnswer(currentBQuestion, isCorrect) {
   if (isCorrect) {
-    // A correct Path B answer routes the user back to the correct place in Path A
-    if (questionId === "question-wrong1") {
-      showScreen("question2");
-    } else if (questionId === "question-wrong2") {
-      showScreen("question3");
-    } else if (questionId === "question-wrong3") {
-      showScreen("question3");
-    }
-    // Reset pathBIndex
+    // Return to the missed Path A question
+    showScreen(pathACurrent);
+    // reset pathB index
     pathBIndex = 0;
   } else {
-    // Move to the next question in Path B
+    // Move to next Path B question
     pathBIndex++;
-    // If user has exhausted all path B questions
-    if (pathBIndex >= pathBQuestions.length) {
-      // Show the special screen with restart button
+    if (pathBIndex >= maxPathB) {
+      // If exhausted all path B questions incorrectly => final screen
       showScreen("incorrect-final");
     } else {
-      // Show next Path B question
+      // Show next question in Path B
       showScreen(pathBQuestions[pathBIndex]);
     }
   }
 }
 
-/* ---------------- QUIZ FLOW LOGIC ---------------- */
+/* ---------------- QUIZ FLOW ---------------- */
 function goToDateSelection() {
   showScreen("date-selection");
 }
@@ -99,8 +113,11 @@ function selectActivity(choice) {
 }
 
 function sendEmail() {
+  // Grab final date/time again
   userSelections.dateTime = document.getElementById("final-date-time").value;
-  const emailContent = `Date and Time: ${userSelections.dateTime}\nCuisine: ${userSelections.cuisine}\nActivity: ${userSelections.activity}`;
+  const emailContent = `Date and Time: ${userSelections.dateTime}
+Cuisine: ${userSelections.cuisine}
+Activity: ${userSelections.activity}`;
   console.log("Sending Email with content:\n", emailContent);
   showScreen("thank-you");
 }
@@ -110,6 +127,8 @@ function proceedToFinalDate() {
 }
 
 function restartQuiz() {
+  // Reset everything
+  pathACurrent = "question1";
   pathBIndex = 0;
   userSelections = { dateTime: "", cuisine: "", activity: "" };
   showScreen("welcome-screen");
@@ -128,7 +147,6 @@ function showScreen(screenId) {
   }
 }
 
-// Start playing background music from a hidden iframe
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
