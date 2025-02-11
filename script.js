@@ -21,6 +21,7 @@ let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
 const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
 let pathBUsed = [false, false, false];
+let pathBCompleted = [false, false, false];
 let userSelections = { dateTime: "", cuisine: "", activity: "" };
 
 function checkAnswer(currentQuestionId, isCorrect) {
@@ -65,10 +66,21 @@ function goToNextPathB() {
 
 function checkWrongAnswer(pathBQuestionId, isCorrect) {
   console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
+  const questionIndex = pathBQuestions.indexOf(pathBQuestionId);
   if (isCorrect) {
-    showScreen(pathACurrent);
+    pathBCompleted[questionIndex] = true;
+    if (pathBCompleted.every(completed => completed)) {
+      showScreen(pathACurrent);
+    } else {
+      goToNextPathB();
+    }
   } else {
-    goToNextPathB();
+    pathBUsed[questionIndex] = true;
+    if (pathBUsed.every(used => used)) {
+      showScreen("incorrect-final");
+    } else {
+      goToNextPathB();
+    }
   }
 }
 
@@ -104,6 +116,7 @@ function sendEmail() {
 function restartQuiz() {
   pathACurrent = "question1";
   pathBUsed = [false, false, false];
+  pathBCompleted = [false, false, false];
   userSelections = { dateTime: "", cuisine: "", activity: "" };
   showScreen("welcome-screen");
 }
