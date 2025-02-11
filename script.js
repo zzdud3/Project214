@@ -4,7 +4,8 @@ let userProgress = {
     incorrectAnswers: [],
     incorrectQuestions: [
         { question: "question-wrong1", answeredCorrectly: false },
-        { question: "question-wrong2", answeredCorrectly: false }
+        { question: "question-wrong2", answeredCorrectly: false },
+        { question: "question-wrong3", answeredCorrectly: false }
     ]
 };
 
@@ -64,10 +65,9 @@ function checkAnswer(question, isCorrect) {
 
 // Handle incorrect answers and show incorrect path
 function showIncorrectPath(question) {
-    if (question === "question1") {
-        showScreen("question-wrong1");
-    } else if (question === "question2") {
-        showScreen("question-wrong2");
+    let incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
+    if (incorrectQuestionIndex !== -1) {
+        showScreen(userProgress.incorrectQuestions[incorrectQuestionIndex].question);
     }
 }
 
@@ -76,17 +76,28 @@ function checkWrongAnswer(question, isCorrect) {
     const incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
     
     if (isCorrect) {
+        // Mark this question as answered correctly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
-        if (question === "question-wrong1") {
-            showScreen("question1");
-        } else if (question === "question-wrong2") {
-            showScreen("question2");
+        
+        // Check if all incorrect questions have been answered correctly
+        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly)) {
+            // If all incorrect questions have been answered correctly, go back to the main path
+            if (question === "question-wrong1") {
+                showScreen("question1");
+            } else if (question === "question-wrong2") {
+                showScreen("question2");
+            } else if (question === "question-wrong3") {
+                showScreen("question2");
+            }
         }
     } else {
-        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly)) {
-            showScreen("incorrect-final");
+        // If not all incorrect questions have been answered correctly, keep prompting incorrect questions
+        if (userProgress.incorrectQuestions.some(q => !q.answeredCorrectly)) {
+            // Show the current question again until answered correctly
+            showScreen(question);
         } else {
-            showScreen(question);  // Keep asking the same incorrect question until answered correctly
+            // If all questions were answered incorrectly, show the restart screen
+            showScreen("incorrect-final");
         }
     }
 }
@@ -109,7 +120,8 @@ function restartQuiz() {
         incorrectAnswers: [],
         incorrectQuestions: [
             { question: "question-wrong1", answeredCorrectly: false },
-            { question: "question-wrong2", answeredCorrectly: false }
+            { question: "question-wrong2", answeredCorrectly: false },
+            { question: "question-wrong3", answeredCorrectly: false }
         ]
     };
     showScreen("welcome-screen");
