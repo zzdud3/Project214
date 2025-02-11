@@ -1,21 +1,21 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () { 
   console.log("DOM fully loaded. Showing welcome screen...");
   showScreen("welcome-screen");
 
   // Ensure background music plays immediately
-  playBackgroundMusic();
+  setTimeout(playBackgroundMusic, 1000);
 });
 
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=1";
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1";
+    bgMusic.allow = "autoplay";
     console.log("Background music started.");
   } else {
     console.error("Background music element not found.");
   }
 }
-
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
@@ -54,7 +54,7 @@ function advancePathA(currentQuestionId) {
 }
 
 function goToNextPathB() {
-  const nextIndex = pathBUsed.findIndex(used => used === false);
+  const nextIndex = pathBUsed.findIndex(used => !used);
   if (nextIndex === -1) {
     showScreen("incorrect-final");
   } else {
@@ -96,7 +96,7 @@ function selectActivity(choice) {
 }
 
 function sendEmail() {
-  userSelections.dateTime = document.getElementById("final-date-time").value;
+  userSelections.dateTime = document.getElementById("date-time").value;
   console.log("Sending Email:", userSelections);
   showScreen("thank-you");
 }
