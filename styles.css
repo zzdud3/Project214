@@ -1,162 +1,65 @@
-/* Base styling */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     background-color: #f7f7f7;
     color: #333;
     text-align: center;
     padding: 20px;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(to bottom, #ff7f7f, #f1e6e6);
+}
+
+.screen {
+    display: none;
 }
 
 h1, h2 {
     color: #ff6f61; /* Elegant feminine color */
     font-family: 'Georgia', serif;
-    transition: all 0.3s ease;
 }
 
-/* Button styles with hover animation */
 button {
-    padding: 12px 25px;
-    margin: 20px;
+    padding: 10px 20px;
+    margin: 10px;
     background-color: #ff6f61;
     color: white;
     border: none;
     cursor: pointer;
-    font-size: 18px;
-    border-radius: 8px;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #ff4a3a;
-    transform: scale(1.05);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Input box for text input question */
 input {
-    padding: 12px 25px;
-    margin: 20px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: 2px solid #ff6f61;
-    transition: all 0.3s ease;
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
 }
 
-input:focus {
-    border-color: #ff4a3a;
-    outline: none;
-    box-shadow: 0 0 5px rgba(255, 80, 80, 0.8);
-}
-
-/* Animation for screens */
-.screen {
-    display: none;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-}
-
-/* Show active screens */
-.screen.show {
-    display: block;
-    opacity: 1;
-}
-
-/* Stylish heading effects */
-h1, h2 {
-    transition: transform 0.5s ease-in-out;
-}
-
-h1:hover, h2:hover {
-    transform: scale(1.1);
-}
-
-/* Welcome screen image */
-#welcome-image {
-    max-width: 300px;
-    margin-top: 30px;
-    transition: transform 0.3s ease;
-}
-
-#welcome-image:hover {
-    transform: scale(1.1);
-}
-
-/* Center content properly */
 #youtube-container {
     display: none;
 }
 
-/* Text and button fade-in */
 #question1, #question2, #question3, #restart-screen, #thank-you {
-    transition: opacity 1s ease-in-out;
+    margin-top: 50px;
 }
 
-#question1.show, #question2.show, #question3.show, #restart-screen.show, #thank-you.show {
-    opacity: 1;
-}
-
-/* Page container */
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-}
-
-/* Background for restart page and thank you */
-#thank-you {
-    background-color: rgba(240, 240, 240, 0.9);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    display: none;
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-#restart-screen {
-    background-color: rgba(255, 235, 235, 0.9);
-    padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    display: none;
-    animation: fadeInUp 0.6s ease-out forwards;
-}
-
-/* Cool animation for fade-in effect on elements */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Smooth transitions for images */
 img {
     max-width: 100%;
     height: auto;
-    margin-top: 30px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    margin-top: 20px;
 }
 
-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+#thank-you {
+    background-color: #f0f0f0;
+    padding: 40px;
+    border-radius: 10px;
+    display: none;
 }
 
-/* General transition effects for elements */
-.transition {
-    transition: all 0.4s ease;
+#restart-screen {
+    background-color: #ffebeb;
+    padding: 40px;
+    border-radius: 10px;
+    display: none;
 }
