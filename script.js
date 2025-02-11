@@ -1,7 +1,9 @@
+
 document.addEventListener("DOMContentLoaded", function () { 
   console.log("DOM fully loaded. Showing welcome screen...");
   showScreen("welcome-screen");
-// Ensure background music plays immediately
+
+  // Ensure background music plays immediately
   playBackgroundMusic();
 });
 
@@ -14,9 +16,6 @@ function playBackgroundMusic() {
     console.error("Background music element not found.");
   }
 }
-
-
-
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
 const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
