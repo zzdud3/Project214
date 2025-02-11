@@ -28,6 +28,7 @@ function checkAnswer(questionId, answer) {
         'question6': ['Because it saw the salad dressing']
     };
 
+    // If answer is correct
     if (correctAnswers[questionId].includes(answer.toLowerCase())) {
         if (questionId === 'question3') {
             showValentinesQuestion();
@@ -44,11 +45,12 @@ function checkAnswer(questionId, answer) {
 
 // Show the next question
 function showNextQuestion(nextQuestionId) {
+    // Hide all questions
     document.querySelectorAll('.screen').forEach((screen) => {
         screen.classList.add('hidden');
     });
 
-    // Prevent Path B questions from repeating
+    // Ensure Path B questions are only shown once
     if (nextQuestionId === 'question4' && !pathBQuestionsAnswered.question4) {
         document.getElementById(nextQuestionId).classList.remove('hidden');
         pathBQuestionsAnswered.question4 = true;
@@ -59,7 +61,7 @@ function showNextQuestion(nextQuestionId) {
         document.getElementById(nextQuestionId).classList.remove('hidden');
         pathBQuestionsAnswered.question6 = true;
     } else {
-        // If Path B questions have been answered, skip to the next one
+        // Path B questions are answered, move forward
         if (pathBAnsweredIncorrectly) {
             if (!pathBQuestionsAnswered.question4) {
                 document.getElementById('question4').classList.remove('hidden');
@@ -179,6 +181,7 @@ function restartQuiz() {
 
 // Reset questions when restarting
 function resetAllQuestions() {
+    pathBQuestionsAnswered = { question4: false, question5: false, question6: false };
     document.querySelectorAll('.screen').forEach((screen) => {
         screen.classList.add('hidden');
     });
