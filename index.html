@@ -14,76 +14,74 @@
         <button onclick="startQuiz()">Proceed</button>
         <img src="path_to_welcome_image.jpg" alt="Welcome Image" id="welcome-image">
     </div>
+<!-- Question 1 (Path A) -->
+<div id="question1" class="screen hidden">
+    <h2>Who are you?</h2>
+    <button onclick="checkAnswer('question1', 'Option 1')">Option 1</button>
+    <button onclick="checkAnswer('question1', 'Option 2')">Option 2</button>
+    <button onclick="checkAnswer('question1', 'Option 3')">Option 3</button>
+    <button onclick="checkAnswer('question1', 'Option 4')">Option 4</button>
+    <img src="path_to_image_1.jpg" alt="Image 1">
+</div>
 
-    <!-- First Question Screen -->
-    <div id="question1" class="screen">
-        <h2>Who are you?</h2>
-        <button onclick="answerQuestion(1, 'Option 1')">Option 1</button>
-        <button onclick="answerQuestion(1, 'Option 2')">Option 2</button>
-        <button onclick="answerQuestion(1, 'Option 3')">Option 3</button>
-        <button onclick="answerQuestion(1, 'Option 4')">Option 4</button>
-        <img src="path_to_image_1.jpg" alt="Image 1">
-        <img src="path_to_image_2.jpg" alt="Image 2">
-    </div>
+<!-- Question 2 (Path A) - Free-text -->
+<div id="question2" class="screen hidden">
+    <h2>What resides between your nose and chin?</h2>
+    <input type="text" id="answer" placeholder="Type your answer here">
+    <button onclick="checkAnswer('question2', document.getElementById('answer').value)">Submit</button>
+</div>
 
-    <!-- Question 2 (Path A) -->
-    <div id="question2" class="screen">
-        <h2>What resides between your nose and chin?</h2>
-        <input type="text" id="answer" placeholder="Type your answer here">
-        <button onclick="checkAnswer('question2', document.getElementById('answer').value)">Submit</button>
-    </div>
+<!-- Question 3 (Path A) -->
+<div id="question3" class="screen hidden">
+    <h2>What is my type?</h2>
+    <button onclick="checkAnswer('question3', 'Introverted')">Introverted</button>
+    <button onclick="checkAnswer('question3', 'Extroverted')">Extroverted</button>
+    <button onclick="checkAnswer('question3', 'Ambivert')">Ambivert</button>
+    <button onclick="checkAnswer('question3', 'Maverick')">Maverick</button>
+</div>
 
-    <!-- Question 3 (Path A) -->
-    <div id="question3" class="screen">
-        <h2>What is my type?</h2>
-        <button onclick="checkAnswer('question3', 'Introverted')">Introverted</button>
-        <button onclick="checkAnswer('question3', 'Extroverted')">Extroverted</button>
-        <button onclick="checkAnswer('question3', 'Ambivert')">Ambivert</button>
-        <button onclick="checkAnswer('question3', 'Maverick')">Maverick</button>
-    </div>
+<!-- Question 1 (Path B) -->
+<div id="question4" class="screen hidden">
+    <h2>What was my Roman Empire?</h2>
+    <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
+    <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
+    <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
+</div>
 
-    <!-- Question 1 (Path B) -->
-    <div id="question4" class="screen">
-        <h2>What was my Roman Empire?</h2>
-        <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
-        <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
-        <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
-    </div>
+<!-- Question 2 (Path B) -->
+<div id="question5" class="screen hidden">
+    <h2>What was the first set of flowers I got you?</h2>
+    <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
+    <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
+    <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
+</div>
 
-    <!-- Question 2 (Path B) -->
-    <div id="question5" class="screen">
-        <h2>What was the first set of flowers I got you?</h2>
-        <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
-        <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
-        <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
-    </div>
+<!-- Question 3 (Path B) -->
+<div id="question6" class="screen hidden">
+    <h2>Why did the tomato turn red?</h2>
+    <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
+    <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
+    <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
+</div>
 
-    <!-- Question 3 (Path B) -->
-    <div id="question6" class="screen">
-        <h2>Why did the tomato turn red?</h2>
-        <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
-        <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
-        <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
-    </div>
+<!-- Restart Page -->
+<div id="restart-screen" class="screen hidden">
+    <h2>Sorry, please try again!</h2>
+    <button onclick="startQuiz()">Restart</button>
+</div>
 
-    <!-- Restart Page -->
-    <div id="restart-screen" class="screen">
-        <h2>Sorry, please try again!</h2>
-        <button onclick="startQuiz()">Restart</button>
-    </div>
+<!-- Thank You Page -->
+<div id="thank-you" class="screen hidden">
+    <h2>Thank You for Completing the Quiz!</h2>
+    <p>Your responses have been recorded. We appreciate you!</p>
+    <p>We will be in touch soon. <3</p>
+</div>
 
-    <!-- Thank You Page -->
-    <div id="thank-you" class="screen">
-        <h2>Thank You for Completing the Quiz!</h2>
-        <p>Your responses have been recorded. We appreciate you!</p>
-        <p>We will be in touch soon. <3</p>
-    </div>
-
+<script src="script.js"></script>
     <!-- YouTube Player (Hidden) -->
     <div id="youtube-container">
         <iframe id="youtube-player" width="0" height="0" frameborder="0" allow="autoplay" src="https://www.youtube.com/embed/YOUR_PLAYLIST_ID?playlist=YOUR_PLAYLIST_ID&autoplay=1&loop=1&mute=1"></iframe>
     </div>
- <!-- Include the script -->
-    <script src="script.js"></script>
+
 </body>
 </html>
