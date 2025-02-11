@@ -1,83 +1,30 @@
-/* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-    color: #333;
     text-align: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* Screen layout */
 .screen {
     display: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
 }
 
-.screen.show {
-    display: block;
-    opacity: 1;
+.hidden {
+    display: none;
 }
 
-h1, h2 {
+h2 {
     color: #ff6f61;
 }
 
-/* Button styles */
 button {
-    padding: 15px 30px;
-    font-size: 18px;
+    margin: 10px;
+    padding: 10px 20px;
     background-color: #ff6f61;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 button:hover {
-    background-color: #ff4a3a;
-    transform: scale(1.05);
-}
-
-/* Input box */
-input {
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #ff6f61;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
-
-input:focus {
-    border-color: #ff4a3a;
-    outline: none;
-}
-
-/* Images */
-img {
-    max-width: 300px;
-    margin-top: 20px;
-    transition: transform 0.3s ease;
-}
-
-img:hover {
-    transform: scale(1.1);
-}
-
-/* Animation for fade in */
-@keyframes fadeInUp {
-    0% {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    background-color: #ff3b2a;
 }
