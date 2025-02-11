@@ -1,14 +1,13 @@
-// Track user progress
 let userProgress = {
     currentQuestion: "question1",
     correctAnswers: [],
     incorrectAnswers: []
 };
 
-// YouTube Player Variables
+// YouTube Playlist Variables
 let player;
-const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID"; // Replace with your YouTube playlist ID
-const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID"; // Replace with your YouTube playlist ID
+const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID";  // Replace with actual playlist ID
+const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID";  // Replace with actual playlist ID
 let currentPlaylist = correctPlaylistId;
 
 // Load YouTube API
@@ -36,13 +35,12 @@ function onYouTubeIframeAPIReady() {
     });
 }
 
-// Switch YouTube Playlist (Resume Where Left Off)
+// Switch YouTube Playlist
 function switchPlaylist(playlistId) {
     if (player) {
         player.loadPlaylist({
             list: playlistId,
             listType: "playlist",
-            index: 0, // Start from first video
             autoplay: 1
         });
     } else {
@@ -50,7 +48,7 @@ function switchPlaylist(playlistId) {
     }
 }
 
-// Function to show screens and hide others
+// Show a screen and hide others
 function showScreen(screenId) {
     document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.add("hidden");
@@ -58,16 +56,15 @@ function showScreen(screenId) {
     document.getElementById(screenId).classList.remove("hidden");
 }
 
-// Start Quiz
+// Start the quiz
 function startQuiz() {
     showScreen("question1");
-    switchPlaylist(correctPlaylistId); // Play correct playlist from start
+    switchPlaylist(correctPlaylistId);
 }
 
 // Check answers for correct path
-function checkAnswer(question, answer) {
-    if (answer === "correct") {
-        userProgress.correctAnswers.push(question);
+function checkAnswer(question, isCorrect) {
+    if (isCorrect) {
         if (question === "question1") {
             showScreen("question2");
         } else if (question === "question2") {
@@ -78,45 +75,41 @@ function checkAnswer(question, answer) {
     }
 }
 
-// Handle incorrect answers in the correct question path
+// Handle incorrect answers and show incorrect path
 function showIncorrectPath(question) {
-    switchPlaylist(incorrectPlaylistId); // Switch to incorrect playlist
+    switchPlaylist(incorrectPlaylistId);
     if (question === "question1") {
         showScreen("question-wrong1");
     } else if (question === "question2") {
         showScreen("question-wrong2");
-    } else if (question === "question3") {
-        showScreen("question-wrong3");
     }
 }
 
-// Handle incorrect questions and allow returning to correct path
+// Handle incorrect path with chance to return
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
         if (question === "question1") {
             showScreen("question1");
         } else if (question === "question2") {
             showScreen("question2");
-        } else if (question === "question3") {
-            showScreen("valentine");
         }
-        switchPlaylist(correctPlaylistId); // Resume correct playlist
+        switchPlaylist(correctPlaylistId);
     } else {
         showScreen("incorrect-final");
     }
 }
 
-// Flower answer check
+// Flower answer validation
 function checkFlowerAnswer() {
     const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
     if (answer === "tulips") {
-        checkAnswer("question2", "correct");
+        checkAnswer("question2", true);
     } else {
-        checkAnswer("question2", "wrong");
+        checkAnswer("question2", false);
     }
 }
 
-// Restart quiz function
+// Restart the quiz
 function restartQuiz() {
     userProgress = {
         currentQuestion: "question1",
@@ -127,11 +120,11 @@ function restartQuiz() {
     switchPlaylist(correctPlaylistId);
 }
 
-// Send email function (date selection)
+// Send email function
 function sendEmail() {
     const dateTime = document.getElementById("date-time").value;
     alert("Date and time confirmed: " + dateTime);
 }
 
-// Load YouTube API when page loads
+// Load YouTube API
 loadYouTubeAPI();
