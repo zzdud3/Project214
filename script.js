@@ -92,7 +92,7 @@ function checkWrongAnswer(question, isCorrect) {
         // Mark this incorrect question as answered incorrectly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
 
-        // Check if there are still unanswered incorrect questions
+        // Proceed through the incorrect questions until all are incorrect
         const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
 
         if (nextIncorrectQuestion) {
@@ -139,6 +139,7 @@ function goToDateSelection() {
 function sendEmail() {
     const dateTime = document.getElementById("date-time").value;
     alert("Date and time confirmed: " + dateTime);
+    showScreen("thank-you");
 }
 
 // Load YouTube API
