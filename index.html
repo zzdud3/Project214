@@ -87,14 +87,6 @@
         <button onclick="checkWrongAnswer('question-wrong1', false)">RG3's downfall</button>
         <button onclick="checkWrongAnswer('question-wrong1', true)">Finding out you breathe the same air as other men.</button>
         <button onclick="checkWrongAnswer('question-wrong1', false)">Getting old.</button>
-
-        <!-- Clickable Images -->
-        <a href="https://your-link-1.com" target="_blank">
-            <img src="image1.jpg" alt="Image 1" width="100" height="100">
-        </a>
-        <a href="https://your-link-2.com" target="_blank">
-            <img src="image2.jpg" alt="Image 2" width="100" height="100">
-        </a>
     </div>
 
     <div id="question-wrong2" class="screen hidden">
@@ -102,16 +94,16 @@
         <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
         <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
         <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
-
-        <!-- Clickable Images -->
-        <a href="https://your-link-1.com" target="_blank">
-            <img src="image1.jpg" alt="Image 1" width="100" height="100">
-        </a>
-        <a href="https://your-link-2.com" target="_blank">
-            <img src="image2.jpg" alt="Image 2" width="100" height="100">
-        </a>
     </div>
 
+    <div id="question-wrong3" class="screen hidden">
+        <h2>Which team is my favorite?</h2>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">Team A</button>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">Team B</button>
+        <button onclick="checkWrongAnswer('question-wrong3', true)">Team C</button>
+    </div>
+
+    <!-- Final Incorrect Screen -->
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, wrong path. Try again!</h2>
         <button onclick="restartQuiz()">Restart</button>
