@@ -92,6 +92,7 @@ function declineValentine() {
 }
 
 function goToDateSelection() {
+    console.log("User selected 'Yes' for Valentine's question. Moving to date selection.");
     showScreen("date-selection");
 }
 
