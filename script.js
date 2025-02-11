@@ -1,73 +1,54 @@
-let currentQuestionIndex = 0;
-let currentPath = "A";  // Tracks which path we're on
+// Global variable to keep track of the current question
+let currentQuestion = 0;
 
+// Initialize arrays for Path A and B questions
 const questionsPathA = [
-    { 
-        question: "Who are you?", 
-        correctAnswer: "Arianna OTJ", 
-        options: ["Arianna OTJ", "Mini Minaj", "MuscleMami", "Justin Bieber's wife"] 
-    },
-    { 
-        question: "What resides between your nose and chin?", 
-        correctAnswer: "tulips", 
-        type: "text"
-    },
-    { 
-        question: "What is my type?", 
-        correctAnswer: "Introverted", 
-        options: ["Introverted", "Extroverted", "Ambivert", "Maverick"] 
-    }
+    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 1" },
+    { question: "What resides between your nose and chin?", correct: "tulips" },
+    { question: "What is my type?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 2" }
 ];
 
 const questionsPathB = [
-    { 
-        question: "What was my Roman Empire?", 
-        correctAnswer: "Eagles superbowl win", 
-        options: ["RG3's downfall", "Eagles superbowl win", "Getting old"] 
-    },
-    { 
-        question: "What was the first set of flowers I got you?", 
-        correctAnswer: "Tulips", 
-        options: ["Lilies", "Tulips", "Carnations"]
-    },
-    { 
-        question: "Why did the tomato turn red?", 
-        correctAnswer: "Because it saw the salad dressing", 
-        options: ["It was ketchup to its friend", "Because it was a little shady", "Because it saw the salad dressing"]
-    }
+    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 2" },
+    { question: "What resides between your nose and chin?", correct: "tulips" },
+    { question: "What is my type?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correct: "Option 3" }
 ];
 
+// Function to start the quiz
 function startQuiz() {
-    document.getElementById('welcome-screen').style.display = 'none';
-    document.getElementById('question1').style.display = 'block';
+    document.getElementById('welcome-screen').classList.remove('show'); // Hide welcome screen
+    showQuestion(0); // Show the first question
 }
 
-function checkAnswer(questionId, selectedAnswer) {
-    const question = getCurrentQuestion();
-    const isCorrect = question.correctAnswer === selectedAnswer || (question.type === 'text' && selectedAnswer.toLowerCase().includes(question.correctAnswer.toLowerCase()));
+// Function to display the next question
+function showQuestion(questionIndex) {
+    currentQuestion = questionIndex;
 
-    if (isCorrect) {
-        proceedToNext();
+    // Hide all screens
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => screen.classList.remove('show'));
+
+    // Get the appropriate question screen
+    const currentQuestionScreen = document.getElementById(`question${currentQuestion + 1}`);
+    currentQuestionScreen.classList.add('show'); // Show the current question
+}
+
+// Function to handle question answering logic
+function answerQuestion(questionIndex, answer) {
+    const currentQuestionData = currentQuestion < questionsPathA.length ? questionsPathA[currentQuestion] : questionsPathB[currentQuestion];
+
+    if (answer === currentQuestionData.correct) {
+        if (currentQuestion < questionsPathA.length - 1) {
+            showQuestion(currentQuestion + 1); // Move to the next question
+        } else {
+            document.getElementById('thank-you').classList.add('show'); // Show the Thank You screen
+        }
     } else {
-        handleIncorrectAnswer();
+        // Handle incorrect answers, navigate through path B if necessary
+        if (currentQuestion < questionsPathA.length - 1) {
+            showQuestion(currentQuestion + 1); // Move to the next question in path B
+        } else {
+            document.getElementById('restart-screen').classList.add('show'); // Show restart screen if all questions answered incorrectly
+        }
     }
-}
-
-function proceedToNext() {
-    if (currentPath === "A" && currentQuestionIndex < questionsPathA.length - 1) {
-        currentQuestionIndex++;
-        document.getElementById('question' + (currentQuestionIndex + 1)).style.display = 'block';
-    } else {
-        document.getElementById('thank-you').style.display = 'block';
-    }
-}
-
-function handleIncorrectAnswer() {
-    currentPath = "B";
-    currentQuestionIndex = 0;
-    document.getElementById('restart-screen').style.display = 'block';
-}
-
-function getCurrentQuestion() {
-    return currentPath === "A" ? questionsPathA[currentQuestionIndex] : questionsPathB[currentQuestionIndex];
 }
