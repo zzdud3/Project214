@@ -69,7 +69,10 @@ input[type="text"], input[type="datetime-local"] {
 }
 
 iframe#bg-music {
-    display: none;
+    width: 1px;
+    height: 1px;
+    visibility: hidden;
+    position: absolute;
 }
 
 #thank-you, #incorrect-final {
