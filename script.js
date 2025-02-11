@@ -75,7 +75,7 @@ function showIncorrectPath(question) {
 // Handle incorrect path with chance to return
 function checkWrongAnswer(question, isCorrect) {
     const incorrectQuestionIndex = userProgress.incorrectQuestions.findIndex(q => q.question === question);
-    
+
     if (isCorrect) {
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
         if (question === "question-wrong1") {
@@ -90,7 +90,6 @@ function checkWrongAnswer(question, isCorrect) {
         if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly === false)) {
             showScreen("incorrect-final");
         } else {
-            // Move to the next incorrect question
             const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
             if (nextIncorrectQuestion) {
                 showScreen(nextIncorrectQuestion.question);
