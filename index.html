@@ -8,16 +8,12 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
         <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
         <button onclick="startQuiz()">Proceed</button>
-        <img src="your-image-link.jpg" alt="Welcome Image" id="welcome-image">
-    </div>
-
-    <!-- Hidden YouTube Player -->
-    <div id="youtube-container">
-        <iframe id="youtube-player" width="0" height="0" frameborder="0" allow="autoplay" src="https://www.youtube.com/embed/YOUR_PLAYLIST_ID?playlist=YOUR_PLAYLIST_ID&autoplay=1&loop=1&mute=1"></iframe>
+        <img src="welcome-image.jpg" alt="Welcome Image">
     </div>
 
     <!-- Question 1 (Path A) -->
@@ -27,32 +23,22 @@
         <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
         <button onclick="checkAnswer('question1', false)">MuscleMami</button>
         <button onclick="checkAnswer('question1', false)">Justin Bieber's wife</button>
-        <img src="your-image-link.jpg" alt="Question 1 Image" id="question1-image">
     </div>
 
-    <!-- Incorrect Questions (Path B) -->
-    <div id="question-wrong1" class="screen hidden">
-        <h2>What was my Roman Empire?</h2>
-        <button onclick="checkWrongAnswer('question-wrong1', false)">RG3's downfall</button>
-        <button onclick="checkWrongAnswer('question-wrong1', true)">Eagles superbowl win</button>
-        <button onclick="checkWrongAnswer('question-wrong1', false)">Getting old</button>
-        <img src="your-image-link.jpg" alt="Incorrect Question 1 Image" id="question-wrong1-image">
+    <!-- Question 2 (Path A) - Free Response -->
+    <div id="question2" class="screen hidden">
+        <h2>What resides between your nose and chin?</h2>
+        <input type="text" id="answer2">
+        <button onclick="checkFreeResponse('answer2', 'question2')">Submit</button>
     </div>
 
-    <div id="question-wrong2" class="screen hidden">
-        <h2>What was the first set of flowers I got you?</h2>
-        <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
-        <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
-        <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
-        <img src="your-image-link.jpg" alt="Incorrect Question 2 Image" id="question-wrong2-image">
-    </div>
-
-    <div id="question-wrong3" class="screen hidden">
-        <h2>Why did the tomato turn red?</h2>
-        <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
-        <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
-        <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
-        <img src="your-image-link.jpg" alt="Incorrect Question 3 Image" id="question-wrong3-image">
+    <!-- Question 3 (Path A) -->
+    <div id="question3" class="screen hidden">
+        <h2>What is my type?</h2>
+        <button onclick="checkAnswer('question3', true)">[Correct Answer]</button>
+        <button onclick="checkAnswer('question3', false)">Option 1</button>
+        <button onclick="checkAnswer('question3', false)">Option 2</button>
+        <button onclick="checkAnswer('question3', false)">Option 3</button>
     </div>
 
     <!-- Valentine Question -->
@@ -60,7 +46,28 @@
         <h2>Will you be my Valentine?</h2>
         <button onclick="goToDateSelection()">Yes</button>
         <button onclick="restartQuiz()">No</button>
-        <img src="your-image-link.jpg" alt="Valentine Question Image" id="valentine-image">
+    </div>
+
+    <!-- Path B Questions -->
+    <div id="question-wrong1" class="screen hidden">
+        <h2>What was my Roman Empire?</h2>
+        <button onclick="checkWrongAnswer('question-wrong1', false)">RG3's downfall</button>
+        <button onclick="checkWrongAnswer('question-wrong1', true)">Eagles Super Bowl win</button>
+        <button onclick="checkWrongAnswer('question-wrong1', false)">Getting old</button>
+    </div>
+
+    <div id="question-wrong2" class="screen hidden">
+        <h2>What was the first set of flowers I got you?</h2>
+        <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
+        <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
+        <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
+    </div>
+
+    <div id="question-wrong3" class="screen hidden">
+        <h2>Why did the tomato turn red?</h2>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
+        <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
+        <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
     </div>
 
     <!-- Date Selection -->
@@ -68,22 +75,19 @@
         <h2>Select a Date & Time</h2>
         <input type="datetime-local" id="date-time">
         <button onclick="sendEmail()">Confirm</button>
-        <img src="your-image-link.jpg" alt="Date Selection Image" id="date-selection-image">
     </div>
 
     <!-- Thank You Page -->
     <div id="thank-you" class="screen hidden">
         <h2>Thank You for Completing the Quiz!</h2>
-        <p>Your responses have been recorded. We appreciate you!</p>
         <button onclick="restartQuiz()">Restart</button>
-        <img src="your-image-link.jpg" alt="Thank You Image" id="thank-you-image">
     </div>
 
-    <!-- Final Incorrect Screen -->
+    <!-- Restart Page -->
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, maybe you ought to try harder.</h2>
         <button onclick="restartQuiz()">Restart</button>
-        <img src="your-image-link.jpg" alt="Final Incorrect Screen Image" id="incorrect-final-image">
     </div>
+
 </body>
 </html>
