@@ -1,38 +1,40 @@
-function loadBackgroundMusic() {
-    const musicContainer = document.getElementById("bg-music-container");
-    
-    // Clear existing iframe (prevents duplicates)
-    musicContainer.innerHTML = ""; 
-
-    // Create a new iframe dynamically
-    const iframe = document.createElement("iframe");
-    iframe.width = "0";
-    iframe.height = "0";
-    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ";
-    iframe.frameBorder = "0";
-    iframe.allow = "autoplay; encrypted-media";
-    iframe.allowFullscreen = true;
-
-    // Append iframe to container
-    musicContainer.appendChild(iframe);
-
-    console.log("Background music started.");
-}
-
-// Triggered when the user clicks "Proceed"
 function startQuiz() {
     console.log("Starting quiz, moving to first question.");
-    
-    // Start background music
-    loadBackgroundMusic();
 
-    // Ensure transition to the first question
+    // Start background music
+    unmuteBackgroundMusic();
+
+    // Ensure transition to first question
     showScreen("question1");
 }
 
+// Function to unmute and restart background music
+function unmuteBackgroundMusic() {
+    const bgMusic = document.getElementById("bg-music");
+
+    if (bgMusic) {
+        // Completely remove & recreate the iframe to force playback
+        const parent = bgMusic.parentNode;
+        parent.removeChild(bgMusic);
+
+        const newIframe = document.createElement("iframe");
+        newIframe.id = "bg-music";
+        newIframe.width = "0";
+        newIframe.height = "0";
+        newIframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&mute=0&playlist=CBx6e9cZlBQ";
+        newIframe.frameBorder = "0";
+        newIframe.allow = "autoplay; encrypted-media";
+        
+        parent.appendChild(newIframe);
+
+        console.log("Background music unmuted and playing.");
+    }
+}
+
+// Function to display the correct screen
 function showScreen(screenId) {
     console.log(`showScreen(${screenId})`);
-    
+
     // Hide all screens
     document.querySelectorAll(".screen").forEach(screen => {
         screen.classList.add("hidden");
