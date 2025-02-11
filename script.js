@@ -1,46 +1,58 @@
-// On page load, ensure the welcome screen is visible
-window.onload = function() {
-    document.getElementById("welcome-screen").classList.remove("hidden");
-};
+document.addEventListener("DOMContentLoaded", function () {
+    showScreen("welcome-screen");
+});
 
-// Start the quiz when the "Proceed" button is clicked
 function startQuiz() {
-    document.getElementById("welcome-screen").classList.add("hidden");
-    document.getElementById("question1").classList.remove("hidden");
+    showScreen("question1");
 }
 
-// Handle correct answers for Path A
-function checkAnswer(questionId, isCorrect) {
+function checkAnswer(question, isCorrect) {
     if (isCorrect) {
-        if (questionId === "question1") {
-            document.getElementById("question1").classList.add("hidden");
-            document.getElementById("question-wrong1").classList.remove("hidden");
-        }
+        if (question === "question1") showScreen("question2");
+        else if (question === "question2") showScreen("question3");
+        else if (question === "question3") showScreen("valentine");
     } else {
-        document.getElementById(questionId).classList.add("hidden");
-        document.getElementById("question-wrong1").classList.remove("hidden");
+        if (question === "question1") showScreen("question-wrong1");
+        else showScreen("question-wrong2");
     }
 }
 
-// Handle incorrect answers for Path B
-function checkWrongAnswer(questionId, isCorrect) {
-    if (isCorrect) {
-        document.getElementById(questionId).classList.add("hidden");
-        document.getElementById("question-wrong2").classList.remove("hidden");
+function checkFreeResponse(inputId, question) {
+    let answer = document.getElementById(inputId).value.toLowerCase();
+    if (answer.includes("tulips")) {
+        showScreen("question3");
     } else {
-        document.getElementById(questionId).classList.add("hidden");
-        document.getElementById("question-wrong3").classList.remove("hidden");
+        showScreen("question-wrong1");
     }
 }
 
-// Valentine’s Question Logic
+function checkWrongAnswer(question, isCorrect) {
+    if (isCorrect) {
+        if (question === "question-wrong1") showScreen("question2");
+        else if (question === "question-wrong2") showScreen("question3");
+        else if (question === "question-wrong3") showScreen("question3");
+    } else {
+        if (question === "question-wrong1") showScreen("question-wrong2");
+        else if (question === "question-wrong2") showScreen("question-wrong3");
+        else showScreen("incorrect-final");
+    }
+}
+
 function goToDateSelection() {
-    document.getElementById("valentine").classList.add("hidden");
-    document.getElementById("date-selection").classList.remove("hidden");
+    showScreen("date-selection");
+}
+
+function sendEmail() {
+    showScreen("thank-you");
 }
 
 function restartQuiz() {
-    document.getElementById("thank-you").classList.add("hidden");
-    document.getElementById("incorrect-final").classList.add("hidden");
-    document.getElementById("welcome-screen").classList.remove("hidden");
+    showScreen("welcome-screen");
+}
+
+function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+    });
+    document.getElementById(screenId).classList.remove("hidden");
 }
