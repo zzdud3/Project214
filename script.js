@@ -78,6 +78,8 @@ function checkWrongAnswer(question, isCorrect) {
 
     if (isCorrect) {
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = true;
+
+        // Move to the next question in the correct path
         if (question === "question-wrong1") {
             showScreen("question1");
         } else if (question === "question-wrong2") {
@@ -87,12 +89,15 @@ function checkWrongAnswer(question, isCorrect) {
         }
     } else {
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
+
+        // Proceed through the incorrect questions until all are incorrect
         const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
 
-        if (!nextIncorrectQuestion) {
-            showScreen("incorrect-final");
-        } else {
+        if (nextIncorrectQuestion) {
             showScreen(nextIncorrectQuestion.question);
+        } else {
+            // If all incorrect questions are exhausted, show the restart screen
+            showScreen("incorrect-final");
         }
     }
 }
