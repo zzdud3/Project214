@@ -87,6 +87,8 @@ function goToDateSelection() {
   showScreen("date-selection");
 }
 
+let userSelections = {}; // Global object to store user choices
+
 function proceedToPreferences() {
   userSelections.dateTime = document.getElementById("date-time").value;
   showScreen("cuisine");
@@ -99,14 +101,32 @@ function selectCuisine(choice) {
 
 function selectActivity(choice) {
   userSelections.activity = choice;
-  sendEmail();
+  sendEmail(); // Send email once all choices are made
 }
 
 function sendEmail() {
-  userSelections.dateTime = document.getElementById("date-time").value; // Fixed reference
-  console.log("Sending Email:", userSelections);
-  showScreen("thank-you");
+  // Ensure all selections are stored
+  userSelections.dateTime = document.getElementById("date-time").value;
+
+  let emailRecipient = "rehmanzaine9@gmail.com"; // Replace with your actual email
+  let subject = "Valentine's Date Selection"; 
+  let body = `Here are the selected details for our date: 
+
+- **Date & Time:** ${userSelections.dateTime} 
+- **Cuisine Preference:** ${userSelections.cuisine} 
+- **Activity Choice:** ${userSelections.activity} 
+
+Looking forward to it! 😊`;
+
+  // Create mailto link to open email client
+  let mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  // Open user's default email client with prefilled details
+  window.location.href = mailtoLink;
+
+  showScreen("thank-you"); // Redirect to the thank-you page
 }
+
 
 function restartQuiz() {
   pathACurrent = "question1";
