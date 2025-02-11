@@ -3,29 +3,28 @@ document.addEventListener("DOMContentLoaded", function () {
   showScreen("welcome-screen");
 
   // Ensure background music plays immediately
-  setTimeout(playBackgroundMusic, 1000);
+  playBackgroundMusic();
 });
 
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=0";
-    bgMusic.allow = "autoplay";
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=1";
     console.log("Background music started.");
   } else {
     console.error("Background music element not found.");
   }
 }
 
+
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
 const pathBQuestions = ["question-wrong1", "question-wrong2", "question-wrong3"];
 let pathBUsed = [false, false, false];
-let pathBCompleted = [false, false, false];
 let userSelections = { dateTime: "", cuisine: "", activity: "" };
 
 function checkAnswer(currentQuestionId, isCorrect) {
-  console.log(`checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect}`);
+  console.log(checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect});
   if (isCorrect) {
     advancePathA(currentQuestionId);
   } else {
@@ -55,7 +54,7 @@ function advancePathA(currentQuestionId) {
 }
 
 function goToNextPathB() {
-  const nextIndex = pathBUsed.findIndex(used => !used);
+  const nextIndex = pathBUsed.findIndex(used => used === false);
   if (nextIndex === -1) {
     showScreen("incorrect-final");
   } else {
@@ -65,22 +64,11 @@ function goToNextPathB() {
 }
 
 function checkWrongAnswer(pathBQuestionId, isCorrect) {
-  console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
-  const questionIndex = pathBQuestions.indexOf(pathBQuestionId);
+  console.log(checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect});
   if (isCorrect) {
-    pathBCompleted[questionIndex] = true;
-    if (pathBCompleted.every(completed => completed)) {
-      showScreen(pathACurrent);
-    } else {
-      goToNextPathB();
-    }
+    showScreen(pathACurrent);
   } else {
-    pathBUsed[questionIndex] = true;
-    if (pathBUsed.every(used => used)) {
-      showScreen("incorrect-final");
-    } else {
-      goToNextPathB();
-    }
+    goToNextPathB();
   }
 }
 
@@ -108,7 +96,7 @@ function selectActivity(choice) {
 }
 
 function sendEmail() {
-  userSelections.dateTime = document.getElementById("date-time").value;
+  userSelections.dateTime = document.getElementById("final-date-time").value;
   console.log("Sending Email:", userSelections);
   showScreen("thank-you");
 }
@@ -116,13 +104,12 @@ function sendEmail() {
 function restartQuiz() {
   pathACurrent = "question1";
   pathBUsed = [false, false, false];
-  pathBCompleted = [false, false, false];
   userSelections = { dateTime: "", cuisine: "", activity: "" };
   showScreen("welcome-screen");
 }
 
 function showScreen(screenId) {
-  console.log(`showScreen(${screenId})`);
+  console.log(showScreen(${screenId}));
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.add("hidden");
   });
