@@ -9,70 +9,101 @@
 <body>
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
-        <h2>Welcome to the Valentine's Quiz!</h2>
+        <h1>Welcome to the Valentine's Quiz!</h1>
         <button onclick="startQuiz()">Proceed</button>
+        <img src="path_to_image_1.jpg" alt="Welcome Image">
     </div>
 
-    <!-- Question 1 (Path A) -->
-    <div id="question1" class="screen hidden">
+    <!-- Path A Questions -->
+    <div id="question1" class="screen">
         <h2>Who are you?</h2>
-        <button onclick="checkAnswer(1, 'Option 1')">Option 1</button>
-        <button onclick="checkAnswer(1, 'Option 2')">Option 2</button>
-        <button onclick="checkAnswer(1, 'Option 3')">Option 3</button>
-        <button onclick="checkAnswer(1, 'Option 4')">Option 4</button>
+        <button onclick="answerQuestion('question1', 'Option 1')">Option 1</button>
+        <button onclick="answerQuestion('question1', 'Option 2')">Option 2</button>
+        <button onclick="answerQuestion('question1', 'Option 3')">Option 3</button>
+        <button onclick="answerQuestion('question1', 'Option 4')">Option 4</button>
+        <img src="path_to_image_1.jpg" alt="Image 1">
+        <img src="path_to_image_2.jpg" alt="Image 2">
     </div>
 
-    <!-- Question 2 (Path A) - Free-text -->
-    <div id="question2" class="screen hidden">
+    <div id="question2" class="screen">
         <h2>What resides between your nose and chin?</h2>
         <input type="text" id="answer" placeholder="Type your answer here">
-        <button onclick="checkAnswer(2, document.getElementById('answer').value)">Submit</button>
+        <button onclick="checkAnswer('question2', document.getElementById('answer').value)">Submit</button>
     </div>
 
-    <!-- Question 3 (Path A) -->
-    <div id="question3" class="screen hidden">
+    <div id="question3" class="screen">
         <h2>What is my type?</h2>
-        <button onclick="checkAnswer(3, 'Introverted')">Introverted</button>
-        <button onclick="checkAnswer(3, 'Extroverted')">Extroverted</button>
-        <button onclick="checkAnswer(3, 'Ambivert')">Ambivert</button>
-        <button onclick="checkAnswer(3, 'Maverick')">Maverick</button>
+        <button onclick="checkAnswer('question3', 'Introverted')">Introverted</button>
+        <button onclick="checkAnswer('question3', 'Extroverted')">Extroverted</button>
+        <button onclick="checkAnswer('question3', 'Ambivert')">Ambivert</button>
+        <button onclick="checkAnswer('question3', 'Maverick')">Maverick</button>
     </div>
 
-    <!-- Question 1 (Path B) -->
-    <div id="question4" class="screen hidden">
+    <!-- Path B Questions -->
+    <div id="question4" class="screen">
         <h2>What was my Roman Empire?</h2>
-        <button onclick="checkAnswer(4, 'Eagles superbowl win')">Eagles superbowl win</button>
-        <button onclick="checkAnswer(4, 'RG3\'s downfall')">RG3's downfall</button>
-        <button onclick="checkAnswer(4, 'Getting old')">Getting old</button>
+        <button onclick="checkAnswer('question4', 'Eagles superbowl win')">Eagles superbowl win</button>
+        <button onclick="checkAnswer('question4', 'RG3\'s downfall')">RG3's downfall</button>
+        <button onclick="checkAnswer('question4', 'Getting old')">Getting old</button>
     </div>
 
-    <!-- Question 2 (Path B) -->
-    <div id="question5" class="screen hidden">
+    <div id="question5" class="screen">
         <h2>What was the first set of flowers I got you?</h2>
-        <button onclick="checkAnswer(5, 'Tulips')">Tulips</button>
-        <button onclick="checkAnswer(5, 'Lilies')">Lilies</button>
-        <button onclick="checkAnswer(5, 'Carnations')">Carnations</button>
+        <button onclick="checkAnswer('question5', 'Tulips')">Tulips</button>
+        <button onclick="checkAnswer('question5', 'Lilies')">Lilies</button>
+        <button onclick="checkAnswer('question5', 'Carnations')">Carnations</button>
     </div>
 
-    <!-- Question 3 (Path B) -->
-    <div id="question6" class="screen hidden">
+    <div id="question6" class="screen">
         <h2>Why did the tomato turn red?</h2>
-        <button onclick="checkAnswer(6, 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
-        <button onclick="checkAnswer(6, 'It was ketchup to its friend')">It was ketchup to its friend</button>
-        <button onclick="checkAnswer(6, 'Because it was a little shady')">Because it was a little shady</button>
+        <button onclick="checkAnswer('question6', 'Because it saw the salad dressing')">Because it saw the salad dressing</button>
+        <button onclick="checkAnswer('question6', 'It was ketchup to its friend')">It was ketchup to its friend</button>
+        <button onclick="checkAnswer('question6', 'Because it was a little shady')">Because it was a little shady</button>
     </div>
 
     <!-- Restart Page -->
-    <div id="restart-screen" class="screen hidden">
+    <div id="restart-screen" class="screen">
         <h2>Sorry, please try again!</h2>
         <button onclick="startQuiz()">Restart</button>
     </div>
 
     <!-- Thank You Page -->
-    <div id="thank-you" class="screen hidden">
+    <div id="thank-you" class="screen">
         <h2>Thank You for Completing the Quiz!</h2>
         <p>Your responses have been recorded. We appreciate you!</p>
         <p>We will be in touch soon. <3</p>
+    </div>
+
+    <!-- Date and Time Selection Page -->
+    <div id="date-time-selection" class="screen hidden">
+        <h2>When would you like to proceed?</h2>
+        <input type="datetime-local" id="datetime">
+        <button onclick="showCuisinePage()">Proceed</button>
+    </div>
+
+    <!-- Cuisine Page -->
+    <div id="cuisine" class="screen hidden">
+        <h2>Cuisine?</h2>
+        <img src="path_to_cuisine_image.jpg" alt="Cuisine Image">
+        <button onclick="answerCuisine('Italian')">Italian</button>
+        <button onclick="answerCuisine('Mexican')">Mexican</button>
+        <button onclick="answerCuisine('Japanese')">Japanese</button>
+    </div>
+
+    <!-- Activity Page -->
+    <div id="activity" class="screen hidden">
+        <h2>Activity?</h2>
+        <img src="path_to_activity_image.jpg" alt="Activity Image">
+        <button onclick="answerActivity('Movie')">Movie</button>
+        <button onclick="answerActivity('Dinner')">Dinner</button>
+        <button onclick="answerActivity('Bowling')">Bowling</button>
+    </div>
+
+    <!-- When Page -->
+    <div id="when" class="screen hidden">
+        <h2>When?</h2>
+        <input type="datetime-local" id="when-time">
+        <button onclick="submitAnswers()">Submit</button>
     </div>
 
     <script src="script.js"></script>
