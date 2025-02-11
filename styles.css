@@ -1,7 +1,9 @@
+/* Minimalistic Valentine's Day Theme */
+
 body {
     font-family: 'Georgia', serif;
-    background-color: #fff0f5;
-    color: #b22222;
+    background-color: #fff0f5; /* Light pink/lavender */
+    color: #b22222; /* FireBrick color */
     text-align: center;
     margin: 0;
     padding: 0;
@@ -26,7 +28,7 @@ body {
 }
 
 button {
-    background-color: #ff69b4;
+    background-color: #ff69b4; /* Hot Pink */
     border: none;
     padding: 10px 20px;
     color: white;
@@ -39,7 +41,7 @@ button {
 }
 
 button:hover {
-    background-color: #ff1493;
+    background-color: #ff1493; /* Deep Pink */
 }
 
 h1, h2 {
@@ -53,7 +55,7 @@ h1 {
 
 h2 {
     font-size: 22px;
-    color: #c71585;
+    color: #c71585; /* MediumVioletRed */
 }
 
 img {
@@ -64,7 +66,8 @@ img {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-input[type="text"], input[type="datetime-local"] {
+input[type=\"text\"],
+input[type=\"datetime-local\"] {
     padding: 10px;
     border: 1px solid #ff69b4;
     border-radius: 5px;
@@ -79,6 +82,7 @@ input:focus {
     border-color: #ff1493;
 }
 
+/* Hide the iframe visually (but keep it playing) */
 #bg-music {
     display: none;
 }
