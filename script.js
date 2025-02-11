@@ -6,8 +6,8 @@ let userProgress = {
 
 // YouTube Playlist Variables
 let player;
-const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID";  // Replace with actual playlist ID
-const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID";  // Replace with actual playlist ID
+const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID";  // Replace with your YouTube Playlist ID
+const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID";  // Replace with your YouTube Playlist ID
 let currentPlaylist = correctPlaylistId;
 
 // Load YouTube API
@@ -89,31 +89,24 @@ function showIncorrectPath(question) {
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
         if (question === "question1") {
-            showScreen("question1");
+            showScreen("question1");  // Go back to the correct question1 path
         } else if (question === "question2") {
-            showScreen("question2");
+            showScreen("question2");  // Go back to the correct question2 path
         }
-        switchPlaylist(correctPlaylistId);
+        switchPlaylist(correctPlaylistId);  // Correct playlist
     } else {
-        showScreen("incorrect-final");
+        showScreen("incorrect-final");  // If still incorrect after retrying
     }
 }
 
 // Flower answer validation
 function checkFlowerAnswer() {
     const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
-    if (answer.length > 0) { // Proceed even if the answer is incorrect
-        if (answer === "tulips") {
-            checkAnswer("question2", true); // Correct answer
-        } else {
-            checkAnswer("question2", false); // Incorrect answer
-        }
+    if (answer === "tulips") {
+        checkAnswer("question2", true);
+    } else {
+        checkAnswer("question2", false);
     }
-}
-
-// Valentine path navigation
-function goToDateSelection() {
-    showScreen("date-selection");
 }
 
 // Restart the quiz
@@ -127,11 +120,11 @@ function restartQuiz() {
     switchPlaylist(correctPlaylistId);
 }
 
-// Send email function
+// Send email function for Date confirmation
 function sendEmail() {
     const dateTime = document.getElementById("date-time").value;
     alert("Date and time confirmed: " + dateTime);
 }
 
-// Load YouTube API
+// Load YouTube API for video/audio functionality
 loadYouTubeAPI();
