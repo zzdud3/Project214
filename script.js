@@ -14,6 +14,7 @@ const questionsPathB = [
 // Track the current question indices for Path A and Path B
 let currentPathAIndex = 0;
 let currentPathBIndex = 0;
+let answeredIncorrectlyPathB = [];
 
 // Function to start the quiz
 function startQuiz() {
@@ -81,13 +82,40 @@ function checkAnswer(questionNumber, selectedAnswer) {
         correctAnswer = questionsPathB[questionNumber - 4].correctAnswer;
         nextQuestionNumber = questionNumber + 1;
 
-        // For multiple-choice questions in Path B, check if the selected option matches the correct answer
-        if (selectedAnswer === correctAnswer) {
-            proceedToNextQuestion(nextQuestionNumber);
-        } else {
+        // If the current Path B question was answered incorrectly, add it to the "answeredIncorrectlyPathB" list
+        if (selectedAnswer !== correctAnswer) {
+            answeredIncorrectlyPathB.push(questionNumber);
+        }
+
+        // If all Path B questions are answered incorrectly, show the restart screen
+        if (answeredIncorrectlyPathB.length === 3) {
             showRestartScreen();
+        } else {
+            // Proceed to the next question in Path B if the answer is correct
+            if (selectedAnswer === correctAnswer) {
+                proceedToNextQuestion(nextQuestionNumber);
+            } else {
+                // Show the next question in Path B, without repeating the already attempted ones
+                let nextUnansweredQuestion = getNextUnansweredQuestion();
+                if (nextUnansweredQuestion !== null) {
+                    showQuestion(nextUnansweredQuestion);
+                } else {
+                    showRestartScreen();
+                }
+            }
         }
     }
+}
+
+// Function to get the next unanswered question from Path B
+function getNextUnansweredQuestion() {
+    // Look for the next question that has not been answered incorrectly yet
+    for (let i = currentPathBIndex; i < questionsPathB.length; i++) {
+        if (!answeredIncorrectlyPathB.includes(i + 4)) {
+            return i + 4;
+        }
+    }
+    return null;
 }
 
 // Function to proceed to the next question
@@ -106,6 +134,7 @@ function proceedToNextQuestion(nextQuestionNumber) {
 // Function to show the Restart screen
 function showRestartScreen() {
     document.getElementById('restart-screen').classList.remove('hidden');
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
 }
 
 // Function to show the Thank You screen
@@ -118,6 +147,7 @@ function showThankYouScreen() {
 function restartQuiz() {
     currentPathAIndex = 0;
     currentPathBIndex = 0;
+    answeredIncorrectlyPathB = [];
     document.getElementById('welcome-screen').classList.remove('hidden');
     document.getElementById('restart-screen').classList.add('hidden');
     document.getElementById('thank-you').classList.add('hidden');
