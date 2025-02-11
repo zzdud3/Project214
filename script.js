@@ -1,89 +1,161 @@
-// Define Path A and Path B questions with the correct answers
+let currentQuestionIndex = 0;
+let pathBIndex = 0;
+let selectedDate = '';
+let cuisineAnswer = '';
+let activityAnswer = '';
+let whenAnswer = '';
+
 const questionsPathA = [
-    { question: "Who are you?", options: ["Option 1"], correct: 0 },
-    { question: "What resides between your nose and chin?", correctAnswer: "tulips", type: "freeResponse" },
-    { question: "What is my type?", options: ["Maverick"], correct: 0 }
+    { id: 'question1', correct: 'Option 2', next: 'question2' },
+    { id: 'question2', correct: 'tulips', next: 'question3' },
+    { id: 'question3', correct: 'Introverted', next: 'valentines-question' }
 ];
 
 const questionsPathB = [
-    { question: "What was my Roman Empire?", options: ["Eagles superbowl win"], correct: 0 },
-    { question: "What was the first set of flowers I got you?", options: ["Carnations"], correct: 0 },
-    { question: "Why did the tomato turn red?", options: ["Because it saw the salad dressing"], correct: 0 }
+    { id: 'question4', correct: 'Eagles superbowl win', next: 'question2' },
+    { id: 'question5', correct: 'Tulips', next: 'question3' },
+    { id: 'question6', correct: 'Because it saw the salad dressing', next: 'question1' }
 ];
 
-// Track the current question indices for Path A and Path B
-let currentPathAIndex = 0;
-let currentPathBIndex = 0;
+let pathBAnswered = new Set(); // Keeps track of answered Path B questions
 
-// Function to start the quiz
 function startQuiz() {
+    hideAllScreens();
     document.getElementById('welcome-screen').classList.add('hidden');
-    showQuestion('question1', questionsPathA);
+    document.getElementById(questionsPathA[0].id).classList.remove('hidden');
+    currentQuestionIndex = 0;
+    pathBIndex = 0;
+    pathBAnswered.clear();
 }
 
-// Function to show the questions
-function showQuestion(questionId, path) {
-    const question = path[currentPathAIndex] || path[currentPathBIndex];
-    if (question) {
-        const questionContainer = document.getElementById(questionId);
-        questionContainer.classList.remove('hidden');
-        document.querySelector(`#${questionId} h2`).textContent = question.question;
+function hideAllScreens() {
+    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+}
 
-        // For multiple-choice questions, populate the options
-        if (question.options) {
-            question.options.forEach((option, index) => {
-                document.querySelector(`#${questionId} button:nth-child(${index + 1})`).textContent = option;
-            });
+function answerQuestion(questionId, selectedAnswer) {
+    const currentQuestion = questionsPathA.find(q => q.id === questionId);
+    if (currentQuestion) {
+        if (selectedAnswer.toLowerCase() === currentQuestion.correct.toLowerCase()) {
+            showNextQuestion(currentQuestion.next);
+        } else {
+            showNextPathBQuestion();
         }
     }
 }
 
-// Function to check the answers
 function checkAnswer(questionId, selectedAnswer) {
-    const question = questionsPathA[currentPathAIndex] || questionsPathB[currentPathBIndex];
-
-    if (question) {
-        // For multiple-choice questions, check the selected answer
-        if (question.options) {
-            if (selectedAnswer === question.options[question.correct]) {
-                proceedToNextQuestion();
-            } else {
-                showRestartScreen();
-            }
-        }
-        // For free-text questions, check the entered answer
-        else if (question.type === "freeResponse") {
-            if (selectedAnswer.toLowerCase().includes(question.correctAnswer.toLowerCase())) {
-                proceedToNextQuestion();
-            } else {
-                showRestartScreen();
-            }
+    const currentQuestion = questionsPathB.find(q => q.id === questionId);
+    if (currentQuestion) {
+        if (selectedAnswer.toLowerCase() === currentQuestion.correct.toLowerCase()) {
+            showNextQuestion(currentQuestion.next);
+        } else {
+            pathBAnswered.add(questionId);
+            showNextPathBQuestion();
         }
     }
 }
 
-// Proceed to the next question
-function proceedToNextQuestion() {
-    // If it's Path A, move to the next question
-    if (currentPathAIndex < questionsPathA.length - 1) {
-        currentPathAIndex++;
-        showQuestion(`question${currentPathAIndex + 1}`, questionsPathA);
+function showNextPathBQuestion() {
+    hideAllScreens();
+
+    // Check if all Path B questions have been attempted
+    if (pathBAnswered.size >= questionsPathB.length) {
+        showRestartScreen();
+        return;
+    }
+
+    // Find next unanswered Path B question
+    while (pathBIndex < questionsPathB.length) {
+        let nextQuestion = questionsPathB[pathBIndex];
+        pathBIndex++;
+        if (!pathBAnswered.has(nextQuestion.id)) {
+            document.getElementById(nextQuestion.id).classList.remove('hidden');
+            return;
+        }
+    }
+
+    showRestartScreen();
+}
+
+function showNextQuestion(nextQuestionId) {
+    hideAllScreens();
+    if (nextQuestionId === 'valentines-question') {
+        document.getElementById(nextQuestionId).classList.remove('hidden');
     } else {
-        // If it's Path B, proceed to Path B
-        showQuestion(`question${currentPathBIndex + 4}`, questionsPathB);
+        document.getElementById(nextQuestionId).classList.remove('hidden');
     }
 }
 
-// Show the Restart screen if the answers are wrong
-function showRestartScreen() {
-    document.getElementById('restart-screen').classList.remove('hidden');
+function handleValentinesAnswer(answer) {
+    if (answer === 'Yes') {
+        showDateAndTimePage();
+    } else {
+        showRestartScreen();
+    }
 }
 
-// Restart the quiz
-function restartQuiz() {
-    currentPathAIndex = 0;
-    currentPathBIndex = 0;
-    document.getElementById('welcome-screen').classList.remove('hidden');
-    document.getElementById('restart-screen').classList.add('hidden');
-    document.getElementById('thank-you').classList.add('hidden');
+function showDateAndTimePage() {
+    hideAllScreens();
+    document.getElementById('date-time-selection').classList.remove('hidden');
+}
+
+function showCuisinePage() {
+    selectedDate = document.getElementById('datetime').value;
+    hideAllScreens();
+    document.getElementById('cuisine').classList.remove('hidden');
+}
+
+function answerCuisine(answer) {
+    cuisineAnswer = answer;
+    showActivityPage();
+}
+
+function showActivityPage() {
+    hideAllScreens();
+    document.getElementById('activity').classList.remove('hidden');
+}
+
+function answerActivity(answer) {
+    activityAnswer = answer;
+    showWhenPage();
+}
+
+function showWhenPage() {
+    hideAllScreens();
+    document.getElementById('when').classList.remove('hidden');
+}
+
+function captureWhen() {
+    whenAnswer = document.getElementById('when-time').value;
+    submitAnswers();
+}
+
+function submitAnswers() {
+    const emailContent = `
+        Cuisine: ${cuisineAnswer}
+        Activity: ${activityAnswer}
+        When: ${whenAnswer}
+        Date Selected: ${selectedDate}
+    `;
+    
+    sendEmail(emailContent);
+    showThankYouScreen();
+}
+
+function sendEmail(content) {
+    const email = "youremail@example.com"; 
+    const subject = "Quiz Responses";
+    const body = encodeURIComponent(content);
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+}
+
+function showThankYouScreen() {
+    hideAllScreens();
+    document.getElementById('thank-you').classList.remove('hidden');
+}
+
+function showRestartScreen() {
+    hideAllScreens();
+    document.getElementById('restart-screen').classList.remove('hidden');
 }
