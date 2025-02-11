@@ -2,19 +2,39 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM fully loaded. Showing welcome screen...");
   showScreen("welcome-screen");
 
-  // Ensure background music plays immediately
-  playBackgroundMusic();
+  // Load background music (muted initially)
+  initializeBackgroundMusic();
 });
 
-function playBackgroundMusic() {
+function initializeBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=1";
-    console.log("Background music started.");
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=1"; 
+    console.log("Background music initialized (muted).");
   } else {
     console.error("Background music element not found.");
   }
 }
+
+// Function to unmute music after user interaction
+function unmuteBackgroundMusic() {
+  const bgMusic = document.getElementById("bg-music");
+  if (bgMusic) {
+    let src = bgMusic.src;
+    if (!src.includes("mute=0")) {
+      bgMusic.src = src.replace("mute=1", "mute=0"); 
+      console.log("Background music unmuted.");
+    }
+  }
+}
+
+// Modified startQuiz to unmute music when proceeding
+function startQuiz() {
+  console.log("Starting quiz, moving to first question.");
+  unmuteBackgroundMusic(); // Unmute music on user interaction
+  showScreen("question1");
+}
+
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
