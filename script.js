@@ -2,6 +2,7 @@ let currentPath = 'A'; // Start path A
 let currentQuestion = 1; // Start with question 1
 
 function startQuiz() {
+    // Hide welcome screen and show the first question
     document.getElementById('welcome-screen').classList.add('hidden');
     document.getElementById('question1').classList.remove('hidden');
 }
@@ -52,6 +53,7 @@ function handlePathB() {
 }
 
 function restartQuiz() {
+    // Reset everything to the starting point
     document.getElementById('thank-you').classList.add('hidden');
     document.getElementById('incorrect-final').classList.add('hidden');
     document.getElementById('welcome-screen').classList.remove('hidden');
