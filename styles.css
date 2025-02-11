@@ -1,110 +1,26 @@
-/* General Styling */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #fef6fb; /* Soft pinkish-white */
-    color: #5a4a62; /* Elegant deep purple */
+    font-family: 'Arial', sans-serif;
     text-align: center;
-    margin: 0;
-    padding: 0;
+    background-color: #ffe4e1;
+    color: #5a3e36;
 }
 
-/* Styling for all screens */
 .screen {
     display: none;
-    width: 90%;
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
 }
 
-/* Show active screens */
 .screen.active {
     display: block;
-    opacity: 1;
-    transform: translateY(0);
 }
 
-/* Welcome Screen Styling */
-#welcome-screen h1 {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #d17b88; /* Soft rose */
-}
-
-/* Buttons */
 button {
-    background: linear-gradient(135deg, #e6a4b4, #fbc2eb);
+    background-color: #ffb6c1;
     color: white;
+    padding: 10px 20px;
     border: none;
-    padding: 12px 20px;
-    font-size: 1rem;
-    border-radius: 25px;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    margin: 10px;
-    font-weight: bold;
 }
 
 button:hover {
-    background: linear-gradient(135deg, #fbc2eb, #e6a4b4);
-    transform: scale(1.05);
+    background-color: #ff69b4;
 }
-
-/* Inputs */
-input[type="text"], input[type="datetime-local"] {
-    width: 80%;
-    padding: 10px;
-    border: 1px solid #e6a4b4;
-    border-radius: 5px;
-    font-size: 1rem;
-    margin-top: 10px;
-}
-
-/* Question Styling */
-h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #9a6b83; /* Soft plum */
-    margin-bottom: 15px;
-}
-
-/* Image Styling */
-img {
-    width: 80%;
-    max-width: 300px;
-    border-radius: 10px;
-    margin: 10px auto;
-    display: block;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-/* Valentine's Question Styling */
-#valentines-question {
-    background: linear-gradient(135deg, #fbc2eb, #e6a4b4);
-    color: white;
-    padding: 30px;
-    border-radius: 15px;
-}
-
-/* Thank You Page */
-#thank-you {
-    background: #fff7f8;
-    color: #8a4a64;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-/* Restart Screen */
-#restart-screen {
-    background: #ffe3e3;
-    color: #773344;
-    padding: 30px;
-    border-radius: 10px;
-}
-
-/* Animations */
-@k
