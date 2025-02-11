@@ -1,3 +1,4 @@
+// User Progress
 let userProgress = {
     currentQuestion: "question1",
     correctAnswers: [],
@@ -6,8 +7,8 @@ let userProgress = {
 
 // YouTube Playlist Variables
 let player;
-const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID";  // Replace with your YouTube Playlist ID
-const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID";  // Replace with your YouTube Playlist ID
+const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID"; // Replace with actual playlist ID
+const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID"; // Replace with actual playlist ID
 let currentPlaylist = correctPlaylistId;
 
 // Load YouTube API
@@ -88,15 +89,14 @@ function showIncorrectPath(question) {
 // Handle incorrect path with chance to return
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
-        // Correct answer in incorrect path, return to the main path
         if (question === "question1") {
-            showScreen("question2");  // Correct main path question
+            showScreen("question1");
         } else if (question === "question2") {
-            showScreen("valentine");  // Correct main path question
+            showScreen("question2");
         }
-        switchPlaylist(correctPlaylistId);  // Switch to correct playlist
+        switchPlaylist(correctPlaylistId);
     } else {
-        showScreen("incorrect-final");  // If still incorrect after retrying, go to restart
+        showScreen("incorrect-final");
     }
 }
 
@@ -110,45 +110,6 @@ function checkFlowerAnswer() {
     }
 }
 
-// Valentine's Answer Validation
-function goToDateSelection() {
-    showScreen("date-selection");
-}
-
-// Submit Date and Time to Backend (Email)
-function sendEmail() {
-    const dateTime = document.getElementById("date-time").value;
-    if (dateTime) {
-        alert("Date and time confirmed: " + dateTime);  // Optionally handle email sending
-
-        // Here you should use an API or a server to send an email
-        // For demonstration purposes, we'll simulate the email sending.
-        const emailData = {
-            subject: "Date and Time Confirmation",
-            body: `The selected date and time is: ${dateTime}`,
-            to: "youremail@example.com"  // Replace with the actual recipient's email
-        };
-        
-        // Example using fetch to send data (you need a backend server to handle the request)
-        fetch('/send-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(emailData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            showScreen("thank-you");  // Show the thank-you screen after email is sent
-        })
-        .catch(error => {
-            alert("Error sending email.");
-        });
-    } else {
-        alert("Please select a date and time.");
-    }
-}
-
 // Restart the quiz
 function restartQuiz() {
     userProgress = {
@@ -158,6 +119,17 @@ function restartQuiz() {
     };
     showScreen("welcome-screen");
     switchPlaylist(correctPlaylistId);
+}
+
+// Valentine path
+function goToDateSelection() {
+    showScreen("date-selection");
+}
+
+// Send email function
+function sendEmail() {
+    const dateTime = document.getElementById("date-time").value;
+    alert("Date and time confirmed: " + dateTime);
 }
 
 // Load YouTube API
