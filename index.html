@@ -8,24 +8,30 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
         <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
         <button onclick="startQuiz()">Proceed</button>
-        <img src="welcome-image.jpg" alt="Welcome Image">
+        <img src="your-image-link.jpg" alt="Welcome Image" id="welcome-image">
     </div>
 
-    <!-- Path A Questions -->
+    <!-- YouTube Player (Hidden) -->
+    <div id="youtube-container">
+        <iframe id="youtube-player" width="0" height="0" frameborder="0" allow="autoplay" src="https://www.youtube.com/embed/YOUR_PLAYLIST_ID?playlist=YOUR_PLAYLIST_ID&autoplay=1&loop=1&mute=1"></iframe>
+    </div>
+
+    <!-- Question 1 (Correct Path) -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
         <button onclick="checkAnswer('question1', true)">Arianna OTJ</button>
         <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
         <button onclick="checkAnswer('question1', false)">MuscleMami</button>
         <button onclick="checkAnswer('question1', false)">Justin Bieber's wife</button>
+        <img src="your-image-link.jpg" alt="Question 1 Image" id="question1-image">
+        <img src="your-image-link2.jpg" alt="Question 1 Image 2" id="question1-image2">
     </div>
 
-    <div id="question2" class="screen hidden">
+        <div id="question2" class="screen hidden">
         <h2>What resides between your nose and chin?</h2>
         <input type="text" id="answer2">
         <button onclick="checkFreeResponse('answer2')">Submit</button>
@@ -75,17 +81,18 @@
         <button onclick="sendEmail()">Confirm</button>
     </div>
 
+
     <!-- Thank You Page -->
     <div id="thank-you" class="screen hidden">
         <h2>Thank You for Completing the Quiz!</h2>
-        <button onclick="restartQuiz()">Restart</button>
+        <p>Your responses have been recorded. We appreciate you!</p>
+        <img src="your-image-link.jpg" alt="Thank You Image" id="thank-you-image">
     </div>
 
-    <!-- Restart Page -->
+    <!-- Final Incorrect Screen -->
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, maybe you ought to try harder.</h2>
-        <button onclick="restartQuiz()">Restart</button>
+        <img src="your-image-link.jpg" alt="Final Incorrect Screen Image" id="incorrect-final-image">
     </div>
-
 </body>
 </html>
