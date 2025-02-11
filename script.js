@@ -92,7 +92,7 @@ function checkWrongAnswer(question, isCorrect) {
         // Mark this incorrect question as answered incorrectly
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
 
-        // Proceed through the incorrect questions until all are incorrect
+        // Check if there are still unanswered incorrect questions
         const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
 
         if (nextIncorrectQuestion) {
