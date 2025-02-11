@@ -1,55 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () { 
-    console.log("DOM fully loaded. Showing welcome screen...");
-    showScreen("welcome-screen");
+  // Ensure background music plays immediately
+  playBackgroundMusic();
 });
 
-function startQuiz() {
-    console.log("Starting quiz, moving to first question.");
-
-    // Start background music
-    loadBackgroundMusic();
-
-    // Ensure transition to the first question
-    showScreen("question1");
-}
-
-// Function to load and start background music
-function loadBackgroundMusic() {
-    const musicContainer = document.getElementById("bg-music-container");
-
-    // Remove existing iframe (prevents duplicates)
-    musicContainer.innerHTML = "";
-
-    // Create a new iframe dynamically
-    const iframe = document.createElement("iframe");
-    iframe.width = "0";
-    iframe.height = "0";
-    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
-    iframe.frameBorder = "0";
-    iframe.allow = "autoplay; encrypted-media";
-
-    // Append the new iframe to the container
-    musicContainer.appendChild(iframe);
-
+function playBackgroundMusic() {
+  const bgMusic = document.getElementById("bg-music");
+  if (bgMusic) {
+    bgMusic.src = "https://www.youtube.com/embed/videoseries?list=PL2kgM6nw1kmzfxj4he4S_Z7Jjxb4FgCTT&autoplay=1&loop=1&mute=1";
     console.log("Background music started.");
-}
-
-// Function to display the correct screen
-function showScreen(screenId) {
-    console.log(`showScreen(${screenId})`);
-
-    // Hide all screens
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.add("hidden");
-    });
-
-    // Show the requested screen
-    const targetScreen = document.getElementById(screenId);
-    if (targetScreen) {
-        targetScreen.classList.remove("hidden");
-    } else {
-        console.error("Screen not found:", screenId);
-    }
+  } else {
+    console.error("Background music element not found.");
+  }
 }
 
 
@@ -60,7 +20,7 @@ let pathBUsed = [false, false, false];
 let userSelections = { dateTime: "", cuisine: "", activity: "" };
 
 function checkAnswer(currentQuestionId, isCorrect) {
-  console.log(`checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect}`);
+  console.log(checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect});
   if (isCorrect) {
     advancePathA(currentQuestionId);
   } else {
@@ -70,7 +30,7 @@ function checkAnswer(currentQuestionId, isCorrect) {
 
 function checkFreeResponse(inputId) {
   const userInput = document.getElementById(inputId).value.trim().toLowerCase();
-  console.log(`checkFreeResponse() - user typed: ${userInput}`);
+  console.log("checkFreeResponse() - user typed:", userInput);
   if (userInput.includes("tulips")) {
     advancePathA("question2");
   } else {
@@ -100,7 +60,7 @@ function goToNextPathB() {
 }
 
 function checkWrongAnswer(pathBQuestionId, isCorrect) {
-  console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
+  console.log(checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect});
   if (isCorrect) {
     showScreen(pathACurrent);
   } else {
@@ -109,7 +69,6 @@ function checkWrongAnswer(pathBQuestionId, isCorrect) {
 }
 
 function startQuiz() {
-  console.log("Starting quiz, moving to first question.");
   showScreen("question1");
 }
 
@@ -133,7 +92,7 @@ function selectActivity(choice) {
 }
 
 function sendEmail() {
-  userSelections.dateTime = document.getElementById("date-time").value; // Fixed reference
+  userSelections.dateTime = document.getElementById("final-date-time").value;
   console.log("Sending Email:", userSelections);
   showScreen("thank-you");
 }
@@ -146,7 +105,7 @@ function restartQuiz() {
 }
 
 function showScreen(screenId) {
-  console.log(`showScreen(${screenId})`);
+  console.log(showScreen(${screenId}));
   document.querySelectorAll(".screen").forEach(screen => {
     screen.classList.add("hidden");
   });
