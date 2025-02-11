@@ -94,10 +94,48 @@
     <button onclick="goToDateSelection()">Yes</button>
     <button onclick="declineValentine()">No</button>
 </div>
+<!-- Date Selection Screen (Fix for Blank Screen) -->
+<div id="date-selection" class="screen hidden">
+    <h2>Select a Date & Time</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/clock.jpg" alt="Clock Image">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/time.jpg" alt="Time Image">
+    </div>
+    <input type="datetime-local" id="date-time">
+    <button onclick="proceedToPreferences()">Proceed</button>
+</div>
 
+<!-- Cuisine Selection -->
+<div id="cuisine" class="screen hidden">
+    <h2>Cuisine?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/cuisine.jpg" alt="Cuisine Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/cuisine1.jpg" alt="Cuisine Image 2">
+    </div>
+    <button onclick="selectCuisine('Italian')">Italian</button>
+    <button onclick="selectCuisine('Mexican')">Mexican</button>
+    <button onclick="selectCuisine('American')">American</button>
+</div>
+
+<!-- Activity Selection -->
+<div id="activity" class="screen hidden">
+    <h2>Activity?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/funn%201.jpg" alt="Activity Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/fun%202.jpg" alt="Activity Image 2">
+    </div>
+    <button onclick="selectActivity('Takeout and TikTok')">Takeout and TikTok</button>
+    <button onclick="selectActivity('Dinner and an evening out')">Dinner and an evening out</button>
+</div>
 <!-- Thank You Page -->
 <div id="thank-you" class="screen hidden">
-    <h2>You have this kind of warmth that makes the world feel a little softer, almost like the best shade of orange...</h2>
+    <h2>"to Arianna - You have a quiet elegance, not the kind that demands attention, but the kind that makes everything feel a little warmer, a little lighter.
+
+You’re the kind of person people can rely on, not just because you’re capable, but because you genuinely care. I wouldn't be alone in saying your presence feels like stepping into a place that instantly feels like home.
+
+I could go on, but I’d start sounding a Krispy Kreme truck; I’ll leave it at if more people were like you, the world would be a much softer, kinder place.
+
+ I just hope this makes you smile, because if anyone deserves that, it’s you. I'm looking forward to a happy Valentine’s day."</h2>
     <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/tulips.jpg" alt="Thank You Image">
 </div>
 
