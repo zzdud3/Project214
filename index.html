@@ -34,12 +34,20 @@
 
 <div id="question2" class="screen hidden">
     <h2>What resides between your nose and chin that isn't your lips?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/hsm.jpg" alt="Question Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/bratz.jpg" alt="Question Image 2">
+    </div>
     <input type="text" id="answer2">
     <button onclick="checkFreeResponse('answer2')">Submit</button>
 </div>
 
 <div id="question3" class="screen hidden">
     <h2>We're stranded on a deserted island. What’s the first thing you do?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/bed%20room%202.jpg" alt="Question Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/bed%20room.jpg" alt="Question Image 2">
+    </div>
     <button onclick="checkAnswer('question3', false)">Cry and scream until the seagulls file a noise complaint.</button>
     <button onclick="checkAnswer('question3', false)">Drink seawater to assert dominance over the ocean.</button>
     <button onclick="checkAnswer('question3', true)">Lock in and begin to build our paradise together.</button>
@@ -49,6 +57,10 @@
 <!-- Path B Questions -->
 <div id="question-wrong1" class="screen hidden">
     <h2>Who's your top 1?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/bf%20sonder%20son.jpg" alt="Question Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/justin%20bieber%20journals.jpg" alt="Question Image 2">
+    </div>
     <button onclick="checkWrongAnswer('question-wrong1', false)">Selena Gomez</button>
     <button onclick="checkWrongAnswer('question-wrong1', true)">Justin Bieber</button>
     <button onclick="checkWrongAnswer('question-wrong1', false)">Ariana Grande</button>
@@ -56,6 +68,10 @@
 
 <div id="question-wrong2" class="screen hidden">
     <h2>What was the first set of flowers I got you?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/orchids.jpg" alt="Question Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/daisies.jpg" alt="Question Image 2">
+    </div>
     <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
     <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
     <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
@@ -63,6 +79,10 @@
 
 <div id="question-wrong3" class="screen hidden">
     <h2>Why did the tomato turn red?</h2>
+    <div class="image-container">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/living%20room.jpg" alt="Question Image 1">
+        <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/living%20room%202.jpg" alt="Question Image 2">
+    </div>
     <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
     <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
     <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
@@ -75,28 +95,6 @@
     <button onclick="declineValentine()">No</button>
 </div>
 
-<!-- Date Selection -->
-<div id="date-selection" class="screen hidden">
-    <h2>Select a Date & Time</h2>
-    <input type="datetime-local" id="date-time">
-    <button onclick="proceedToPreferences()">Proceed</button>
-</div>
-
-<!-- Cuisine Selection -->
-<div id="cuisine" class="screen hidden">
-    <h2>Cuisine?</h2>
-    <button onclick="selectCuisine('Italian')">Italian</button>
-    <button onclick="selectCuisine('Mexican')">Mexican</button>
-    <button onclick="selectCuisine('American')">American</button>
-</div>
-
-<!-- Activity Selection -->
-<div id="activity" class="screen hidden">
-    <h2>Activity?</h2>
-    <button onclick="selectActivity('Takeout and TikTok')">Takeout and TikTok</button>
-    <button onclick="selectActivity('Dinner and an evening out')">Dinner and an evening out</button>
-</div>
-
 <!-- Thank You Page -->
 <div id="thank-you" class="screen hidden">
     <h2>You have this kind of warmth that makes the world feel a little softer, almost like the best shade of orange...</h2>
@@ -106,6 +104,7 @@
 <!-- Restart Page -->
 <div id="incorrect-final" class="screen hidden">
     <h2>Sorry, maybe you ought to try harder. Must be sleepy while doing this.</h2>
+    <img src="https://raw.githubusercontent.com/zzdud3/Project214/main/whomp%20womp.jpg" alt="Incorrect Final Image">
     <button onclick="restartQuiz()">Restart</button>
 </div>
 
