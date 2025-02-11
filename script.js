@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("DOM fully loaded. Showing welcome screen...");
     showScreen("welcome-screen");
 
-    // Wait for user interaction to play background music
     document.getElementById("welcome-screen").addEventListener("click", function () {
         playBackgroundMusic();
     });
@@ -66,15 +65,12 @@ function advancePathA(currentQuestionId) {
         showScreen("valentine");
     }
 }
-function declineValentine() {
-    console.log("User selected 'No' for Valentine's question.");
-    goToNextPathB();
-}
+
 function goToNextPathB() {
     const nextIndex = pathBUsed.findIndex(used => used === false);
     if (nextIndex === -1) {
         console.log("All Path B questions answered incorrectly. Restarting quiz...");
-        setTimeout(() => restartQuiz(), 3000);
+        showScreen("incorrect-final");
     } else {
         pathBUsed[nextIndex] = true;
         showScreen(pathBQuestions[nextIndex]);
@@ -88,6 +84,11 @@ function checkWrongAnswer(pathBQuestionId, isCorrect) {
     } else {
         goToNextPathB();
     }
+}
+
+function declineValentine() {
+    console.log("User selected 'No' for Valentine's question.");
+    goToNextPathB();
 }
 
 function goToDateSelection() {
