@@ -87,13 +87,12 @@ function checkWrongAnswer(question, isCorrect) {
         }
     } else {
         userProgress.incorrectQuestions[incorrectQuestionIndex].answeredCorrectly = false;
-        if (userProgress.incorrectQuestions.every(q => q.answeredCorrectly === false)) {
+        const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
+
+        if (!nextIncorrectQuestion) {
             showScreen("incorrect-final");
         } else {
-            const nextIncorrectQuestion = userProgress.incorrectQuestions.find(q => q.answeredCorrectly === false);
-            if (nextIncorrectQuestion) {
-                showScreen(nextIncorrectQuestion.question);
-            }
+            showScreen(nextIncorrectQuestion.question);
         }
     }
 }
