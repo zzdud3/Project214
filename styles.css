@@ -10,7 +10,11 @@ body {
     padding: 20px;
 }
 
-.screen.hidden {
+.screen:not(.hidden) {
+    display: block;
+}
+
+.hidden {
     display: none;
 }
 
