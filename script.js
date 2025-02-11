@@ -1,27 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM fully loaded. Showing welcome screen...");
-  showScreen("welcome-screen");
+    console.log("DOM fully loaded. Showing welcome screen...");
+    showScreen("welcome-screen");
 
-  // Wait for user interaction to play background music
-  document.getElementById("welcome-screen").addEventListener("click", function () {
-    playBackgroundMusic();
-  });
+    // Wait for user interaction to play background music
+    document.getElementById("welcome-screen").addEventListener("click", function () {
+        playBackgroundMusic();
+    });
 });
 
 function playBackgroundMusic() {
-  const bgMusic = document.getElementById("bg-music");
-  if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0&enablejsapi=1";
-    console.log("Background music started.");
-  } else {
-    console.error("Background music element not found.");
-  }
-}
-function startQuiz() {
-  console.log("Starting quiz, moving to first question.");
-  showScreen("question1");
+    const bgMusic = document.getElementById("bg-music");
+    if (bgMusic) {
+        bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0&enablejsapi=1";
+        bgMusic.allow = "autoplay; encrypted-media";
+        console.log("Background music started.");
+    } else {
+        console.error("Background music element not found.");
+    }
 }
 
+function startQuiz() {
+    console.log("Starting quiz, moving to first question.");
+    showScreen("question1");
+}
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
@@ -30,124 +31,117 @@ let pathBUsed = [false, false, false];
 let userSelections = { dateTime: "", cuisine: "", activity: "" };
 
 function checkAnswer(currentQuestionId, isCorrect) {
-  console.log(`checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect}`);
-  if (isCorrect) {
-    advancePathA(currentQuestionId);
-  } else {
-    goToNextPathB();
-  }
+    console.log(`checkAnswer() called for ${currentQuestionId}; isCorrect=${isCorrect}`);
+    if (isCorrect) {
+        advancePathA(currentQuestionId);
+    } else {
+        goToNextPathB();
+    }
 }
 
 function checkFreeResponse(inputId) {
-  const userInput = document.getElementById(inputId).value.trim().toLowerCase();
-  console.log(`checkFreeResponse() - user typed: ${userInput}`);
-  if (userInput.includes("tulips")) {
-    advancePathA("question2");
-  } else {
-    goToNextPathB();
-  }
+    const inputElement = document.getElementById(inputId);
+    if (!inputElement) {
+        console.error("Input element not found:", inputId);
+        return;
+    }
+    
+    const userInput = inputElement.value.trim().toLowerCase();
+    console.log(`checkFreeResponse() - user typed: ${userInput}`);
+    
+    if (userInput.includes("tulips")) {
+        advancePathA("question2");
+    } else {
+        goToNextPathB();
+    }
 }
 
 function advancePathA(currentQuestionId) {
-  const currentIndex = pathAOrder.indexOf(currentQuestionId);
-  if (currentIndex < pathAOrder.length - 1) {
-    pathACurrent = pathAOrder[currentIndex + 1];
-    showScreen(pathACurrent);
-  } else {
-    pathACurrent = "valentine";
-    showScreen("valentine");
-  }
+    const currentIndex = pathAOrder.indexOf(currentQuestionId);
+    if (currentIndex < pathAOrder.length - 1) {
+        pathACurrent = pathAOrder[currentIndex + 1];
+        showScreen(pathACurrent);
+    } else {
+        pathACurrent = "valentine";
+        showScreen("valentine");
+    }
 }
 
 function goToNextPathB() {
-  const nextIndex = pathBUsed.findIndex(used => used === false);
-  if (nextIndex === -1) {
-    showScreen("incorrect-final");
-  } else {
-    pathBUsed[nextIndex] = true;
-    showScreen(pathBQuestions[nextIndex]);
-  }
+    const nextIndex = pathBUsed.findIndex(used => used === false);
+    if (nextIndex === -1) {
+        console.log("All Path B questions answered incorrectly. Restarting quiz...");
+        setTimeout(() => restartQuiz(), 3000);
+    } else {
+        pathBUsed[nextIndex] = true;
+        showScreen(pathBQuestions[nextIndex]);
+    }
 }
 
 function checkWrongAnswer(pathBQuestionId, isCorrect) {
-  console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
-  if (isCorrect) {
-    showScreen(pathACurrent);
-  } else {
-    goToNextPathB();
-  }
-}
-
-function startQuiz() {
-  console.log("Starting quiz, moving to first question.");
-  showScreen("question1");
+    console.log(`checkWrongAnswer() called for ${pathBQuestionId}; isCorrect=${isCorrect}`);
+    if (isCorrect) {
+        showScreen(pathACurrent);
+    } else {
+        goToNextPathB();
+    }
 }
 
 function goToDateSelection() {
-  showScreen("date-selection");
+    showScreen("date-selection");
 }
 
-let userSelections = {}; // Global object to store user choices
-
 function proceedToPreferences() {
-  userSelections.dateTime = document.getElementById("date-time").value;
-  showScreen("cuisine");
+    userSelections.dateTime = document.getElementById("date-time").value;
+    if (!userSelections.dateTime) {
+        alert("Please select a date and time.");
+        return;
+    }
+    showScreen("cuisine");
 }
 
 function selectCuisine(choice) {
-  userSelections.cuisine = choice;
-  showScreen("activity");
+    userSelections.cuisine = choice;
+    showScreen("activity");
 }
 
 function selectActivity(choice) {
-  userSelections.activity = choice;
-  sendEmail(); // Send email once all choices are made
+    userSelections.activity = choice;
+    sendEmail();
 }
 
 function sendEmail() {
-  // Ensure all selections are stored
-  userSelections.dateTime = document.getElementById("date-time").value;
+    userSelections.dateTime = document.getElementById("date-time").value;
+    
+    let emailRecipient = "rehmanzaine9@gmail.com";
+    let subject = "Valentine's Date Selection"; 
+    let body = `Here are the selected details for our date: \n\n- **Date & Time:** ${userSelections.dateTime}\n- **Cuisine Preference:** ${userSelections.cuisine}\n- **Activity Choice:** ${userSelections.activity}\n\nLooking forward to it! 😊`;
+    
+    let mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
 
-  let emailRecipient = "rehmanzaine9@gmail.com"; // Replace with your actual email
-  let subject = "Valentine's Date Selection"; 
-  let body = `Here are the selected details for our date: 
-
-- **Date & Time:** ${userSelections.dateTime} 
-- **Cuisine Preference:** ${userSelections.cuisine} 
-- **Activity Choice:** ${userSelections.activity} 
-
-Looking forward to it! 😊`;
-
-  // Create mailto link to open email client
-  let mailtoLink = `mailto:${emailRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  // Open user's default email client with prefilled details
-  window.location.href = mailtoLink;
-
-  showScreen("thank-you"); // Redirect to the thank-you page
+    showScreen("thank-you");
 }
 
-
 function restartQuiz() {
-  pathACurrent = "question1";
-  pathBUsed = [false, false, false];
-  userSelections = { dateTime: "", cuisine: "", activity: "" };
-  showScreen("welcome-screen");
+    pathACurrent = "question1";
+    pathBUsed = [false, false, false];
+    userSelections = { dateTime: "", cuisine: "", activity: "" };
+    showScreen("welcome-screen");
 }
 
 function showScreen(screenId) {
-  console.log(`showScreen(${screenId})`); // Debugging check
+    console.log(`showScreen(${screenId})`);
 
-  document.querySelectorAll(".screen").forEach(screen => {
-    screen.classList.add("hidden"); // Hide all screens
-  });
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+    });
 
-  const targetScreen = document.getElementById(screenId);
-  if (targetScreen) {
-    targetScreen.classList.remove("hidden"); // Reveal the selected screen
-    targetScreen.style.display = "block"; // Ensure it's not hidden
-  } else {
-    console.error("Screen not found:", screenId);
-  }
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.remove("hidden");
+        targetScreen.style.display = "block";
+    } else {
+        console.error("Screen not found:", screenId);
+    }
 }
-
