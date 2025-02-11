@@ -1,135 +1,137 @@
-// Track which question the user has reached in the correct and incorrect paths
+// Track user progress
 let userProgress = {
-    currentQuestion: "question1", // Start at the first question in the correct path
-    correctAnswers: [], // Store the correct answers the user has given
-    incorrectAnswers: [] // Track the incorrect answers
+    currentQuestion: "question1",
+    correctAnswers: [],
+    incorrectAnswers: []
 };
 
-// Function to start the quiz from the welcome screen
-function startQuiz() {
-    showScreen('question1');
-    correctAudio.play();
-    correctAudio.loop = true;
+// YouTube Player Variables
+let player;
+const correctPlaylistId = "YOUR_CORRECT_PLAYLIST_ID"; // Replace with your YouTube playlist ID
+const incorrectPlaylistId = "YOUR_INCORRECT_PLAYLIST_ID"; // Replace with your YouTube playlist ID
+let currentPlaylist = correctPlaylistId;
+
+// Load YouTube API
+function loadYouTubeAPI() {
+    let tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    let firstScriptTag = document.getElementsByTagName("script")[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-// Function to show or hide screens
-function showScreen(screenId) {
-    const allScreens = document.querySelectorAll('.screen');
-    allScreens.forEach(screen => {
-        screen.classList.add('hidden');
+// Initialize YouTube Player
+function onYouTubeIframeAPIReady() {
+    player = new YT.Player("youtube-player", {
+        height: "0",
+        width: "0",
+        playerVars: {
+            listType: "playlist",
+            list: currentPlaylist,
+            autoplay: 1,
+            loop: 1
+        },
+        events: {
+            onReady: (event) => event.target.playVideo()
+        }
     });
-    const activeScreen = document.getElementById(screenId);
-    if (activeScreen) {
-        activeScreen.classList.remove('hidden');
+}
+
+// Switch YouTube Playlist (Resume Where Left Off)
+function switchPlaylist(playlistId) {
+    if (player) {
+        player.loadPlaylist({
+            list: playlistId,
+            listType: "playlist",
+            index: 0, // Start from first video
+            autoplay: 1
+        });
+    } else {
+        currentPlaylist = playlistId;
     }
 }
 
-// Check answers in the correct question bank
+// Function to show screens and hide others
+function showScreen(screenId) {
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+    });
+    document.getElementById(screenId).classList.remove("hidden");
+}
+
+// Start Quiz
+function startQuiz() {
+    showScreen("question1");
+    switchPlaylist(correctPlaylistId); // Play correct playlist from start
+}
+
+// Check answers for correct path
 function checkAnswer(question, answer) {
-    if (answer === 'correct') {
-        userProgress.correctAnswers.push(question); // Track the correct answer
+    if (answer === "correct") {
+        userProgress.correctAnswers.push(question);
         if (question === "question1") {
-            showScreen('question2');
+            showScreen("question2");
         } else if (question === "question2") {
-            showScreen('valentine');
-        } else if (question === "valentine") {
-            showScreen('date-selection');
+            showScreen("valentine");
         }
     } else {
-        userProgress.incorrectAnswers.push(question); // Track the incorrect answer
         showIncorrectPath(question);
     }
 }
 
 // Handle incorrect answers in the correct question path
 function showIncorrectPath(question) {
-    correctAudio.pause();
-    incorrectAudio.play();
-    showScreen('question-wrong1');
-    userProgress.currentQuestion = question; // Track the current question in the incorrect path
+    switchPlaylist(incorrectPlaylistId); // Switch to incorrect playlist
+    if (question === "question1") {
+        showScreen("question-wrong1");
+    } else if (question === "question2") {
+        showScreen("question-wrong2");
+    } else if (question === "question3") {
+        showScreen("question-wrong3");
+    }
 }
 
-// Handle incorrect questions and allow returning to correct questions on correct answers
+// Handle incorrect questions and allow returning to correct path
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
-        switch (question) {
-            case "question1":
-                showScreen('question1');
-                break;
-            case "question2":
-                showScreen('question2');
-                break;
-            case "question3":
-                showScreen('valentine');
-                break;
+        if (question === "question1") {
+            showScreen("question1");
+        } else if (question === "question2") {
+            showScreen("question2");
+        } else if (question === "question3") {
+            showScreen("valentine");
         }
-        userProgress.correctAnswers.push(question); // Track as correct
-        incorrectAudio.pause();
-        correctAudio.play();
-        correctAudio.loop = true;
+        switchPlaylist(correctPlaylistId); // Resume correct playlist
     } else {
-        incorrectAudio.pause();
-        incorrectAudio.play();
-        showScreen('incorrect-final');
+        showScreen("incorrect-final");
     }
 }
 
-// Flower answer (specific to question 2)
+// Flower answer check
 function checkFlowerAnswer() {
     const answer = document.getElementById("flower-answer").value.trim().toLowerCase();
-    if (answer === 'tulips') { // Correct answer
-        checkAnswer('question2', 'correct'); // Return to the correct question bank
+    if (answer === "tulips") {
+        checkAnswer("question2", "correct");
     } else {
-        checkAnswer('question2', 'wrong'); // Incorrect answer leads to the incorrect path
+        checkAnswer("question2", "wrong");
     }
 }
 
-// Handle incorrect final page and restart
+// Restart quiz function
 function restartQuiz() {
-    userProgress = { // Reset user progress when restarting
+    userProgress = {
         currentQuestion: "question1",
         correctAnswers: [],
         incorrectAnswers: []
     };
-    showScreen('welcome-screen');
-    incorrectAudio.pause();
-    correctAudio.play();
-    correctAudio.loop = true;
+    showScreen("welcome-screen");
+    switchPlaylist(correctPlaylistId);
 }
 
-// Final screen after successful date selection
+// Send email function (date selection)
 function sendEmail() {
     const dateTime = document.getElementById("date-time").value;
-    // Implement email sending logic here
     alert("Date and time confirmed: " + dateTime);
 }
 
-// Incorrect question screens and flow
-function showIncorrectQuestion(question) {
-    if (question === "question-wrong1") {
-        showScreen('question-wrong1');
-    } else if (question === "question-wrong2") {
-        showScreen('question-wrong2');
-    } else if (question === "question-wrong3") {
-        showScreen('question-wrong3');
-    }
-}
-
-// Handle the restart button from the incorrect final page
-function restartFromIncorrect() {
-    showScreen('welcome-screen');
-    incorrectAudio.pause();
-    correctAudio.play();
-    correctAudio.loop = true;
-}
-
-// Example of how to structure the HTML question screens
-function generateQuestionScreen(questionId, questionText, answers) {
-    return `
-    <div id="${questionId}" class="screen hidden">
-        <h2>${questionText}</h2>
-        ${answers.map(answer => `
-            <button onclick="checkAnswer('${questionId}', '${answer.correct ? 'correct' : 'wrong'}')">${answer.text}</button>
-        `).join('')}
-    </div>`;
-}
+// Load YouTube API when page loads
+loadYouTubeAPI();
