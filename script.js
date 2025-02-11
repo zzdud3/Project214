@@ -116,15 +116,18 @@ function restartQuiz() {
 }
 
 function showScreen(screenId) {
-  console.log(`showScreen(${screenId})`);
+  console.log(`showScreen(${screenId})`); // Debugging check
+
   document.querySelectorAll(".screen").forEach(screen => {
-    screen.style.display = "none"; // Hide all screens
+    screen.classList.add("hidden"); // Hide all screens
   });
-  
+
   const targetScreen = document.getElementById(screenId);
   if (targetScreen) {
-    targetScreen.style.display = "block"; // Ensure the selected screen is shown
+    targetScreen.classList.remove("hidden"); // Reveal the selected screen
+    targetScreen.style.display = "block"; // Ensure it's not hidden
   } else {
     console.error("Screen not found:", screenId);
   }
 }
+
