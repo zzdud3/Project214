@@ -66,7 +66,10 @@ function advancePathA(currentQuestionId) {
         showScreen("valentine");
     }
 }
-
+function declineValentine() {
+    console.log("User selected 'No' for Valentine's question.");
+    goToNextPathB();
+}
 function goToNextPathB() {
     const nextIndex = pathBUsed.findIndex(used => used === false);
     if (nextIndex === -1) {
