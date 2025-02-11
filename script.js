@@ -17,6 +17,11 @@ function playBackgroundMusic() {
     console.error("Background music element not found.");
   }
 }
+function startQuiz() {
+  console.log("Starting quiz, moving to first question.");
+  showScreen("question1");
+}
+
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
