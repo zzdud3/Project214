@@ -11,37 +11,31 @@
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
         <h1>Welcome!</h1>
-        <audio id="correct-audio" autoplay loop>
-            <source src="https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPOSITORY/main/assets/audio/correct-audio.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
         <button onclick="startQuiz()">Proceed</button>
     </div>
 
     <!-- YouTube Player (Hidden) -->
-    <div id="youtube-player"></div>
+    <div id="youtube-container">
+        <iframe id="youtube-player" width="0" height="0" frameborder="0" allow="autoplay"></iframe>
+    </div>
 
     <!-- Question 1 (Correct Path) -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
-        <div class="image-container">
-            <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/left-image.jpg" alt="Left Image">
-            <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/right-image.jpg" alt="Right Image">
-        </div>
-        <button onclick="checkAnswer('question1', 'correct')">Arianna OTJ</button>
-        <button onclick="checkAnswer('question1', 'wrong1')">Mini Minaj</button>
-        <button onclick="checkAnswer('question1', 'wrong2')">MuscleMami</button>
-        <button onclick="checkAnswer('question1', 'wrong3')">Justi Bieber's wife</button>
+        <button onclick="checkAnswer('question1', true)">Arianna OTJ</button>
+        <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
+        <button onclick="checkAnswer('question1', false)">MuscleMami</button>
+        <button onclick="checkAnswer('question1', false)">Justi Bieber's wife</button>
     </div>
 
-    <!-- Question 2 (Correct Path) -->
+    <!-- Question 2 -->
     <div id="question2" class="screen hidden">
         <h2>What flower grows between your nose and chin?</h2>
         <input type="text" id="flower-answer" placeholder="Your answer...">
         <button onclick="checkFlowerAnswer()">Submit</button>
     </div>
 
-    <!-- Valentine Question (Correct Path) -->
+    <!-- Valentine Question -->
     <div id="valentine" class="screen hidden">
         <h2>Will you be my Valentine?</h2>
         <button onclick="goToDateSelection()">Yes</button>
@@ -55,13 +49,7 @@
         <button onclick="sendEmail()">Confirm</button>
     </div>
 
-    <!-- Thank You Page -->
-    <div id="thank-you" class="screen hidden">
-        <h2>Thank You!</h2>
-        <p>A heartfelt message here...</p>
-    </div>
-
-    <!-- Incorrect Path Questions -->
+    <!-- Incorrect Questions -->
     <div id="question-wrong1" class="screen hidden">
         <h2>What was my Roman Empire?</h2>
         <button onclick="checkWrongAnswer('question1', false)">RG3's downfall</button>
@@ -76,16 +64,8 @@
         <button onclick="checkWrongAnswer('question2', true)">Carnations</button>
     </div>
 
-    <div id="question-wrong3" class="screen hidden">
-        <h2>How many "dates" have we been on?</h2>
-        <button onclick="checkWrongAnswer('question3', false)">1</button>
-        <button onclick="checkWrongAnswer('question3', true)">2</button>
-        <button onclick="checkWrongAnswer('question3', false)">3</button>
-    </div>
-
-    <!-- Incorrect Final Page -->
     <div id="incorrect-final" class="screen hidden">
-        <h2>I just wanted to be honest with you because I really respect you. I think you're a great person, and I’ve really enjoyed getting to know you, but I don’t feel the kind of connection I’m looking for in a relationship. I don’t want to lead you on, and I hope you understand. You truly deserve someone who can give you their whole heart, and I know you’ll find that. Wishing you nothing but the best!</h2>
+        <h2>Sorry, wrong path. Try again!</h2>
         <button onclick="restartQuiz()">Restart</button>
     </div>
 </body>
