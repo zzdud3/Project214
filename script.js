@@ -4,20 +4,20 @@ document.addEventListener("DOMContentLoaded", function () {
   
 function unmuteBackgroundMusic() {
     const bgMusic = document.getElementById("bg-music");
-    
     if (bgMusic) {
-        // Reload iframe with mute=0 after user interaction
-        bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&mute=0&playlist=CBx6e9cZlBQ";
-        console.log("Background music unmuted.");
-    } else {
-        console.error("Background music iframe not found.");
+        let src = bgMusic.src;
+        if (src.includes("mute=1")) {
+            // Unmute and start playing audio when Proceed button is clicked
+            bgMusic.src = src.replace("mute=1", "mute=0"); // Unmute the music
+            console.log("Background music unmuted and started playing.");
+        }
     }
 }
 
-// Modify startQuiz() to unmute music when "Proceed" is clicked
+// Triggered when the user clicks the Proceed button to start the quiz
 function startQuiz() {
     console.log("Starting quiz, moving to first question.");
-    unmuteBackgroundMusic(); // Unmute music after user interaction
+    unmuteBackgroundMusic(); // Unmute and start the music when user clicks Proceed
     showScreen("question1");
 }
 
