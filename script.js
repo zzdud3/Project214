@@ -1,18 +1,19 @@
 function loadBackgroundMusic() {
     const musicContainer = document.getElementById("bg-music-container");
     
-    // Remove existing iframe if it exists (prevents duplicates)
+    // Clear existing iframe (prevents duplicates)
     musicContainer.innerHTML = ""; 
 
-    // Create a new iframe dynamically to ensure autoplay works
+    // Create a new iframe dynamically
     const iframe = document.createElement("iframe");
     iframe.width = "0";
     iframe.height = "0";
-    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
+    iframe.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ";
     iframe.frameBorder = "0";
     iframe.allow = "autoplay; encrypted-media";
+    iframe.allowFullscreen = true;
 
-    // Append the new iframe to the container
+    // Append iframe to container
     musicContainer.appendChild(iframe);
 
     console.log("Background music started.");
@@ -21,11 +22,30 @@ function loadBackgroundMusic() {
 // Triggered when the user clicks "Proceed"
 function startQuiz() {
     console.log("Starting quiz, moving to first question.");
-    loadBackgroundMusic(); // Load and play background music dynamically
+    
+    // Start background music
+    loadBackgroundMusic();
+
+    // Ensure transition to the first question
     showScreen("question1");
 }
 
+function showScreen(screenId) {
+    console.log(`showScreen(${screenId})`);
+    
+    // Hide all screens
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.add("hidden");
+    });
 
+    // Show the requested screen
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) {
+        targetScreen.classList.remove("hidden");
+    } else {
+        console.error("Screen not found:", screenId);
+    }
+}
 
 let pathACurrent = "question1";
 const pathAOrder = ["question1", "question2", "question3"];
