@@ -44,13 +44,8 @@ function checkWrongAnswer(questionId, isCorrect) {
             showScreen('valentine');
         }
     } else {
-        // Incorrect answer, go to the next wrong question
-        if (remainingWrongQuestions.length > 0) {
-            showScreen(remainingWrongQuestions[0]);
-        } else {
-            // All incorrect questions attempted incorrectly, show restart screen
-            showScreen('incorrect-final');
-        }
+        // Incorrect answer to an incorrect question will trigger the restart screen
+        showScreen('incorrect-final');
     }
 }
 
