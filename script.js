@@ -5,7 +5,7 @@
 function playBackgroundMusic() {
   const bgMusic = document.getElementById("bg-music");
   if (bgMusic) {
-    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?si=KW2oObMJcyOLmgrU&autoplay=1&loop=1&mute=1";
+    bgMusic.src = "https://www.youtube.com/embed/CBx6e9cZlBQ?autoplay=1&loop=1&playlist=CBx6e9cZlBQ&mute=0";
     console.log("Background music started.");
   } else {
     console.error("Background music element not found.");
