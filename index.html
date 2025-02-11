@@ -10,8 +10,10 @@
 <body>
     <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
-        <h1>Welcome! Looking forward o your responses to this questionnare as its required for a project of mine. Thank you in advance for filling it out!</h1>
+        <h1>Welcome! Looking forward to your responses to this questionnaire as it's required for a project of mine. Thank you in advance for filling it out!</h1>
         <button onclick="startQuiz()">Proceed</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Welcome Image" id="welcome-image">
     </div>
 
     <!-- YouTube Player (Hidden) -->
@@ -26,6 +28,8 @@
         <button onclick="checkAnswer('question1', false)">Mini Minaj</button>
         <button onclick="checkAnswer('question1', false)">MuscleMami</button>
         <button onclick="checkAnswer('question1', false)">Justin Bieber's wife</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Question 1 Image" id="question1-image">
     </div>
 
     <!-- Question 2 -->
@@ -33,6 +37,8 @@
         <h2>What flower grows between your nose and chin?</h2>
         <input type="text" id="flower-answer" placeholder="Your answer...">
         <button onclick="checkFlowerAnswer()">Submit</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Question 2 Image" id="question2-image">
     </div>
 
     <!-- Valentine Question -->
@@ -40,6 +46,8 @@
         <h2>Will you be my Valentine?</h2>
         <button onclick="goToDateSelection()">Yes</button>
         <button onclick="wrongAnswerPath()">No</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Valentine Question Image" id="valentine-image">
     </div>
 
     <!-- Date Selection -->
@@ -47,6 +55,17 @@
         <h2>Select a Date & Time</h2>
         <input type="datetime-local" id="date-time">
         <button onclick="sendEmail()">Confirm</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Date Selection Image" id="date-selection-image">
+    </div>
+
+    <!-- Thank You Page -->
+    <div id="thank-you" class="screen hidden">
+        <h2>Thank You for Completing the Quiz!</h2>
+        <p>Your responses have been recorded. We appreciate you!</p>
+        <button onclick="restartQuiz()">Restart</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Thank You Image" id="thank-you-image">
     </div>
 
     <!-- Incorrect Questions -->
@@ -55,6 +74,8 @@
         <button onclick="checkWrongAnswer('question-wrong1', false)">RG3's downfall</button>
         <button onclick="checkWrongAnswer('question-wrong1', true)">Eagles superbowl win</button>
         <button onclick="checkWrongAnswer('question-wrong1', false)">Getting old</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Incorrect Question 1 Image" id="question-wrong1-image">
     </div>
 
     <div id="question-wrong2" class="screen hidden">
@@ -62,6 +83,8 @@
         <button onclick="checkWrongAnswer('question-wrong2', false)">Lilies</button>
         <button onclick="checkWrongAnswer('question-wrong2', false)">Tulips</button>
         <button onclick="checkWrongAnswer('question-wrong2', true)">Carnations</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Incorrect Question 2 Image" id="question-wrong2-image">
     </div>
 
     <div id="question-wrong3" class="screen hidden">
@@ -69,12 +92,16 @@
         <button onclick="checkWrongAnswer('question-wrong3', false)">It was ketchup to its friend</button>
         <button onclick="checkWrongAnswer('question-wrong3', false)">Because it was a little shady</button>
         <button onclick="checkWrongAnswer('question-wrong3', true)">Because it saw the salad dressing</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Incorrect Question 3 Image" id="question-wrong3-image">
     </div>
 
     <!-- Final Incorrect Screen -->
     <div id="incorrect-final" class="screen hidden">
         <h2>Sorry, maybe you ought to try harder.</h2>
         <button onclick="restartQuiz()">Restart</button>
+        <!-- Insert your image below -->
+        <img src="your-image-link.jpg" alt="Final Incorrect Screen Image" id="incorrect-final-image">
     </div>
 
 </body>
