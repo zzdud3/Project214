@@ -18,6 +18,9 @@
         <button onclick="startQuiz()">Proceed</button>
     </div>
 
+    <!-- YouTube Player (Hidden) -->
+    <div id="youtube-player"></div>
+
     <!-- Question 1 (Correct Path) -->
     <div id="question1" class="screen hidden">
         <h2>Who are you?</h2>
@@ -25,10 +28,10 @@
             <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/left-image.jpg" alt="Left Image">
             <img src="https://raw.githubusercontent.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY/main/right-image.jpg" alt="Right Image">
         </div>
-        <button onclick="checkAnswer(1, 'correct')">Arianna OTJ</button>
-        <button onclick="checkAnswer(1, 'wrong1')">Mini Minaj</button>
-        <button onclick="checkAnswer(1, 'wrong2')">MuscleMami</button>
-        <button onclick="checkAnswer(1, 'wrong3')">Justi Bieber's wife</button>
+        <button onclick="checkAnswer('question1', 'correct')">Arianna OTJ</button>
+        <button onclick="checkAnswer('question1', 'wrong1')">Mini Minaj</button>
+        <button onclick="checkAnswer('question1', 'wrong2')">MuscleMami</button>
+        <button onclick="checkAnswer('question1', 'wrong3')">Justi Bieber's wife</button>
     </div>
 
     <!-- Question 2 (Correct Path) -->
@@ -61,23 +64,23 @@
     <!-- Incorrect Path Questions -->
     <div id="question-wrong1" class="screen hidden">
         <h2>What was my Roman Empire?</h2>
-        <button onclick="checkWrongAnswer(1, false)">RG3's downfall</button>
-        <button onclick="checkWrongAnswer(1, true)">Finding out you breathe the same air as other men.</button>
-        <button onclick="checkWrongAnswer(1, false)">Getting old.</button>
+        <button onclick="checkWrongAnswer('question1', false)">RG3's downfall</button>
+        <button onclick="checkWrongAnswer('question1', true)">Finding out you breathe the same air as other men.</button>
+        <button onclick="checkWrongAnswer('question1', false)">Getting old.</button>
     </div>
 
     <div id="question-wrong2" class="screen hidden">
-        <h2>What was the first flower i got you?</h2>
-        <button onclick="checkWrongAnswer(2, false)">Lilies</button>
-        <button onclick="checkWrongAnswer(2, false)">Tulips</button>
-        <button onclick="checkWrongAnswer(2, true)">Carations</button>
+        <h2>What was the first flower I got you?</h2>
+        <button onclick="checkWrongAnswer('question2', false)">Lilies</button>
+        <button onclick="checkWrongAnswer('question2', false)">Tulips</button>
+        <button onclick="checkWrongAnswer('question2', true)">Carnations</button>
     </div>
 
     <div id="question-wrong3" class="screen hidden">
         <h2>How many "dates" have we been on?</h2>
-        <button onclick="checkWrongAnswer(3, false)">1</button>
-        <button onclick="checkWrongAnswer(3, true)">2</button>
-        <button onclick="checkWrongAnswer(3, false)">3</button>
+        <button onclick="checkWrongAnswer('question3', false)">1</button>
+        <button onclick="checkWrongAnswer('question3', true)">2</button>
+        <button onclick="checkWrongAnswer('question3', false)">3</button>
     </div>
 
     <!-- Incorrect Final Page -->
