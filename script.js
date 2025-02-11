@@ -1,154 +1,185 @@
-// Define questions and answers for both Path A and Path B
-const questionsPathA = [
-    { question: "Who are you?", options: ["Option 1", "Option 2", "Option 3", "Option 4"], correctAnswer: "Option 1" },
-    { question: "What resides between your nose and chin?", correctAnswer: "tulips", type: "freeResponse" },
-    { question: "What is my type?", options: ["Introverted", "Extroverted", "Ambivert", "Maverick"], correctAnswer: "Introverted" }
-];
+let currentQuestion = 1;
+let pathBAnsweredIncorrectly = false;
+let pathBQuestionsAnswered = { question4: false, question5: false, question6: false };
+let cuisineAnswer = '';
+let activityAnswer = '';
+let whenAnswer = '';
+let selectedDate = '';
 
-const questionsPathB = [
-    { question: "What was my Roman Empire?", options: ["Eagles superbowl win", "RG3's downfall", "Getting old"], correctAnswer: "Eagles superbowl win" },
-    { question: "What was the first set of flowers I got you?", options: ["Tulips", "Lilies", "Carnations"], correctAnswer: "Tulips" },
-    { question: "Why did the tomato turn red?", options: ["Because it saw the salad dressing", "It was ketchup to its friend", "Because it was a little shady"], correctAnswer: "Because it saw the salad dressing" }
-];
-
-// Track the current question indices for Path A and Path B
-let currentPathAIndex = 0;
-let currentPathBIndex = 0;
-let answeredIncorrectlyPathB = [];
-
-// Function to start the quiz
+// Start the quiz
 function startQuiz() {
     document.getElementById('welcome-screen').classList.add('hidden');
-    showQuestion(1);  // Start showing the first question (Path A)
+    document.getElementById('question1').classList.remove('hidden');
 }
 
-// Function to show the current question
-function showQuestion(questionNumber) {
-    // Hide all screens
-    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
-
-    // Determine which question to show (either Path A or Path B)
-    let question;
-    if (questionNumber <= 3) {
-        question = questionsPathA[questionNumber - 1]; // Path A questions
-        document.getElementById(`question${questionNumber}`).classList.remove('hidden');
-        document.querySelector(`#question${questionNumber} h2`).textContent = question.question;
-
-        if (question.options) {
-            question.options.forEach((option, index) => {
-                document.querySelector(`#question${questionNumber} button:nth-child(${index + 1})`).textContent = option;
-            });
-        }
-    } else {
-        question = questionsPathB[questionNumber - 4]; // Path B questions
-        document.getElementById(`question${questionNumber}`).classList.remove('hidden');
-        document.querySelector(`#question${questionNumber} h2`).textContent = question.question;
-
-        if (question.options) {
-            question.options.forEach((option, index) => {
-                document.querySelector(`#question${questionNumber} button:nth-child(${index + 1})`).textContent = option;
-            });
-        }
+// Process answer for each question
+function answerQuestion(questionId, answer) {
+    if (questionId === 'question1') {
+        showNextQuestion('question2');
     }
 }
 
-// Function to check the answer
-function checkAnswer(questionNumber, selectedAnswer) {
-    let correctAnswer;
-    let nextQuestionNumber;
+function checkAnswer(questionId, answer) {
+    let correctAnswers = {
+        'question2': ['tulips'],
+        'question3': ['Introverted'],
+        'question4': ['Eagles superbowl win'],
+        'question5': ['Tulips'],
+        'question6': ['Because it saw the salad dressing']
+    };
 
-    // Check Path A questions
-    if (questionNumber <= 3) {
-        correctAnswer = questionsPathA[questionNumber - 1].correctAnswer;
-        nextQuestionNumber = questionNumber + 1;
-        // For free-response question, check if answer contains correct word
-        if (questionsPathA[questionNumber - 1].type === "freeResponse") {
-            if (selectedAnswer.toLowerCase().includes(correctAnswer.toLowerCase())) {
-                proceedToNextQuestion(nextQuestionNumber);
+    if (correctAnswers[questionId].includes(answer.toLowerCase())) {
+        if (questionId === 'question3') {
+            showValentinesQuestion();
+        } else if (questionId === 'question5' || questionId === 'question6') {
+            showNextQuestion('question1');
+        } else {
+            showNextQuestion('question4');
+        }
+    } else {
+        pathBAnsweredIncorrectly = true;
+        showNextQuestion('question5');
+    }
+}
+
+// Show the next question
+function showNextQuestion(nextQuestionId) {
+    document.querySelectorAll('.screen').forEach((screen) => {
+        screen.classList.add('hidden');
+    });
+
+    // Prevent Path B questions from repeating
+    if (nextQuestionId === 'question4' && !pathBQuestionsAnswered.question4) {
+        document.getElementById(nextQuestionId).classList.remove('hidden');
+        pathBQuestionsAnswered.question4 = true;
+    } else if (nextQuestionId === 'question5' && !pathBQuestionsAnswered.question5) {
+        document.getElementById(nextQuestionId).classList.remove('hidden');
+        pathBQuestionsAnswered.question5 = true;
+    } else if (nextQuestionId === 'question6' && !pathBQuestionsAnswered.question6) {
+        document.getElementById(nextQuestionId).classList.remove('hidden');
+        pathBQuestionsAnswered.question6 = true;
+    } else {
+        // If Path B questions have been answered, skip to the next one
+        if (pathBAnsweredIncorrectly) {
+            if (!pathBQuestionsAnswered.question4) {
+                document.getElementById('question4').classList.remove('hidden');
+            } else if (!pathBQuestionsAnswered.question5) {
+                document.getElementById('question5').classList.remove('hidden');
+            } else if (!pathBQuestionsAnswered.question6) {
+                document.getElementById('question6').classList.remove('hidden');
             } else {
                 showRestartScreen();
             }
         }
-        // For multiple-choice questions, check if the selected option matches the correct answer
-        else if (selectedAnswer === correctAnswer) {
-            proceedToNextQuestion(nextQuestionNumber);
-        } else {
-            showRestartScreen();
-        }
-    }
-
-    // Check Path B questions
-    else if (questionNumber > 3) {
-        correctAnswer = questionsPathB[questionNumber - 4].correctAnswer;
-        nextQuestionNumber = questionNumber + 1;
-
-        // If the current Path B question was answered incorrectly, add it to the "answeredIncorrectlyPathB" list
-        if (selectedAnswer !== correctAnswer) {
-            answeredIncorrectlyPathB.push(questionNumber);
-        }
-
-        // If all Path B questions are answered incorrectly, show the restart screen
-        if (answeredIncorrectlyPathB.length === 3) {
-            showRestartScreen();
-        } else {
-            // Proceed to the next question in Path B if the answer is correct
-            if (selectedAnswer === correctAnswer) {
-                proceedToNextQuestion(nextQuestionNumber);
-            } else {
-                // Show the next question in Path B, without repeating the already attempted ones
-                let nextUnansweredQuestion = getNextUnansweredQuestion();
-                if (nextUnansweredQuestion !== null) {
-                    showQuestion(nextUnansweredQuestion);
-                } else {
-                    showRestartScreen();
-                }
-            }
-        }
     }
 }
 
-// Function to get the next unanswered question from Path B
-function getNextUnansweredQuestion() {
-    // Look for the next question that has not been answered incorrectly yet
-    for (let i = currentPathBIndex; i < questionsPathB.length; i++) {
-        if (!answeredIncorrectlyPathB.includes(i + 4)) {
-            return i + 4;
-        }
-    }
-    return null;
+// Show Valentine's question
+function showValentinesQuestion() {
+    document.getElementById('question3').classList.add('hidden');
+    document.getElementById('valentines-question').classList.remove('hidden');
 }
 
-// Function to proceed to the next question
-function proceedToNextQuestion(nextQuestionNumber) {
-    if (nextQuestionNumber <= 3) {
-        currentPathAIndex++;
-        showQuestion(nextQuestionNumber);
-    } else if (nextQuestionNumber <= 6) {
-        currentPathBIndex++;
-        showQuestion(nextQuestionNumber);
+// Process the Valentine's Question answer
+function handleValentinesAnswer(answer) {
+    if (answer === 'Yes') {
+        showDateAndTimePage();
     } else {
-        showThankYouScreen();
+        showRestartScreen();
     }
 }
 
-// Function to show the Restart screen
-function showRestartScreen() {
-    document.getElementById('restart-screen').classList.remove('hidden');
-    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+// Show the Date and Time page
+function showDateAndTimePage() {
+    document.getElementById('valentines-question').classList.add('hidden');
+    document.getElementById('date-time-selection').classList.remove('hidden');
 }
 
-// Function to show the Thank You screen
+// Show Cuisine page
+function showCuisinePage() {
+    selectedDate = document.getElementById('datetime').value;
+    document.getElementById('date-time-selection').classList.add('hidden');
+    document.getElementById('cuisine').classList.remove('hidden');
+}
+
+// Capture and store Cuisine answer
+function answerCuisine(answer) {
+    cuisineAnswer = answer;
+    showActivityPage();
+}
+
+// Show Activity page
+function showActivityPage() {
+    document.getElementById('cuisine').classList.add('hidden');
+    document.getElementById('activity').classList.remove('hidden');
+}
+
+// Capture and store Activity answer
+function answerActivity(answer) {
+    activityAnswer = answer;
+    showWhenPage();
+}
+
+// Show When page
+function showWhenPage() {
+    document.getElementById('activity').classList.add('hidden');
+    document.getElementById('when').classList.remove('hidden');
+}
+
+// Capture When date and time
+function captureWhen() {
+    whenAnswer = document.getElementById('when-time').value;
+    submitAnswers();
+}
+
+// Submit the answers and send an email
+function submitAnswers() {
+    const emailContent = `
+        Cuisine: ${cuisineAnswer}
+        Activity: ${activityAnswer}
+        When: ${whenAnswer}
+        Date Selected: ${selectedDate}
+    `;
+    
+    sendEmail(emailContent);
+    showThankYouScreen();
+}
+
+// Send email (Replace with your email sending service)
+function sendEmail(content) {
+    const email = "youremail@example.com"; // Replace with your email
+    const subject = "Quiz Responses";
+    const body = encodeURIComponent(content);
+    const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+}
+
+// Show Thank You screen
 function showThankYouScreen() {
     document.getElementById('thank-you').classList.remove('hidden');
-    document.querySelectorAll('.screen').forEach(screen => screen.classList.add('hidden'));
+    document.getElementById('when').classList.add('hidden');
 }
 
-// Function to restart the quiz
+// Show restart screen
+function showRestartScreen() {
+    document.getElementById('restart-screen').classList.remove('hidden');
+    document.querySelectorAll('.screen').forEach((screen) => {
+        screen.classList.add('hidden');
+    });
+}
+
+// Show restart page when the user answers incorrectly in Path B
 function restartQuiz() {
-    currentPathAIndex = 0;
-    currentPathBIndex = 0;
-    answeredIncorrectlyPathB = [];
-    document.getElementById('welcome-screen').classList.remove('hidden');
+    pathBAnsweredIncorrectly = false;
+    currentQuestion = 1;
     document.getElementById('restart-screen').classList.add('hidden');
-    document.getElementById('thank-you').classList.add('hidden');
+    document.getElementById('welcome-screen').classList.remove('hidden');
+    resetAllQuestions();
+}
+
+// Reset questions when restarting
+function resetAllQuestions() {
+    document.querySelectorAll('.screen').forEach((screen) => {
+        screen.classList.add('hidden');
+    });
 }
