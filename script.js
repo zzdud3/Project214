@@ -88,14 +88,15 @@ function showIncorrectPath(question) {
 // Handle incorrect path with chance to return
 function checkWrongAnswer(question, isCorrect) {
     if (isCorrect) {
+        // Correct answer in incorrect path, return to the main path
         if (question === "question1") {
-            showScreen("question1");  // Go back to the correct question1 path
+            showScreen("question2");  // Correct main path question
         } else if (question === "question2") {
-            showScreen("question2");  // Go back to the correct question2 path
+            showScreen("valentine");  // Correct main path question
         }
-        switchPlaylist(correctPlaylistId);  // Correct playlist
+        switchPlaylist(correctPlaylistId);  // Switch to correct playlist
     } else {
-        showScreen("incorrect-final");  // If still incorrect after retrying
+        showScreen("incorrect-final");  // If still incorrect after retrying, go to restart
     }
 }
 
@@ -109,12 +110,40 @@ function checkFlowerAnswer() {
     }
 }
 
-// Submit Date and Time
+// Valentine's Answer Validation
+function goToDateSelection() {
+    showScreen("date-selection");
+}
+
+// Submit Date and Time to Backend (Email)
 function sendEmail() {
     const dateTime = document.getElementById("date-time").value;
     if (dateTime) {
         alert("Date and time confirmed: " + dateTime);  // Optionally handle email sending
-        showScreen("thank-you");  // Show the thank you screen after confirmation
+
+        // Here you should use an API or a server to send an email
+        // For demonstration purposes, we'll simulate the email sending.
+        const emailData = {
+            subject: "Date and Time Confirmation",
+            body: `The selected date and time is: ${dateTime}`,
+            to: "youremail@example.com"  // Replace with the actual recipient's email
+        };
+        
+        // Example using fetch to send data (you need a backend server to handle the request)
+        fetch('/send-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(emailData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            showScreen("thank-you");  // Show the thank-you screen after email is sent
+        })
+        .catch(error => {
+            alert("Error sending email.");
+        });
     } else {
         alert("Please select a date and time.");
     }
@@ -131,5 +160,5 @@ function restartQuiz() {
     switchPlaylist(correctPlaylistId);
 }
 
-// Load YouTube API for video/audio functionality
+// Load YouTube API
 loadYouTubeAPI();
