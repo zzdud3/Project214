@@ -1,46 +1,126 @@
+/* Reset some default styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic body styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
     color: #333;
     text-align: center;
+    padding: 20px;
 }
 
-.screen {
-    display: none;
+/* Styling for the header and buttons */
+h1, h2 {
+    font-size: 2rem;
+    margin: 20px 0;
+    color: #333;
 }
 
-.screen.hidden {
-    display: none;
+h2 {
+    font-size: 1.8rem;
+    color: #7f4b9d;  /* Soft purple */
 }
 
+/* Button Styling */
 button {
-    background-color: #ff5f99;
+    background-color: #f7c2d1;  /* Soft pink */
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
+    border-radius: 5px;
+    padding: 12px 30px;
     margin: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #ff3385;
+    background-color: #f79cbd;  /* Slightly darker pink */
 }
 
-h1, h2 {
-    color: #ff5f99;
+/* Button for restart */
+#restart button {
+    background-color: #f9b2b2;
 }
 
-img {
-    max-width: 90%;
-    margin: 20px;
+button:focus {
+    outline: none;
 }
 
-#youtube-container iframe {
+/* Hiding screens initially */
+.hidden {
     display: none;
 }
 
-#thank-you, #incorrect-final {
-    background-color: #f9f9f9;
+/* General styling for images */
+img {
+    width: 200px;
+    height: 200px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+}
+
+/* Container for the YouTube iframe */
+#youtube-container {
+    display: none;
+}
+
+/* Screens and layout styling */
+.screen {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
     border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+/* Styling for the Welcome, Restart, Thank you pages */
+#welcome-screen, #restart, #thank-you {
+    padding: 40px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#welcome-screen h1, #thank-you h2 {
+    font-size: 2rem;
+    color: #f7a8b8;  /* Soft pink for welcome and thank you */
+}
+
+#welcome-screen button, #restart button {
+    background-color: #f7c2d1;  /* Soft pink */
+}
+
+/* Date Selection Styling */
+#date-selection input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    width: 200px;
+    margin-top: 20px;
+}
+
+#date-selection button {
+    margin-top: 20px;
+    background-color: #7f4b9d;  /* Soft purple */
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 30px;
+    border-radius: 5px;
+}
+
+#date-selection button:hover {
+    background-color: #6b3e7d; /* Slightly darker purple */
+}
+
