@@ -100,9 +100,14 @@ function restartQuiz() {
     showScreen("welcome-screen");
 }
 
-// Valentine path
+// Valentine path (Yes, proceed to date selection)
 function goToDateSelection() {
     showScreen("date-selection");
+}
+
+// Incorrect answer path (No, proceed to incorrect questions)
+function wrongAnswerPath() {
+    showScreen("question-wrong1");
 }
 
 // Send email function
