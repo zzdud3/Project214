@@ -1,3 +1,9 @@
+let userProgress = {
+    currentQuestion: "question1",
+    correctAnswers: [],
+    incorrectAnswers: []
+};
+
 // Static YouTube Playlist ID
 const youtubePlaylistId = "YOUR_PLAYLIST_ID"; // Replace with your static YouTube playlist ID
 
@@ -86,6 +92,11 @@ function checkFlowerAnswer() {
 
 // Restart the quiz
 function restartQuiz() {
+    userProgress = {
+        currentQuestion: "question1",
+        correctAnswers: [],
+        incorrectAnswers: []
+    };
     showScreen("welcome-screen");
 }
 
