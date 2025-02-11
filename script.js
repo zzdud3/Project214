@@ -1,119 +1,89 @@
-// Store the questions for Path A and Path B
+// Define Path A and Path B questions with the correct answers
 const questionsPathA = [
-  { question: "Who are you?", options: ["Arianna OTJ", "Mini Minaj", "MuscleMami", "Justin Bieber's wife"], correct: 0 },
-  { question: "What resides between your nose and chin?", options: ["Tulips", "Lipstick", "Nose ring", "Chin dimple"], correct: 0, type: "freeResponse" },
-  { question: "What is my type?", options: ["Athletic", "Creative", "Bookish", "Muscular"], correct: 1 },
+    { question: "Who are you?", options: ["Option 1"], correct: 0 },
+    { question: "What resides between your nose and chin?", correctAnswer: "tulips", type: "freeResponse" },
+    { question: "What is my type?", options: ["Maverick"], correct: 0 }
 ];
 
 const questionsPathB = [
-  { question: "What was my Roman Empire?", options: ["RG3's downfall", "Eagles superbowl win", "Getting old", "Life of a rockstar"], correct: 1 },
-  { question: "What was the first set of flowers I got you?", options: ["Lilies", "Tulips", "Carnations", "Daisies"], correct: 2 },
-  { question: "Why did the tomato turn red?", options: ["It was ketchup to its friend", "Because it was a little shady", "Because it saw the salad dressing", "It was hot"], correct: 2 },
+    { question: "What was my Roman Empire?", options: ["Eagles superbowl win"], correct: 0 },
+    { question: "What was the first set of flowers I got you?", options: ["Carnations"], correct: 0 },
+    { question: "Why did the tomato turn red?", options: ["Because it saw the salad dressing"], correct: 0 }
 ];
 
+// Track the current question indices for Path A and Path B
 let currentPathAIndex = 0;
 let currentPathBIndex = 0;
 
-// Show the welcome screen initially
-document.getElementById('welcome-screen').classList.remove('hidden');
-
-// Start quiz function
+// Function to start the quiz
 function startQuiz() {
-  document.getElementById('welcome-screen').classList.add('hidden');
-  showQuestionPathA();
+    document.getElementById('welcome-screen').classList.add('hidden');
+    showQuestion('question1', questionsPathA);
 }
 
-// Show a question from Path A
-function showQuestionPathA() {
-  if (currentPathAIndex < questionsPathA.length) {
-    const currentQuestion = questionsPathA[currentPathAIndex];
-    const questionContainer = document.getElementById('question-container');
-    questionContainer.innerHTML = `
-      <h2>${currentQuestion.question}</h2>
-      ${currentQuestion.options.map((option, index) => 
-        `<button onclick="checkAnswerPathA(${index})">${option}</button>`
-      ).join('')}
-    `;
-    document.getElementById('question-container').classList.remove('hidden');
-  } else {
-    // No more Path A questions, proceed to Valentine question
-    showValentineQuestion();
-  }
-}
+// Function to show the questions
+function showQuestion(questionId, path) {
+    const question = path[currentPathAIndex] || path[currentPathBIndex];
+    if (question) {
+        const questionContainer = document.getElementById(questionId);
+        questionContainer.classList.remove('hidden');
+        document.querySelector(`#${questionId} h2`).textContent = question.question;
 
-// Check the answer for Path A
-function checkAnswerPathA(selectedIndex) {
-  const currentQuestion = questionsPathA[currentPathAIndex];
-  if (selectedIndex === currentQuestion.correct) {
-    currentPathAIndex++;
-    showQuestionPathA(); // Show next Path A question
-  } else {
-    // Incorrect answer in Path A, go to Path B
-    currentPathBIndex = 0; // Reset Path B index
-    showQuestionPathB();
-  }
-}
-
-// Show a question from Path B
-function showQuestionPathB() {
-  if (currentPathBIndex < questionsPathB.length) {
-    const currentQuestion = questionsPathB[currentPathBIndex];
-    const questionContainer = document.getElementById('question-container');
-    questionContainer.innerHTML = `
-      <h2>${currentQuestion.question}</h2>
-      ${currentQuestion.options.map((option, index) => 
-        `<button onclick="checkAnswerPathB(${index})">${option}</button>`
-      ).join('')}
-    `;
-    document.getElementById('question-container').classList.remove('hidden');
-  } else {
-    // All questions in Path B are answered incorrectly, restart the quiz
-    restartQuiz();
-  }
-}
-
-// Check the answer for Path B
-function checkAnswerPathB(selectedIndex) {
-  const currentQuestion = questionsPathB[currentPathBIndex];
-  if (selectedIndex === currentQuestion.correct) {
-    currentPathBIndex++;
-    if (currentPathBIndex < questionsPathB.length) {
-      showQuestionPathB(); // Show next Path B question
-    } else {
-      // After Path B, return to Path A if any questions remain
-      currentPathAIndex++;
-      if (currentPathAIndex < questionsPathA.length) {
-        showQuestionPathA();
-      } else {
-        showValentineQuestion(); // End of quiz
-      }
+        // For multiple-choice questions, populate the options
+        if (question.options) {
+            question.options.forEach((option, index) => {
+                document.querySelector(`#${questionId} button:nth-child(${index + 1})`).textContent = option;
+            });
+        }
     }
-  } else {
-    currentPathBIndex++;
-    if (currentPathBIndex < questionsPathB.length) {
-      showQuestionPathB(); // Show next question in Path B
-    } else {
-      // If all questions in Path B have been answered incorrectly, restart
-      restartQuiz();
+}
+
+// Function to check the answers
+function checkAnswer(questionId, selectedAnswer) {
+    const question = questionsPathA[currentPathAIndex] || questionsPathB[currentPathBIndex];
+
+    if (question) {
+        // For multiple-choice questions, check the selected answer
+        if (question.options) {
+            if (selectedAnswer === question.options[question.correct]) {
+                proceedToNextQuestion();
+            } else {
+                showRestartScreen();
+            }
+        }
+        // For free-text questions, check the entered answer
+        else if (question.type === "freeResponse") {
+            if (selectedAnswer.toLowerCase().includes(question.correctAnswer.toLowerCase())) {
+                proceedToNextQuestion();
+            } else {
+                showRestartScreen();
+            }
+        }
     }
-  }
 }
 
-// Valentine question (end of quiz path)
-function showValentineQuestion() {
-  const valentineScreen = document.getElementById('valentine');
-  valentineScreen.classList.remove('hidden');
+// Proceed to the next question
+function proceedToNextQuestion() {
+    // If it's Path A, move to the next question
+    if (currentPathAIndex < questionsPathA.length - 1) {
+        currentPathAIndex++;
+        showQuestion(`question${currentPathAIndex + 1}`, questionsPathA);
+    } else {
+        // If it's Path B, proceed to Path B
+        showQuestion(`question${currentPathBIndex + 4}`, questionsPathB);
+    }
 }
 
-// Handle the 'Yes' or 'No' answer to the Valentine question
-function handleValentineResponse(response) {
-  if (response === 'yes') {
-    showDateSelection();
-  } else {
-    restartQuiz();
-  }
+// Show the Restart screen if the answers are wrong
+function showRestartScreen() {
+    document.getElementById('restart-screen').classList.remove('hidden');
 }
 
-// Show the date selection page
-function showDateSelection() {
-  const dateSelectionScreen = document.getElementById('
+// Restart the quiz
+function restartQuiz() {
+    currentPathAIndex = 0;
+    currentPathBIndex = 0;
+    document.getElementById('welcome-screen').classList.remove('hidden');
+    document.getElementById('restart-screen').classList.add('hidden');
+    document.getElementById('thank-you').classList.add('hidden');
+}
