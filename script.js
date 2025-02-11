@@ -1,114 +1,126 @@
-// Initialize YouTube player
-const youtubePlayer = document.getElementById('youtube-player');
+let currentQuestion = 0; // Track the current question
+let currentPath = 'correct'; // Start on the correct path
 
-function loadYouTubePlayer() {
-    youtubePlayer.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&playlist=YOUR_PLAYLIST_ID&loop=1";
-}
-
-// Start the quiz
+// Function to start the quiz
 function startQuiz() {
     console.log("Starting quiz...");
-    // Hide the welcome screen and show the first question
     document.getElementById('welcome-screen').classList.add('hidden');
-    document.getElementById('question1').classList.remove('hidden');
-    loadYouTubePlayer();
+    showQuestion('question1');
+    playAudio('correct'); // Play background audio for the correct path
 }
 
-// Check answer for correct path
+// Show a specific question based on its ID
+function showQuestion(questionId) {
+    // Hide all screens first
+    const screens = document.querySelectorAll('.screen');
+    screens.forEach(screen => screen.classList.add('hidden'));
+
+    // Show the target question screen
+    const questionScreen = document.getElementById(questionId);
+    if (questionScreen) {
+        questionScreen.classList.remove('hidden');
+    }
+}
+
+// Function to handle the answer to a question
 function checkAnswer(questionId, isCorrect) {
-    console.log(`Answer for ${questionId}: ${isCorrect ? 'Correct' : 'Incorrect'}`);
+    const questionElement = document.getElementById(questionId);
+    const correctPathScreen = document.getElementById('question2'); // Example of the next correct question screen
+
     if (isCorrect) {
-        proceedToNextScreen(questionId);
+        console.log(`Answer for ${questionId}: Correct`);
+        if (questionId === 'question1') {
+            showQuestion('question2');
+        }
     } else {
-        showIncorrectQuestion(questionId);
+        console.log(`Answer for ${questionId}: Incorrect`);
+        showWrongPath(questionId);
     }
 }
 
-// Proceed to the next screen in the correct path
-function proceedToNextScreen(questionId) {
-    console.log(`Proceeding from ${questionId}`);
-    if (questionId === 'question1') {
-        // Hide question 1 and show Valentine question
-        document.getElementById('question1').classList.add('hidden');
-        document.getElementById('valentine').classList.remove('hidden');
-    }
-}
-
-// Show the incorrect question path
-function showIncorrectQuestion(questionId) {
+// Show the wrong path for a question
+function showWrongPath(questionId) {
     console.log(`Showing incorrect path from ${questionId}`);
-    if (questionId === 'question1') {
-        // Hide question 1 and show first incorrect question
-        document.getElementById('question1').classList.add('hidden');
-        document.getElementById('question-wrong1').classList.remove('hidden');
+    const wrongPathScreens = ['question-wrong1', 'question-wrong2', 'question-wrong3'];
+
+    for (let i = 0; i < wrongPathScreens.length; i++) {
+        const wrongPathScreen = document.getElementById(wrongPathScreens[i]);
+        if (!wrongPathScreen.classList.contains('hidden')) {
+            wrongPathScreen.classList.add('hidden');
+        }
     }
+
+    showQuestion(wrongPathScreens[0]); // Show the first incorrect question
 }
 
-// Check answer for incorrect questions
+// Function to handle answering a wrong question
 function checkWrongAnswer(questionId, isCorrect) {
     console.log(`Answer for ${questionId} (wrong path): ${isCorrect ? 'Correct' : 'Incorrect'}`);
+
+    // If answered correctly, go back to the correct path
     if (isCorrect) {
-        proceedToNextScreenFromWrongPath(questionId);
+        showQuestion('question2');
     } else {
-        // If still incorrect, show final incorrect screen
         showFinalIncorrectScreen();
     }
 }
 
-// Proceed to the next screen after answering wrong questions
-function proceedToNextScreenFromWrongPath(questionId) {
-    console.log(`Proceeding from ${questionId} in incorrect path`);
-    if (questionId === 'question-wrong1') {
-        // Hide first incorrect question and show second incorrect question
-        document.getElementById('question-wrong1').classList.add('hidden');
-        document.getElementById('question-wrong2').classList.remove('hidden');
-    } else if (questionId === 'question-wrong2') {
-        // Hide second incorrect question and show third incorrect question
-        document.getElementById('question-wrong2').classList.add('hidden');
-        document.getElementById('question-wrong3').classList.remove('hidden');
-    } else if (questionId === 'question-wrong3') {
-        // If it's the last incorrect question, show final incorrect screen
-        showFinalIncorrectScreen();
-    }
-}
-
-// Show the final incorrect screen
+// Function to show the final incorrect screen
 function showFinalIncorrectScreen() {
     console.log("Showing final incorrect screen...");
-    document.getElementById('question-wrong1').classList.add('hidden');
-    document.getElementById('question-wrong2').classList.add('hidden');
-    document.getElementById('question-wrong3').classList.add('hidden');
-    document.getElementById('incorrect-final').classList.remove('hidden');
-}
+    const incorrectFinalScreen = document.getElementById('incorrect-final');
+    if (incorrectFinalScreen) {
+        // Hide all other screens first
+        const wrongPathScreens = ['question-wrong1', 'question-wrong2', 'question-wrong3'];
+        wrongPathScreens.forEach(screenId => {
+            const wrongScreen = document.getElementById(screenId);
+            if (wrongScreen && !wrongScreen.classList.contains('hidden')) {
+                wrongScreen.classList.add('hidden');
+            }
+        });
 
-// Go to the date selection after "Will you be my Valentine?"
-function goToDateSelection() {
-    console.log("Moving to date selection...");
-    document.getElementById('valentine').classList.add('hidden');
-    document.getElementById('date-selection').classList.remove('hidden');
-}
-
-// Send email with selected date and time
-function sendEmail() {
-    const dateTime = document.getElementById('date-time').value;
-
-    if (dateTime) {
-        alert("Thank you for confirming! Your response has been sent.");
-        document.getElementById('date-selection').classList.add('hidden');
-        document.getElementById('thank-you').classList.remove('hidden');
-
-        // Simulate email submission (you will need a server-side service to handle this)
-        console.log("Sending email with date and time: " + dateTime);
+        // Show the final incorrect screen
+        incorrectFinalScreen.classList.remove('hidden');
     } else {
-        alert("Please select a date and time.");
+        console.error("Element with id 'incorrect-final' not found.");
     }
 }
 
-// Restart the quiz
-function restartQuiz() {
-    console.log("Restarting quiz...");
-    document.getElementById('incorrect-final').classList.add('hidden');
-    document.getElementById('thank-you').classList.add('hidden');
-    document.getElementById('welcome-screen').classList.remove('hidden');
-    youtubePlayer.src = ""; // Stop YouTube playlist
+// Function to handle the "Will you be my Valentine" question
+function goToDateSelection() {
+    showQuestion('date-selection');
+    console.log("Proceeding to date selection...");
 }
+
+// Function to send the date/time submission to a pre-configured email
+function sendEmail() {
+    const dateTime = document.getElementById('date-time').value;
+    if (dateTime) {
+        console.log(`Sending email with date and time: ${dateTime}`);
+        // Simulate sending an email (you can integrate an actual API here)
+        alert("Thank you for submitting! The date and time have been recorded.");
+        showQuestion('thank-you');
+    } else {
+        alert("Please select a date and time before submitting.");
+    }
+}
+
+// Function to restart the quiz
+function restartQuiz() {
+    currentQuestion = 0;
+    currentPath = 'correct'; // Start back on the correct path
+    document.getElementById('thank-you').classList.add('hidden');
+    showQuestion('welcome-screen');
+}
+
+// Play audio based on the path (correct or incorrect)
+function playAudio(path) {
+    const audioElement = new Audio(path === 'correct' ? 'correct-audio.mp3' : 'incorrect-audio.mp3');
+    audioElement.play();
+}
+
+// This will be triggered when the page is loaded to initialize the YouTube player
+window.onload = function() {
+    const youtubePlayer = document.getElementById('youtube-player');
+    youtubePlayer.src = "https://www.youtube.com/embed/YOUR_PLAYLIST_ID?autoplay=1&playlist=YOUR_PLAYLIST_ID&loop=1";
+};
