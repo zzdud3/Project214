@@ -1,5 +1,6 @@
 let currentScreen = 'welcome-screen';
 let incorrectAnswersCount = 0;
+let remainingWrongQuestions = ['question-wrong1', 'question-wrong2', 'question-wrong3'];
 
 function startQuiz() {
     // Hide the welcome screen and show the first question
@@ -18,9 +19,9 @@ function showScreen(screenId) {
 
 function checkAnswer(questionId, isCorrect) {
     if (isCorrect) {
-        // Correct answer, proceed to the next screen
+        // If correct, go to the next question
         if (questionId === 'question1') {
-            showScreen('question2');
+            showScreen('question-wrong1');
         }
     } else {
         // Incorrect answer, go to the wrong question path
@@ -32,26 +33,23 @@ function checkAnswer(questionId, isCorrect) {
 
 function checkWrongAnswer(questionId, isCorrect) {
     if (isCorrect) {
-        incorrectAnswersCount = 0; // Reset count when the user answers correctly in the incorrect path
-        if (questionId === 'question-wrong1') {
-            showScreen('question-wrong2');
-        } else if (questionId === 'question-wrong2') {
-            showScreen('question-wrong3');
-        } else if (questionId === 'question-wrong3') {
-            showScreen('valentine'); // Move to the Valentine question after all wrong answers
+        // Remove the answered incorrect question from the list
+        remainingWrongQuestions = remainingWrongQuestions.filter(q => q !== questionId);
+        
+        if (remainingWrongQuestions.length > 0) {
+            // Proceed to the next unanswered incorrect question
+            showScreen(remainingWrongQuestions[0]);
+        } else {
+            // All incorrect questions have been attempted, show the Valentine question
+            showScreen('valentine');
         }
     } else {
-        incorrectAnswersCount++;
-        if (incorrectAnswersCount >= 3) {
-            // Trigger restart after 3 incorrect answers
-            showScreen('incorrect-final');
+        // Incorrect answer, go to the next wrong question
+        if (remainingWrongQuestions.length > 0) {
+            showScreen(remainingWrongQuestions[0]);
         } else {
-            // Continue through the incorrect path
-            if (questionId === 'question-wrong1') {
-                showScreen('question-wrong2');
-            } else if (questionId === 'question-wrong2') {
-                showScreen('question-wrong3');
-            }
+            // All incorrect questions attempted incorrectly, show restart screen
+            showScreen('incorrect-final');
         }
     }
 }
@@ -62,14 +60,31 @@ function goToDateSelection() {
 }
 
 function sendEmail() {
-    // Handle email sending after date selection
+    // Handle email sending after date selection (currently triggers the final screen)
     const dateTime = document.getElementById('date-time').value;
     alert('Date and time confirmed: ' + dateTime);
     showScreen('thank-you');
 }
 
+function wrongAnswerPath() {
+    // Treat "No" as an incorrect answer and trigger restart or proceed with incorrect path
+    showScreen('incorrect-final');
+}
+
 function restartQuiz() {
     // Restart the quiz by showing the welcome screen again
     incorrectAnswersCount = 0; // Reset incorrect answer count
+    remainingWrongQuestions = ['question-wrong1', 'question-wrong2', 'question-wrong3']; // Reset remaining wrong questions
     showScreen('welcome-screen');
+}
+
+// Adjusted function for handling correct answers in the incorrect path
+function handleCorrectInIncorrectPath() {
+    if (remainingWrongQuestions.length > 0) {
+        // If an incorrect question was answered correctly, go to the second question in the correct path
+        showScreen('question1');
+    } else {
+        // Proceed to Valentine question after answering all incorrect questions
+        showScreen('valentine');
+    }
 }
